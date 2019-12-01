@@ -1,0 +1,408 @@
+{
+  "$schema": "http://json-schema.org/schema#",
+  "additionalProperties": false,
+  "properties": {
+    "data": {
+      "items": {
+        "properties": {
+          "attributes": {
+            "properties": {
+              "app": {
+                "type": "string"
+              },
+              "assignedTeams": {
+                "type": "array"
+              },
+              "assignedUsers": {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              "auto": {
+                "type": "boolean"
+              },
+              "channel": {
+                "type": "string"
+              },
+              "createdAt": {
+                "type": "string"
+              },
+              "createdByTeams": {
+                "type": "array"
+              },
+              "direction": {
+                "type": "string"
+              },
+              "directionType": {
+                "type": "string"
+              },
+              "externalId": {
+                "type": "string"
+              },
+              "importedAt": {
+                "type": "string"
+              },
+              "meta": {
+                "properties": {
+                  "from": {
+                    "type": [
+                      "null",
+                      "string"
+                    ]
+                  },
+                  "subject": {
+                    "type": "string"
+                  },
+                  "to": {
+                    "items": {
+                      "anyOf": [
+                        {
+                          "type": "null"
+                        },
+                        {
+                          "properties": {
+                            "email": {
+                              "type": [
+                                "null",
+                                "string"
+                              ]
+                            }
+                          },
+                          "required": [
+                            "email"
+                          ],
+                          "type": "object"
+                        }
+                      ]
+                    },
+                    "type": "array"
+                  }
+                },
+                "type": "object"
+              },
+              "modifiedAt": {
+                "type": "string"
+              },
+              "preview": {
+                "type": "string"
+              },
+              "redacted": {
+                "type": "boolean"
+              },
+              "sentAt": {
+                "type": "string"
+              },
+              "size": {
+                "type": "integer"
+              },
+              "status": {
+                "type": "string"
+              },
+              "updatedAt": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "app",
+              "assignedTeams",
+              "assignedUsers",
+              "auto",
+              "channel",
+              "createdAt",
+              "createdByTeams",
+              "direction",
+              "directionType",
+              "meta",
+              "preview",
+              "redacted",
+              "sentAt",
+              "size",
+              "status",
+              "updatedAt"
+            ],
+            "type": "object"
+          },
+          "id": {
+            "type": "string"
+          },
+          "links": {
+            "properties": {
+              "related": {
+                "type": "string"
+              },
+              "self": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "self"
+            ],
+            "type": "object"
+          },
+          "relationships": {
+            "properties": {
+              "conversation": {
+                "properties": {
+                  "data": {
+                    "properties": {
+                      "id": {
+                        "type": "string"
+                      },
+                      "type": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "id",
+                      "type"
+                    ],
+                    "type": "object"
+                  },
+                  "links": {
+                    "properties": {
+                      "self": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "self"
+                    ],
+                    "type": "object"
+                  }
+                },
+                "required": [
+                  "data",
+                  "links"
+                ],
+                "type": "object"
+              },
+              "createdBy": {
+                "properties": {
+                  "data": {
+                    "properties": {
+                      "id": {
+                        "type": "string"
+                      },
+                      "type": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "id",
+                      "type"
+                    ],
+                    "type": "object"
+                  },
+                  "links": {
+                    "properties": {
+                      "self": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "self"
+                    ],
+                    "type": "object"
+                  }
+                },
+                "required": [
+                  "data",
+                  "links"
+                ],
+                "type": "object"
+              },
+              "customer": {
+                "properties": {
+                  "data": {
+                    "properties": {
+                      "id": {
+                        "type": "string"
+                      },
+                      "type": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "id",
+                      "type"
+                    ],
+                    "type": "object"
+                  },
+                  "links": {
+                    "properties": {
+                      "self": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "self"
+                    ],
+                    "type": "object"
+                  }
+                },
+                "required": [
+                  "data",
+                  "links"
+                ],
+                "type": "object"
+              },
+              "modifiedBy": {
+                "properties": {
+                  "data": {
+                    "properties": {
+                      "id": {
+                        "type": "string"
+                      },
+                      "type": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "id",
+                      "type"
+                    ],
+                    "type": "object"
+                  },
+                  "links": {
+                    "properties": {
+                      "self": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "self"
+                    ],
+                    "type": "object"
+                  }
+                },
+                "required": [
+                  "data",
+                  "links"
+                ],
+                "type": "object"
+              },
+              "org": {
+                "properties": {
+                  "data": {
+                    "properties": {
+                      "id": {
+                        "type": "string"
+                      },
+                      "type": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "id",
+                      "type"
+                    ],
+                    "type": "object"
+                  },
+                  "links": {
+                    "properties": {
+                      "self": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "self"
+                    ],
+                    "type": "object"
+                  }
+                },
+                "required": [
+                  "data",
+                  "links"
+                ],
+                "type": "object"
+              }
+            },
+            "required": [
+              "conversation",
+              "customer",
+              "org"
+            ],
+            "type": "object"
+          },
+          "type": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "attributes",
+          "id",
+          "links",
+          "relationships",
+          "type"
+        ],
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "links": {
+      "properties": {
+        "first": {
+          "type": "string"
+        },
+        "last": {
+          "type": "string"
+        },
+        "next": {
+          "type": "string"
+        },
+        "prev": {
+          "type": "null"
+        },
+        "self": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "first",
+        "last",
+        "next",
+        "prev",
+        "self"
+      ],
+      "type": "object"
+    },
+    "meta": {
+      "properties": {
+        "aggregations": {
+          "type": "object"
+        },
+        "page": {
+          "type": "integer"
+        },
+        "pageSize": {
+          "type": "integer"
+        },
+        "timed_out": {
+          "type": "boolean"
+        },
+        "total": {
+          "type": "integer"
+        },
+        "totalPages": {
+          "type": "integer"
+        }
+      },
+      "required": [
+        "aggregations",
+        "page",
+        "pageSize",
+        "timed_out",
+        "total",
+        "totalPages"
+      ],
+      "type": "object"
+    }
+  },
+  "required": [
+    "data",
+    "links",
+    "meta"
+  ],
+  "type": "object"
+}

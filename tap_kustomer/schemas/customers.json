@@ -1,0 +1,588 @@
+{
+  "$schema": "http://json-schema.org/schema#",
+  "additionalProperties": false,
+  "type": "object",
+  "properties": {
+    "data": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "attributes": {
+            "properties": {
+              "activeUsers": {
+                "type": "array"
+              },
+              "conversationCounts": {
+                "properties": {
+                  "all": {
+                    "type": "integer"
+                  },
+                  "done": {
+                    "type": "integer"
+                  },
+                  "open": {
+                    "type": "integer"
+                  },
+                  "snoozed": {
+                    "type": "integer"
+                  }
+                },
+                "required": [
+                  "all",
+                  "done",
+                  "open",
+                  "snoozed"
+                ],
+                "type": "object"
+              },
+              "createdAt": {
+                "type": "string"
+              },
+              "custom": {
+                "properties": {
+                  "acceptsMarketingBool": {
+                    "type": "boolean"
+                  },
+                  "lastOrderIdNum": {
+                    "type": "integer"
+                  },
+                  "lastOrderNameStr": {
+                    "type": "string"
+                  },
+                  "ordersCountNum": {
+                    "type": "integer"
+                  },
+                  "totalSpentNum": {
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "acceptsMarketingBool",
+                  "lastOrderIdNum",
+                  "lastOrderNameStr",
+                  "ordersCountNum",
+                  "totalSpentNum"
+                ],
+                "type": "object"
+              },
+              "deleted": {
+                "type": "boolean"
+              },
+              "displayColor": {
+                "type": "string"
+              },
+              "displayIcon": {
+                "type": "string"
+              },
+              "displayName": {
+                "type": "string"
+              },
+              "emails": {
+                "items": {
+                  "properties": {
+                    "email": {
+                      "type": "string"
+                    },
+                    "type": {
+                      "type": "string"
+                    },
+                    "verified": {
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "email",
+                    "type",
+                    "verified"
+                  ],
+                  "type": "object"
+                },
+                "type": "array"
+              },
+              "externalId": {
+                "type": "string"
+              },
+              "externalIds": {
+                "items": {
+                  "properties": {
+                    "externalId": {
+                      "type": "string"
+                    },
+                    "verified": {
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "externalId",
+                    "verified"
+                  ],
+                  "type": "object"
+                },
+                "type": "array"
+              },
+              "facebookIds": {
+                "type": "array"
+              },
+              "firstName": {
+                "type": "string"
+              },
+              "importedAt": {
+                "type": "string"
+              },
+              "instagramIds": {
+                "type": "array"
+              },
+              "lastActivityAt": {
+                "type": "string"
+              },
+              "lastConversation": {
+                "properties": {
+                  "channels": {
+                    "items": {
+                      "type": "string"
+                    },
+                    "type": "array"
+                  },
+                  "id": {
+                    "type": "string"
+                  },
+                  "sentiment": {
+                    "type": "object"
+                  },
+                  "tags": {
+                    "type": "array"
+                  }
+                },
+                "required": [
+                  "channels",
+                  "tags"
+                ],
+                "type": "object"
+              },
+              "lastCustomerActivityAt": {
+                "type": "string"
+              },
+              "lastMessageAt": {
+                "type": "string"
+              },
+              "lastMessageIn": {
+                "properties": {
+                  "channel": {
+                    "type": "string"
+                  },
+                  "sentAt": {
+                    "type": "string"
+                  },
+                  "sentiment": {
+                    "type": "null"
+                  }
+                },
+                "required": [
+                  "channel",
+                  "sentAt",
+                  "sentiment"
+                ],
+                "type": "object"
+              },
+              "lastMessageUnrespondedTo": {
+                "properties": {
+                  "channel": {
+                    "type": "string"
+                  },
+                  "sentAt": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "channel",
+                  "sentAt"
+                ],
+                "type": "object"
+              },
+              "lastName": {
+                "type": "string"
+              },
+              "locations": {
+                "type": "array"
+              },
+              "modifiedAt": {
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
+              },
+              "phones": {
+                "items": {
+                  "properties": {
+                    "phone": {
+                      "type": "string"
+                    },
+                    "type": {
+                      "type": "string"
+                    },
+                    "verified": {
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "phone",
+                    "type",
+                    "verified"
+                  ],
+                  "type": "object"
+                },
+                "type": "array"
+              },
+              "preview": {
+                "properties": {
+                  "channel": {
+                    "type": "string"
+                  },
+                  "previewAt": {
+                    "type": "string"
+                  },
+                  "subject": {
+                    "type": "string"
+                  },
+                  "text": {
+                    "type": "string"
+                  },
+                  "type": {
+                    "type": "string"
+                  }
+                },
+                "type": "object"
+              },
+              "progressiveStatus": {
+                "type": [
+                  "null",
+                  "string"
+                ]
+              },
+              "recentLocation": {
+                "properties": {
+                  "updatedAt": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "updatedAt"
+                ],
+                "type": "object"
+              },
+              "rev": {
+                "type": "integer"
+              },
+              "sharedEmails": {
+                "type": "array"
+              },
+              "sharedExternalIds": {
+                "type": "array"
+              },
+              "sharedPhones": {
+                "type": "array"
+              },
+              "sharedSocials": {
+                "type": "array"
+              },
+              "smoochIds": {
+                "type": "array"
+              },
+              "socials": {
+                "type": "array"
+              },
+              "tags": {
+                "type": "array"
+              },
+              "updatedAt": {
+                "type": "string"
+              },
+              "urls": {
+                "type": "array"
+              },
+              "verified": {
+                "type": "boolean"
+              },
+              "watchers": {
+                "type": "array"
+              },
+              "whatsapps": {
+                "type": "array"
+              }
+            },
+            "required": [
+              "activeUsers",
+              "conversationCounts",
+              "createdAt",
+              "deleted",
+              "displayColor",
+              "displayIcon",
+              "displayName",
+              "emails",
+              "externalIds",
+              "facebookIds",
+              "firstName",
+              "instagramIds",
+              "lastActivityAt",
+              "lastConversation",
+              "lastCustomerActivityAt",
+              "lastName",
+              "locations",
+              "name",
+              "phones",
+              "preview",
+              "progressiveStatus",
+              "recentLocation",
+              "rev",
+              "sharedEmails",
+              "sharedExternalIds",
+              "sharedPhones",
+              "sharedSocials",
+              "smoochIds",
+              "socials",
+              "tags",
+              "updatedAt",
+              "urls",
+              "verified",
+              "watchers",
+              "whatsapps"
+            ],
+            "type": "object"
+          },
+          "id": {
+            "type": "string"
+          },
+          "links": {
+            "properties": {
+              "self": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "self"
+            ],
+            "type": "object"
+          },
+          "relationships": {
+            "properties": {
+              "createdBy": {
+                "properties": {
+                  "data": {
+                    "properties": {
+                      "id": {
+                        "type": "string"
+                      },
+                      "type": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "id",
+                      "type"
+                    ],
+                    "type": "object"
+                  },
+                  "links": {
+                    "properties": {
+                      "self": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "self"
+                    ],
+                    "type": "object"
+                  }
+                },
+                "required": [
+                  "data",
+                  "links"
+                ],
+                "type": "object"
+              },
+              "messages": {
+                "properties": {
+                  "links": {
+                    "properties": {
+                      "self": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "self"
+                    ],
+                    "type": "object"
+                  }
+                },
+                "required": [
+                  "links"
+                ],
+                "type": "object"
+              },
+              "modifiedBy": {
+                "properties": {
+                  "data": {
+                    "properties": {
+                      "id": {
+                        "type": "string"
+                      },
+                      "type": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "id",
+                      "type"
+                    ],
+                    "type": "object"
+                  },
+                  "links": {
+                    "properties": {
+                      "self": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "self"
+                    ],
+                    "type": "object"
+                  }
+                },
+                "required": [
+                  "data",
+                  "links"
+                ],
+                "type": "object"
+              },
+              "org": {
+                "properties": {
+                  "data": {
+                    "properties": {
+                      "id": {
+                        "type": "string"
+                      },
+                      "type": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "id",
+                      "type"
+                    ],
+                    "type": "object"
+                  },
+                  "links": {
+                    "properties": {
+                      "self": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "self"
+                    ],
+                    "type": "object"
+                  }
+                },
+                "required": [
+                  "data",
+                  "links"
+                ],
+                "type": "object"
+              },
+              "shopify-orders": {
+                "properties": {
+                  "links": {
+                    "properties": {
+                      "self": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "self"
+                    ],
+                    "type": "object"
+                  },
+                  "meta": {
+                    "properties": {
+                      "kobject": {
+                        "type": "boolean"
+                      }
+                    },
+                    "required": [
+                      "kobject"
+                    ],
+                    "type": "object"
+                  }
+                },
+                "required": [
+                  "links",
+                  "meta"
+                ],
+                "type": "object"
+              }
+            },
+            "required": [
+              "messages",
+              "org"
+            ],
+            "type": "object"
+          },
+          "type": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "attributes",
+          "id",
+          "links",
+          "relationships",
+          "type"
+        ]
+      }
+    },
+    "links": {
+      "type": "object",
+      "properties": {
+        "first": {
+          "type": "string"
+        },
+        "last": {
+          "type": "string"
+        },
+        "next": {
+          "type": "string"
+        },
+        "prev": {
+          "type": "null"
+        },
+        "self": {
+          "type": "string"
+        }
+      }
+    },
+    "meta": {
+      "type": "object",
+      "properties": {
+        "aggregations": {
+          "type": "object"
+        },
+        "page": {
+          "type": "integer"
+        },
+        "pageSize": {
+          "type": "integer"
+        },
+        "timed_out": {
+          "type": "boolean"
+        },
+        "total": {
+          "type": "integer"
+        },
+        "totalPages": {
+          "type": "integer"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,612 @@
+{
+  "$schema": "http://json-schema.org/schema#",
+  "additionalProperties": false,
+  "properties": {
+    "data": {
+      "items": {
+        "properties": {
+          "attributes": {
+            "properties": {
+              "assignedTeams": {
+                "type": "array"
+              },
+              "assignedUsers": {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              "channels": {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              "createdAt": {
+                "type": "string"
+              },
+              "custom": {
+                "properties": {
+                  "deskTicketUrl": {
+                    "type": "string"
+                  },
+                  "newOrderStr": {
+                    "type": "string"
+                  },
+                  "newPrimaryMenuStr": {
+                    "type": "string"
+                  },
+                  "refundStatusStr": {
+                    "type": "string"
+                  },
+                  "returnStr": {
+                    "type": "string"
+                  },
+                  "returnTrackingStr": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "deskTicketUrl"
+                ],
+                "type": "object"
+              },
+              "direction": {
+                "type": "string"
+              },
+              "externalId": {
+                "type": "string"
+              },
+              "firstDone": {
+                "properties": {
+                  "assignedTeams": {
+                    "type": "array"
+                  },
+                  "assignedUsers": {
+                    "type": "array"
+                  },
+                  "createdByTeams": {
+                    "type": "array"
+                  }
+                },
+                "required": [
+                  "assignedTeams",
+                  "assignedUsers",
+                  "createdByTeams"
+                ],
+                "type": "object"
+              },
+              "firstMessageIn": {
+                "properties": {
+                  "channel": {
+                    "type": "string"
+                  },
+                  "createdAt": {
+                    "type": "string"
+                  },
+                  "directionType": {
+                    "type": "string"
+                  },
+                  "id": {
+                    "type": "string"
+                  },
+                  "sentAt": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "channel",
+                  "createdAt",
+                  "directionType",
+                  "id",
+                  "sentAt"
+                ],
+                "type": "object"
+              },
+              "firstMessageOut": {
+                "properties": {
+                  "channel": {
+                    "type": "string"
+                  },
+                  "createdAt": {
+                    "type": "string"
+                  },
+                  "createdBy": {
+                    "type": "string"
+                  },
+                  "createdByTeams": {
+                    "type": "array"
+                  },
+                  "directionType": {
+                    "type": "string"
+                  },
+                  "id": {
+                    "type": "string"
+                  },
+                  "sentAt": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "channel",
+                  "createdAt",
+                  "createdBy",
+                  "createdByTeams",
+                  "directionType",
+                  "id",
+                  "sentAt"
+                ],
+                "type": "object"
+              },
+              "firstResponse": {
+                "properties": {
+                  "assignedTeams": {
+                    "type": "array"
+                  },
+                  "assignedUsers": {
+                    "type": "array"
+                  },
+                  "createdByTeams": {
+                    "type": "array"
+                  }
+                },
+                "required": [
+                  "assignedTeams",
+                  "assignedUsers",
+                  "createdByTeams"
+                ],
+                "type": "object"
+              },
+              "importedAt": {
+                "type": "string"
+              },
+              "lastActivityAt": {
+                "type": "string"
+              },
+              "lastDone": {
+                "properties": {
+                  "assignedTeams": {
+                    "type": "array"
+                  },
+                  "assignedUsers": {
+                    "type": "array"
+                  },
+                  "createdByTeams": {
+                    "type": "array"
+                  }
+                },
+                "required": [
+                  "assignedTeams",
+                  "assignedUsers",
+                  "createdByTeams"
+                ],
+                "type": "object"
+              },
+              "lastMessageAt": {
+                "type": "string"
+              },
+              "lastMessageDirection": {
+                "type": "string"
+              },
+              "lastMessageIn": {
+                "properties": {
+                  "id": {
+                    "type": "string"
+                  },
+                  "sentAt": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "id",
+                  "sentAt"
+                ],
+                "type": "object"
+              },
+              "lastMessageOut": {
+                "properties": {
+                  "id": {
+                    "type": "string"
+                  },
+                  "sentAt": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "id",
+                  "sentAt"
+                ],
+                "type": "object"
+              },
+              "lastMessageUnrespondedTo": {
+                "properties": {
+                  "id": {
+                    "type": "string"
+                  },
+                  "sentAt": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "id",
+                  "sentAt"
+                ],
+                "type": "object"
+              },
+              "lastReceivedAt": {
+                "type": "string"
+              },
+              "lastResponse": {
+                "properties": {
+                  "assignedTeams": {
+                    "type": "array"
+                  },
+                  "assignedUsers": {
+                    "type": "array"
+                  },
+                  "createdByTeams": {
+                    "type": "array"
+                  }
+                },
+                "required": [
+                  "assignedTeams",
+                  "assignedUsers",
+                  "createdByTeams"
+                ],
+                "type": "object"
+              },
+              "messageCount": {
+                "type": "integer"
+              },
+              "modifiedAt": {
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
+              },
+              "noteCount": {
+                "type": "integer"
+              },
+              "outboundMessageCount": {
+                "type": "integer"
+              },
+              "preview": {
+                "type": "string"
+              },
+              "priority": {
+                "type": "integer"
+              },
+              "rev": {
+                "type": "integer"
+              },
+              "satisfaction": {
+                "type": "integer"
+              },
+              "status": {
+                "type": "string"
+              },
+              "suggestedTags": {
+                "type": "array"
+              },
+              "tags": {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              "totalDone": {
+                "properties": {
+                  "businessTime": {
+                    "type": "integer"
+                  },
+                  "time": {
+                    "type": "integer"
+                  }
+                },
+                "required": [
+                  "businessTime",
+                  "time"
+                ],
+                "type": "object"
+              },
+              "updatedAt": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "assignedTeams",
+              "assignedUsers",
+              "channels",
+              "createdAt",
+              "custom",
+              "direction",
+              "externalId",
+              "firstDone",
+              "firstResponse",
+              "importedAt",
+              "lastActivityAt",
+              "lastDone",
+              "lastMessageAt",
+              "lastMessageDirection",
+              "lastResponse",
+              "messageCount",
+              "modifiedAt",
+              "name",
+              "noteCount",
+              "outboundMessageCount",
+              "priority",
+              "rev",
+              "satisfaction",
+              "status",
+              "suggestedTags",
+              "tags",
+              "updatedAt"
+            ],
+            "type": "object"
+          },
+          "id": {
+            "type": "string"
+          },
+          "links": {
+            "properties": {
+              "self": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "self"
+            ],
+            "type": "object"
+          },
+          "relationships": {
+            "properties": {
+              "createdBy": {
+                "properties": {
+                  "data": {
+                    "properties": {
+                      "id": {
+                        "type": "string"
+                      },
+                      "type": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "id",
+                      "type"
+                    ],
+                    "type": "object"
+                  },
+                  "links": {
+                    "properties": {
+                      "self": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "self"
+                    ],
+                    "type": "object"
+                  }
+                },
+                "required": [
+                  "data",
+                  "links"
+                ],
+                "type": "object"
+              },
+              "customer": {
+                "properties": {
+                  "data": {
+                    "properties": {
+                      "id": {
+                        "type": "string"
+                      },
+                      "type": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "id",
+                      "type"
+                    ],
+                    "type": "object"
+                  },
+                  "links": {
+                    "properties": {
+                      "self": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "self"
+                    ],
+                    "type": "object"
+                  }
+                },
+                "required": [
+                  "data",
+                  "links"
+                ],
+                "type": "object"
+              },
+              "messages": {
+                "properties": {
+                  "links": {
+                    "properties": {
+                      "self": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "self"
+                    ],
+                    "type": "object"
+                  }
+                },
+                "required": [
+                  "links"
+                ],
+                "type": "object"
+              },
+              "modifiedBy": {
+                "properties": {
+                  "data": {
+                    "properties": {
+                      "id": {
+                        "type": "string"
+                      },
+                      "type": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "id",
+                      "type"
+                    ],
+                    "type": "object"
+                  },
+                  "links": {
+                    "properties": {
+                      "self": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "self"
+                    ],
+                    "type": "object"
+                  }
+                },
+                "required": [
+                  "data",
+                  "links"
+                ],
+                "type": "object"
+              },
+              "org": {
+                "properties": {
+                  "data": {
+                    "properties": {
+                      "id": {
+                        "type": "string"
+                      },
+                      "type": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "id",
+                      "type"
+                    ],
+                    "type": "object"
+                  },
+                  "links": {
+                    "properties": {
+                      "self": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "self"
+                    ],
+                    "type": "object"
+                  }
+                },
+                "required": [
+                  "data",
+                  "links"
+                ],
+                "type": "object"
+              }
+            },
+            "required": [
+              "createdBy",
+              "customer",
+              "messages",
+              "modifiedBy",
+              "org"
+            ],
+            "type": "object"
+          },
+          "type": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "attributes",
+          "id",
+          "links",
+          "relationships",
+          "type"
+        ],
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "links": {
+      "properties": {
+        "first": {
+          "type": "string"
+        },
+        "last": {
+          "type": "string"
+        },
+        "next": {
+          "type": "string"
+        },
+        "prev": {
+          "type": "null"
+        },
+        "self": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "first",
+        "last",
+        "next",
+        "prev",
+        "self"
+      ],
+      "type": "object"
+    },
+    "meta": {
+      "properties": {
+        "aggregations": {
+          "type": "object"
+        },
+        "page": {
+          "type": "integer"
+        },
+        "pageSize": {
+          "type": "integer"
+        },
+        "timed_out": {
+          "type": "boolean"
+        },
+        "total": {
+          "type": "integer"
+        },
+        "totalPages": {
+          "type": "integer"
+        }
+      },
+      "required": [
+        "aggregations",
+        "page",
+        "pageSize",
+        "timed_out",
+        "total",
+        "totalPages"
+      ],
+      "type": "object"
+    }
+  },
+  "required": [
+    "data",
+    "links",
+    "meta"
+  ],
+  "type": "object"
+}

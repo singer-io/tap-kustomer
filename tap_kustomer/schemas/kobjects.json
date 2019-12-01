@@ -1,0 +1,312 @@
+{
+  "$schema": "http://json-schema.org/schema#",
+  "additionalProperties": false,
+  "properties": {
+    "data": {
+      "items": {
+        "properties": {
+          "attributes": {
+            "properties": {
+              "createdAt": {
+                "type": "string"
+              },
+              "custom": {
+                "properties": {
+                  "billingStatusStr": {
+                    "type": "string"
+                  },
+                  "commentTxt": {
+                    "type": "string"
+                  },
+                  "delightedLinkStr": {
+                    "type": "string"
+                  },
+                  "orderCreatedAt": {
+                    "type": "string"
+                  },
+                  "orderNumberStr": {
+                    "type": "string"
+                  },
+                  "orderUpdatedAt": {
+                    "type": "string"
+                  },
+                  "purchaseAmountNum": {
+                    "type": "integer"
+                  },
+                  "scoreNum": {
+                    "type": "integer"
+                  },
+                  "shippingAddressStr": {
+                    "type": "string"
+                  },
+                  "shippingCountryStr": {
+                    "type": "string"
+                  },
+                  "shippingStateStr": {
+                    "type": "string"
+                  },
+                  "shippingZipStr": {
+                    "type": "string"
+                  },
+                  "skusTxt": {
+                    "type": "string"
+                  },
+                  "specialInstructionsStr": {
+                    "type": "string"
+                  },
+                  "tagsStr": {
+                    "type": "string"
+                  },
+                  "totalPriceNum": {
+                    "type": "number"
+                  },
+                  "totalPriceStr": {
+                    "type": "string"
+                  },
+                  "updatedAt": {
+                    "type": "string"
+                  }
+                },
+                "type": "object"
+              },
+              "description": {
+                "type": "string"
+              },
+              "externalId": {
+                "type": "string"
+              },
+              "icon": {
+                "type": "string"
+              },
+              "images": {
+                "type": "array"
+              },
+              "tags": {
+                "type": "array"
+              },
+              "title": {
+                "type": "string"
+              },
+              "updatedAt": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "createdAt",
+              "custom",
+              "description",
+              "externalId",
+              "icon",
+              "images",
+              "tags",
+              "title",
+              "updatedAt"
+            ],
+            "type": "object"
+          },
+          "id": {
+            "type": "string"
+          },
+          "links": {
+            "properties": {
+              "self": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "self"
+            ],
+            "type": "object"
+          },
+          "relationships": {
+            "properties": {
+              "customer": {
+                "properties": {
+                  "data": {
+                    "properties": {
+                      "id": {
+                        "type": "string"
+                      },
+                      "type": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "id",
+                      "type"
+                    ],
+                    "type": "object"
+                  },
+                  "links": {
+                    "properties": {
+                      "self": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "self"
+                    ],
+                    "type": "object"
+                  }
+                },
+                "required": [
+                  "data",
+                  "links"
+                ],
+                "type": "object"
+              },
+              "klass": {
+                "properties": {
+                  "data": {
+                    "properties": {
+                      "id": {
+                        "type": "string"
+                      },
+                      "type": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "id",
+                      "type"
+                    ],
+                    "type": "object"
+                  },
+                  "link": {
+                    "properties": {
+                      "self": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "self"
+                    ],
+                    "type": "object"
+                  }
+                },
+                "required": [
+                  "data",
+                  "link"
+                ],
+                "type": "object"
+              },
+              "org": {
+                "properties": {
+                  "data": {
+                    "properties": {
+                      "type": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "type"
+                    ],
+                    "type": "object"
+                  },
+                  "links": {
+                    "properties": {
+                      "self": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "self"
+                    ],
+                    "type": "object"
+                  }
+                },
+                "required": [
+                  "data",
+                  "links"
+                ],
+                "type": "object"
+              }
+            },
+            "required": [
+              "customer",
+              "klass",
+              "org"
+            ],
+            "type": "object"
+          },
+          "type": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "attributes",
+          "id",
+          "links",
+          "relationships",
+          "type"
+        ],
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "links": {
+      "properties": {
+        "first": {
+          "type": "string"
+        },
+        "last": {
+          "type": "string"
+        },
+        "next": {
+          "type": "string"
+        },
+        "prev": {
+          "type": "null"
+        },
+        "self": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "first",
+        "last",
+        "next",
+        "prev",
+        "self"
+      ],
+      "type": "object"
+    },
+    "meta": {
+      "properties": {
+        "aggregations": {
+          "type": "object"
+        },
+        "page": {
+          "type": "integer"
+        },
+        "pageSize": {
+          "type": "integer"
+        },
+        "timed_out": {
+          "type": "boolean"
+        },
+        "total": {
+          "type": "integer"
+        },
+        "totalPages": {
+          "type": "integer"
+        }
+      },
+      "required": [
+        "aggregations",
+        "page",
+        "pageSize",
+        "timed_out",
+        "total",
+        "totalPages"
+      ],
+      "type": "object"
+    }
+  },
+  "required": [
+    "data",
+    "links",
+    "meta"
+  ],
+  "type": "object"
+}
