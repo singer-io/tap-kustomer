@@ -1,154 +1,133 @@
 {
   "additionalProperties": false,
+  "type": "object",
   "properties": {
-    "app": {
-      "type": ["null", "string"]
+    "created_at": {
+      "type": "string"
     },
-    "assignedTeams": {
-      "type": "array"
-    },
-    "assignedUsers": {
-      "items": {
-        "type": ["null", "string"]
-      },
-      "type": "array"
-    },
-    "auto": {
-      "type": ["null", "boolean"]
-    },
-    "channel": {
-      "type": ["null", "string"]
-    },
-    "createdAt": {
-      "type": ["null", "string"]
-    },
-    "createdByTeams": {
-      "type": "array"
-    },
-    "direction": {
-      "type": ["null", "string"]
-    },
-    "directionType": {
-      "type": ["null", "string"]
-    },
-    "externalId": {
-      "type": ["null", "string"]
-    },
-    "importedAt": {
-      "type": ["null", "string"]
-    },
-    "meta": {
+    "custom": {
       "properties": {
-        "from": {
-          "type": ["null", "string"]
+        "billing_status_str": {
+          "type": "string"
         },
-        "subject": {
-          "type": ["null", "string"]
+        "comment_txt": {
+          "type": "string"
         },
-        "to": {
-          "items": {
-            "anyOf": [
-              {
-                "type": "null"
-              },
-              {
-                "properties": {
-                  "email": {
-                    "type": ["null", "string"]
-                  }
-                },
-
-                "type": ["null", "object"]
-              }
-            ]
-          },
-          "type": "array"
+        "delighted_link_str": {
+          "type": "string"
+        },
+        "order_created_at": {
+          "type": "string"
+        },
+        "order_number_str": {
+          "type": "string"
+        },
+        "order_updated_at": {
+          "type": "string"
+        },
+        "purchase_amount_num": {
+          "type": "integer"
+        },
+        "score_num": {
+          "type": "integer"
+        },
+        "shipping_address_str": {
+          "type": "string"
+        },
+        "shipping_country_str": {
+          "type": "string"
+        },
+        "shipping_state_str": {
+          "type": "string"
+        },
+        "shipping_zip_str": {
+          "type": "string"
+        },
+        "skus_txt": {
+          "type": "string"
+        },
+        "special_instructions_str": {
+          "type": "string"
+        },
+        "tags_str": {
+          "type": "string"
+        },
+        "total_price_num": {
+          "type": "number"
+        },
+        "total_price_str": {
+          "type": "string"
+        },
+        "updated_at": {
+          "type": "string"
         }
       },
-      "type": ["null", "object"]
+      "type": "object"
     },
-    "modifiedAt": {
-      "type": ["null", "string"]
+    "customer": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string"
+        }
+      }
     },
-    "preview": {
-      "type": ["null", "string"]
+    "description": {
+      "type": "string"
     },
-    "redacted": {
-      "type": ["null", "boolean"]
+    "external_id": {
+      "type": "string"
     },
-    "sentAt": {
-      "type": ["null", "string"]
-    },
-    "size": {
-      "type": ["null", "integer"]
-    },
-    "status": {
-      "type": ["null", "string"]
-    },
-    "updatedAt": {
-      "type": ["null", "string"]
+    "icon": {
+      "type": "string"
     },
     "id": {
-      "type": ["null", "string"]
+      "type": "string"
     },
-    "conversation": {
-      "type": ["null", "object"],
+    "images": {
+      "type": "array"
+    },
+    "klass": {
+      "type": "object",
       "properties": {
         "id": {
-          "type": ["null", "string"]
+          "type": "string"
         },
         "type": {
-          "type": ["null", "string"]
+          "type": "string"
         }
       }
     },
-    "createdBy": {
-      "type": ["null", "object"],
-      "additionalProperties": false,
+    "links": {
+      "type": "object",
       "properties": {
-        "id": {
-          "type": ["null", "string"]
-        },
-        "type": {
-          "type": ["null", "string"]
-        }
-      },
-      "customer": {
-        "type": ["null", "object"],
-        "properties": {
-          "id": {
-            "type": ["null", "string"]
-          },
-          "type": {
-            "type": ["null", "string"]
-          }
-        }
-      }
-    },
-    "modifiedBy": {
-      "type": ["null", "object"],
-      "properties": {
-        "id": {
-          "type": ["null", "string"]
-        },
-        "type": {
-          "type": ["null", "string"]
+        "self": {
+          "type": "string"
         }
       }
     },
     "org": {
-      "type": ["null", "object"],
+      "type": "object",
       "properties": {
-        "id": {
-          "type": ["null", "string"]
-        },
         "type": {
-          "type": ["null", "string"]
+          "type": "string"
         }
       }
     },
+    "tags": {
+      "type": "array"
+    },
+    "title": {
+      "type": "string"
+    },
     "type": {
-      "type": ["null", "string"]
+      "type": "string"
+    },
+    "updated_at": {
+      "type": "string"
     }
   }
 }

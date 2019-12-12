@@ -1,6 +1,8 @@
 import backoff
+from datetime import datetime, timezone
+from time import sleep
 import requests
-from singer import metrics
+from singer import metrics, utils
 import singer
 
 API_VERSION = 'v1'
@@ -108,6 +110,7 @@ class KustomerClient(object):
                           Server5xxError,
                           max_tries=5,
                           factor=2)
+    @utils.ratelimit(250, 60)
     def check_token(self):
         if self.__token is None:
             raise Exception('Error: Missing access_token.')
@@ -134,6 +137,7 @@ class KustomerClient(object):
                           (Server5xxError, ConnectionError, Server429Error),
                           max_tries=5,
                           factor=2)
+    @utils.ratelimit(250, 60)
     def request(self, method, path=None, url=None, **kwargs):
         if not self.__verified:
             self.__verified = self.check_token()
@@ -166,6 +170,21 @@ class KustomerClient(object):
 
         if response.status_code >= 500:
             raise Server5xxError()
+
+        """
+        Kustomer API rate limiting. If rate limit exceeded wait until limit reset.
+        See, https://dev.kustomer.com/v1/welcome/rate-limiting
+        """
+        if int(response.headers['x-ratelimit-remaining']) <= 0:
+            if 'x-ratelimit-reset' in response.headers:
+                retry_in = datetime.fromtimestamp(response.headers['x-ratelimit-reset'])
+                LOGGER.info("Rate limit exceeded, retrying in {}: ".format(retry_in))
+                now = datetime.datetime.now().timestamp()
+                while retry_in >= now:
+                    sleep(1)
+                raise Server429Error()
+
+
 
         if response.status_code != 200:
             raise_for_error(response)

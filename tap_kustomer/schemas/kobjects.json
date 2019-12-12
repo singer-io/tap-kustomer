@@ -1,122 +1,127 @@
 {
-  "type": ["null", "object"],
   "additionalProperties": false,
+  "type": "object",
   "properties": {
-    "createdAt": {
-      "type": ["null", ["null", "string"]]
+    "created_at": {
+      "type": "string"
     },
     "custom": {
       "properties": {
-        "billingStatusStr": {
-          "type": ["null", "string"]
+        "billing_status_str": {
+          "type": "string"
         },
-        "commentTxt": {
-          "type": ["null", "string"]
+        "comment_txt": {
+          "type": "string"
         },
-        "delightedLinkStr": {
-          "type": ["null", "string"]
+        "delighted_link_str": {
+          "type": "string"
         },
-        "orderCreatedAt": {
-          "type": ["null", "string"]
+        "order_created_at": {
+          "type": "string"
         },
-        "orderNumberStr": {
-          "type": ["null", "string"]
+        "order_number_str": {
+          "type": "string"
         },
-        "orderUpdatedAt": {
-          "type": ["null", "string"]
+        "order_updated_at": {
+          "type": "string"
         },
-        "purchaseAmountNum": {
-          "type": ["null", "integer"]
+        "purchase_amount_num": {
+          "type": "integer"
         },
-        "scoreNum": {
-          "type": ["null", "integer"]
+        "score_num": {
+          "type": "integer"
         },
-        "shippingAddressStr": {
-          "type": ["null", "string"]
+        "shipping_address_str": {
+          "type": "string"
         },
-        "shippingCountryStr": {
-          "type": ["null", "string"]
+        "shipping_country_str": {
+          "type": "string"
         },
-        "shippingStateStr": {
-          "type": ["null", "string"]
+        "shipping_state_str": {
+          "type": "string"
         },
-        "shippingZipStr": {
-          "type": ["null", "string"]
+        "shipping_zip_str": {
+          "type": "string"
         },
-        "skusTxt": {
-          "type": ["null", "string"]
+        "skus_txt": {
+          "type": "string"
         },
-        "specialInstructionsStr": {
-          "type": ["null", "string"]
+        "special_instructions_str": {
+          "type": "string"
         },
-        "tagsStr": {
-          "type": ["null", "string"]
+        "tags_str": {
+          "type": "string"
         },
-        "totalPriceNum": {
-          "type": ["null", "number"]
+        "total_price_num": {
+          "type": "number"
         },
-        "totalPriceStr": {
-          "type": ["null", "string"]
+        "total_price_str": {
+          "type": "string"
         },
-        "updatedAt": {
-          "type": ["null", "string"]
+        "updated_at": {
+          "type": "string"
         }
       },
-      "type": ["null", "object"]
-    },
-    "description": {
-      "type": ["null", "string"]
-    },
-    "externalId": {
-      "type": ["null", "string"]
-    },
-    "icon": {
-      "type": ["null", "string"]
-    },
-    "title": {
-      "type": ["null", "string"]
-    },
-    "updatedAt": {
-      "type": ["null", "string"]
-    }
-  },
-  "id": {
-    "type": ["null", "string"]
-  },
-  "links": {
-    "type": ["null", "object"],
-    "properties": {
-      "self": {
-        "type": ["null", "string"]
-      }
+      "type": "object"
     },
     "customer": {
-      "type": ["null", "object"],
+      "type": "object",
       "properties": {
         "id": {
-          "type": ["null", "string"]
+          "type": "string"
         },
         "type": {
-          "type": ["null", "string"]
+          "type": "string"
         }
       }
     },
+    "description": {
+      "type": "string"
+    },
+    "external_id": {
+      "type": "string"
+    },
+    "icon": {
+      "type": "string"
+    },
+    "id": {
+      "type": "string"
+    },
     "klass": {
-      "type": ["null", "object"],
+      "type": "object",
       "properties": {
         "id": {
-          "type": ["null", "string"]
+          "type": "string"
         },
         "type": {
-          "type": ["null", "string"]
+          "type": "string"
+        }
+      }
+    },
+    "links": {
+      "type": "object",
+      "properties": {
+        "self": {
+          "type": "string"
         }
       }
     },
     "org": {
-      "type": ["null", "object"],
+      "type": "object",
       "properties": {
-        "type": ["null", "string"]
+        "type": {
+          "type": "string"
+        }
       }
+    },
+    "title": {
+      "type": "string"
+    },
+    "type": {
+      "type": "string"
+    },
+    "updated_at": {
+      "type": "string"
     }
   }
 }

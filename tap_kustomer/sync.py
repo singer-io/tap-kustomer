@@ -139,20 +139,20 @@ def sync_endpoint(client,  #pylint: disable=too-many-branches
 
     # windowing: loop through date days_interval date windows from last_datetime to now_datetime
     now_datetime = utils.now()
-    if bookmark_query_field_from and bookmark_query_field_to:
-        # days_interval from config date_window_size, default = 60; passed to function from sync
-        if not days_interval:
-            days_interval = 60
-        start_window = strptime_to_utc(last_datetime)
-        end_window = start_window + timedelta(days=days_interval)
-        if end_window > now_datetime:
-            end_window = now_datetime
-    else:
-        start_window = strptime_to_utc(last_datetime)
-        end_window = now_datetime
-        diff_sec = (end_window - start_window).seconds
-        # round-up difference to days
-        days_interval = math.ceil(diff_sec / (3600 * 24))
+    # if bookmark_query_field_from and bookmark_query_field_to:
+    #     # days_interval from config date_window_size, default = 60; passed to function from sync
+    #     if not days_interval:
+    #         days_interval = 60
+    #     start_window = strptime_to_utc(last_datetime)
+    #     end_window = start_window + timedelta(days=days_interval)
+    #     if end_window > now_datetime:
+    #         end_window = now_datetime
+    # else:
+    start_window = strptime_to_utc(last_datetime)
+    end_window = now_datetime
+    diff_sec = (end_window - start_window).seconds
+    # round-up difference to days
+    days_interval = math.ceil(diff_sec / (3600 * 24))
     endpoint_total = 0
     total_records = 0
 
@@ -162,9 +162,9 @@ def sync_endpoint(client,  #pylint: disable=too-many-branches
     # Increase the "offset" by the "limit" for each batch.
     # Continue until the "offset" exceeds the total_records.
     offset = 0  # Starting offset value for each batch API call
-    limit = 25000  # Batch size; Number of records per API call
+    limit = 100  # Batch size; Number of records per API call
     total_records = limit  # Initialize total; set to actual total on first API call
-    while start_window < now_datetime:
+    while start_window < now_datetime and total_records >= limit:
         LOGGER.info('START Sync for Stream: {}{}'.format(
             stream_name,
             ', Date window from: {} to {}'.format(start_window, end_window)
@@ -225,6 +225,7 @@ def sync_endpoint(client,  #pylint: disable=too-many-branches
             total_records = response.get('meta').get('total')
             total_pages = response.get('meta').get('totalPages')
             last_updated = response.get('data')[-1]['attributes']['updatedAt']
+
             next_url = response.get('next', None)
 
             # Transform data with transform_json from transform.py

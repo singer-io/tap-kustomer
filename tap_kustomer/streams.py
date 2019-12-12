@@ -31,7 +31,7 @@ STREAMS = {
             "queryContext": "customer"
         },
         "replication_method": "INCREMENTAL",
-        "replication_keys": "updated_at",
+        "replication_keys": ["updated_at"],
         "bookmark_query_field": "customer_updated_at"
     },
     "kobjects": {
@@ -40,7 +40,7 @@ STREAMS = {
         "replication_method": "INCREMENTAL",
         "key_properties": "id",
         "path": "customers/search",
-        "replication_keys": "updated_at",
+        "replication_keys": ["updated_at"],
         "api_method": "POST",
         "data_key": "data",
         "bookmark_query_field": "kobject_updated_at",
@@ -59,7 +59,7 @@ STREAMS = {
         "replication_method": "INCREMENTAL",
         "key_properties": "id",
         "path": "customers/search",
-        "replication_keys": "updated_at",
+        "replication_keys": ["updated_at"],
         "api_method": "POST",
         "data_key": "data",
         "bookmark_query_field": "conversation_updated_at",
@@ -78,7 +78,7 @@ STREAMS = {
         "replication_method": "INCREMENTAL",
         "key_properties": "id",
         "path": "customers/search",
-        "replication_keys": "updated_at",
+        "replication_keys": ["updated_at"],
         "api_method": "POST",
         "data_key": "data",
         "bookmark_query_field": "message_updated_at",

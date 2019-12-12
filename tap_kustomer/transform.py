@@ -101,7 +101,10 @@ def denest_node_all_elements(index, record, denest_key, data_key, new_json):
         if key in new_json[data_key][index].keys():
             raise AssertionException(
                 'Denested key {} exists in parent {}'.format(key, new_json[data_key][index]))
-        new_json[data_key][index][key] = val
+        if val == None:
+            new_json[data_key][index][key] = ''
+        else:
+            new_json[data_key][index][key] = val
     new_json[data_key][index].pop(denest_key)
 
 
