@@ -1,587 +1,311 @@
 {
-  "$schema": "http://json-schema.org/schema#",
   "additionalProperties": false,
-  "type": "object",
+  "type": ["null", "object"],
   "properties": {
-    "data": {
+    "id": {
+      "type": ["null", "string"]
+    },
+    "links": {
+      "properties": {
+        "self": {
+          "type": ["null", "string"]
+        }
+      },
+
+      "type": ["null", "object"]
+    },
+    "type": {
+      "type": ["null", "string"]
+    },
+    "conversationCounts": {
+      "properties": {
+        "all": {
+          "type": ["null", "integer"]
+        },
+        "done": {
+          "type": ["null", "integer"]
+        },
+        "open": {
+          "type": ["null", "integer"]
+        },
+        "snoozed": {
+          "type": ["null", "integer"]
+        }
+      },
+      "type": ["null", "object"]
+    },
+    "createdAt": {
+      "type": ["null", "string"]
+    },
+    "custom": {
+      "properties": {
+        "acceptsMarketingBool": {
+          "type": ["null", "boolean"]
+        },
+        "lastOrderIdNum": {
+          "type": ["null", "integer"]
+        },
+        "lastOrderNameStr": {
+          "type": ["null", "string"]
+        },
+        "ordersCountNum": {
+          "type": ["null", "integer"]
+        },
+        "totalSpentNum": {
+          "type": ["null", "number"]
+        }
+      },
+
+      "type": ["null", "object"]
+    },
+    "deleted": {
+      "type": ["null", "boolean"]
+    },
+    "displayColor": {
+      "type": ["null", "string"]
+    },
+    "displayIcon": {
+      "type": ["null", "string"]
+    },
+    "displayName": {
+      "type": ["null", "string"]
+    },
+    "emails": {
       "type": "array",
       "items": {
         "type": "object",
         "properties": {
-          "attributes": {
-            "properties": {
-              "activeUsers": {
-                "type": "array"
-              },
-              "conversationCounts": {
-                "properties": {
-                  "all": {
-                    "type": "integer"
-                  },
-                  "done": {
-                    "type": "integer"
-                  },
-                  "open": {
-                    "type": "integer"
-                  },
-                  "snoozed": {
-                    "type": "integer"
-                  }
-                },
-                "required": [
-                  "all",
-                  "done",
-                  "open",
-                  "snoozed"
-                ],
-                "type": "object"
-              },
-              "createdAt": {
-                "type": "string"
-              },
-              "custom": {
-                "properties": {
-                  "acceptsMarketingBool": {
-                    "type": "boolean"
-                  },
-                  "lastOrderIdNum": {
-                    "type": "integer"
-                  },
-                  "lastOrderNameStr": {
-                    "type": "string"
-                  },
-                  "ordersCountNum": {
-                    "type": "integer"
-                  },
-                  "totalSpentNum": {
-                    "type": "number"
-                  }
-                },
-                "required": [
-                  "acceptsMarketingBool",
-                  "lastOrderIdNum",
-                  "lastOrderNameStr",
-                  "ordersCountNum",
-                  "totalSpentNum"
-                ],
-                "type": "object"
-              },
-              "deleted": {
-                "type": "boolean"
-              },
-              "displayColor": {
-                "type": "string"
-              },
-              "displayIcon": {
-                "type": "string"
-              },
-              "displayName": {
-                "type": "string"
-              },
-              "emails": {
-                "items": {
-                  "properties": {
-                    "email": {
-                      "type": "string"
-                    },
-                    "type": {
-                      "type": "string"
-                    },
-                    "verified": {
-                      "type": "boolean"
-                    }
-                  },
-                  "required": [
-                    "email",
-                    "type",
-                    "verified"
-                  ],
-                  "type": "object"
-                },
-                "type": "array"
-              },
-              "externalId": {
-                "type": "string"
-              },
-              "externalIds": {
-                "items": {
-                  "properties": {
-                    "externalId": {
-                      "type": "string"
-                    },
-                    "verified": {
-                      "type": "boolean"
-                    }
-                  },
-                  "required": [
-                    "externalId",
-                    "verified"
-                  ],
-                  "type": "object"
-                },
-                "type": "array"
-              },
-              "facebookIds": {
-                "type": "array"
-              },
-              "firstName": {
-                "type": "string"
-              },
-              "importedAt": {
-                "type": "string"
-              },
-              "instagramIds": {
-                "type": "array"
-              },
-              "lastActivityAt": {
-                "type": "string"
-              },
-              "lastConversation": {
-                "properties": {
-                  "channels": {
-                    "items": {
-                      "type": "string"
-                    },
-                    "type": "array"
-                  },
-                  "id": {
-                    "type": "string"
-                  },
-                  "sentiment": {
-                    "type": "object"
-                  },
-                  "tags": {
-                    "type": "array"
-                  }
-                },
-                "required": [
-                  "channels",
-                  "tags"
-                ],
-                "type": "object"
-              },
-              "lastCustomerActivityAt": {
-                "type": "string"
-              },
-              "lastMessageAt": {
-                "type": "string"
-              },
-              "lastMessageIn": {
-                "properties": {
-                  "channel": {
-                    "type": "string"
-                  },
-                  "sentAt": {
-                    "type": "string"
-                  },
-                  "sentiment": {
-                    "type": "null"
-                  }
-                },
-                "required": [
-                  "channel",
-                  "sentAt",
-                  "sentiment"
-                ],
-                "type": "object"
-              },
-              "lastMessageUnrespondedTo": {
-                "properties": {
-                  "channel": {
-                    "type": "string"
-                  },
-                  "sentAt": {
-                    "type": "string"
-                  }
-                },
-                "required": [
-                  "channel",
-                  "sentAt"
-                ],
-                "type": "object"
-              },
-              "lastName": {
-                "type": "string"
-              },
-              "locations": {
-                "type": "array"
-              },
-              "modifiedAt": {
-                "type": "string"
-              },
-              "name": {
-                "type": "string"
-              },
-              "phones": {
-                "items": {
-                  "properties": {
-                    "phone": {
-                      "type": "string"
-                    },
-                    "type": {
-                      "type": "string"
-                    },
-                    "verified": {
-                      "type": "boolean"
-                    }
-                  },
-                  "required": [
-                    "phone",
-                    "type",
-                    "verified"
-                  ],
-                  "type": "object"
-                },
-                "type": "array"
-              },
-              "preview": {
-                "properties": {
-                  "channel": {
-                    "type": "string"
-                  },
-                  "previewAt": {
-                    "type": "string"
-                  },
-                  "subject": {
-                    "type": "string"
-                  },
-                  "text": {
-                    "type": "string"
-                  },
-                  "type": {
-                    "type": "string"
-                  }
-                },
-                "type": "object"
-              },
-              "progressiveStatus": {
-                "type": [
-                  "null",
-                  "string"
-                ]
-              },
-              "recentLocation": {
-                "properties": {
-                  "updatedAt": {
-                    "type": "string"
-                  }
-                },
-                "required": [
-                  "updatedAt"
-                ],
-                "type": "object"
-              },
-              "rev": {
-                "type": "integer"
-              },
-              "sharedEmails": {
-                "type": "array"
-              },
-              "sharedExternalIds": {
-                "type": "array"
-              },
-              "sharedPhones": {
-                "type": "array"
-              },
-              "sharedSocials": {
-                "type": "array"
-              },
-              "smoochIds": {
-                "type": "array"
-              },
-              "socials": {
-                "type": "array"
-              },
-              "tags": {
-                "type": "array"
-              },
-              "updatedAt": {
-                "type": "string"
-              },
-              "urls": {
-                "type": "array"
-              },
-              "verified": {
-                "type": "boolean"
-              },
-              "watchers": {
-                "type": "array"
-              },
-              "whatsapps": {
-                "type": "array"
-              }
-            },
-            "required": [
-              "activeUsers",
-              "conversationCounts",
-              "createdAt",
-              "deleted",
-              "displayColor",
-              "displayIcon",
-              "displayName",
-              "emails",
-              "externalIds",
-              "facebookIds",
-              "firstName",
-              "instagramIds",
-              "lastActivityAt",
-              "lastConversation",
-              "lastCustomerActivityAt",
-              "lastName",
-              "locations",
-              "name",
-              "phones",
-              "preview",
-              "progressiveStatus",
-              "recentLocation",
-              "rev",
-              "sharedEmails",
-              "sharedExternalIds",
-              "sharedPhones",
-              "sharedSocials",
-              "smoochIds",
-              "socials",
-              "tags",
-              "updatedAt",
-              "urls",
-              "verified",
-              "watchers",
-              "whatsapps"
-            ],
-            "type": "object"
+          "email": {
+            "type": ["null", "string"]
           },
+          "type": {
+            "type": ["null", "string"]
+          },
+          "verified": {
+            "type": ["null", "boolean"]
+          }
+        }
+      }
+    },
+    "externalId": {
+      "type": ["null", "string"]
+    },
+    "externalIds": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "externalId": {
+            "type": ["null", "string"]
+          },
+          "verified": {
+            "type": ["null", "boolean"]
+          }
+        }
+      }
+    },
+    "firstName": {
+      "type": ["null", "string"]
+    },
+    "importedAt": {
+      "type": ["null", "string"]
+    },
+    "lastActivityAt": {
+      "type": ["null", "string"]
+    },
+    "lastConversation": {
+      "type": "object",
+      "properties": {
+        "channels": {
+          "type": "array",
+          "items": {
+            "type": ["null", "string"]
+          }
+        },
+        "id": {
+          "type": ["null", "string"]
+        },
+        "sentiment": {
+          "type": ["null", "object"]
+        }
+      }
+    },
+    "lastCustomerActivityAt": {
+      "type": ["null", "string"]
+    },
+    "lastMessageAt": {
+      "type": ["null", "string"]
+    },
+    "lastMessageIn": {
+      "properties": {
+        "channel": {
+          "type": ["null", "string"]
+        },
+        "sentAt": {
+          "type": ["null", "string"]
+        },
+        "sentiment": {
+          "type": "null"
+        }
+      },
+
+      "type": ["null", "object"]
+    },
+    "lastMessageUnrespondedTo": {
+      "properties": {
+        "channel": {
+          "type": ["null", "string"]
+        },
+        "sentAt": {
+          "type": ["null", "string"]
+        }
+      },
+
+      "type": ["null", "object"]
+    },
+    "lastName": {
+      "type": ["null", "string"]
+    },
+    "modifiedAt": {
+      "type": ["null", "string"]
+    },
+    "name": {
+      "type": ["null", "string"]
+    },
+    "phones": {
+      "items": {
+        "properties": {
+          "phone": {
+            "type": ["null", "string"]
+          },
+          "type": {
+            "type": ["null", "string"]
+          },
+          "verified": {
+            "type": ["null", "boolean"]
+          }
+        },
+
+        "type": ["null", "object"]
+      },
+      "type": "array"
+    },
+    "preview": {
+      "properties": {
+        "channel": {
+          "type": ["null", "string"]
+        },
+        "previewAt": {
+          "type": ["null", "string"]
+        },
+        "subject": {
+          "type": ["null", "string"]
+        },
+        "text": {
+          "type": ["null", "string"]
+        },
+        "type": {
+          "type": ["null", "string"]
+        }
+      },
+      "type": ["null", "object"]
+    },
+    "progressiveStatus": {
+      "type": ["null", "string"]
+    },
+    "recentLocation": {
+      "properties": {
+        "updatedAt": {
+          "type": ["null", "string"]
+        }
+      },
+
+      "type": ["null", "object"]
+    },
+    "rev": {
+      "type": ["null", "integer"]
+    },
+    "updatedAt": {
+      "type": ["null", "string"]
+    },
+    "urls": {
+      "type": "array",
+      "items": {
+        "type": ["null", "string"]
+      }
+    },
+    "verified": {
+      "type": ["null", "boolean"]
+    },
+    "createdBy": {
+      "type": ["null", "object"],
+      "properties": {
+        "id": {
+          "type": ["null", "string"]
+        },
+        "type": {
+          "type": ["null", "string"]
+        }
+      }
+    },
+    "messages": {
+      "type": ["null", "object"],
+      "properties": {
+        "id": {
+          "type": ["null", "string"]
+        },
+        "type": {
+          "type": ["null", "string"]
+        }
+      }
+    },
+    "modifiedBy": {
+      "type": ["null", "object"],
+      "properties": {
+        "properties": {
           "id": {
-            "type": "string"
+            "type": ["null", "string"]
           },
+          "type": {
+            "type": ["null", "string"]
+          }
+        }
+      }
+    },
+    "org": {
+      "type": ["null", "object"],
+      "properties": {
+        "properties": {
+          "id": {
+            "type": ["null", "string"]
+          },
+          "type": {
+            "type": ["null", "string"]
+          }
+        }
+      },
+      "shopify-orders": {
+        "properties": {
           "links": {
             "properties": {
               "self": {
-                "type": "string"
+                "type": ["null", "string"]
               }
             },
-            "required": [
-              "self"
-            ],
-            "type": "object"
+
+            "type": ["null", "object"]
           },
-          "relationships": {
+          "meta": {
             "properties": {
-              "createdBy": {
-                "properties": {
-                  "data": {
-                    "properties": {
-                      "id": {
-                        "type": "string"
-                      },
-                      "type": {
-                        "type": "string"
-                      }
-                    },
-                    "required": [
-                      "id",
-                      "type"
-                    ],
-                    "type": "object"
-                  },
-                  "links": {
-                    "properties": {
-                      "self": {
-                        "type": "string"
-                      }
-                    },
-                    "required": [
-                      "self"
-                    ],
-                    "type": "object"
-                  }
-                },
-                "required": [
-                  "data",
-                  "links"
-                ],
-                "type": "object"
-              },
-              "messages": {
-                "properties": {
-                  "links": {
-                    "properties": {
-                      "self": {
-                        "type": "string"
-                      }
-                    },
-                    "required": [
-                      "self"
-                    ],
-                    "type": "object"
-                  }
-                },
-                "required": [
-                  "links"
-                ],
-                "type": "object"
-              },
-              "modifiedBy": {
-                "properties": {
-                  "data": {
-                    "properties": {
-                      "id": {
-                        "type": "string"
-                      },
-                      "type": {
-                        "type": "string"
-                      }
-                    },
-                    "required": [
-                      "id",
-                      "type"
-                    ],
-                    "type": "object"
-                  },
-                  "links": {
-                    "properties": {
-                      "self": {
-                        "type": "string"
-                      }
-                    },
-                    "required": [
-                      "self"
-                    ],
-                    "type": "object"
-                  }
-                },
-                "required": [
-                  "data",
-                  "links"
-                ],
-                "type": "object"
-              },
-              "org": {
-                "properties": {
-                  "data": {
-                    "properties": {
-                      "id": {
-                        "type": "string"
-                      },
-                      "type": {
-                        "type": "string"
-                      }
-                    },
-                    "required": [
-                      "id",
-                      "type"
-                    ],
-                    "type": "object"
-                  },
-                  "links": {
-                    "properties": {
-                      "self": {
-                        "type": "string"
-                      }
-                    },
-                    "required": [
-                      "self"
-                    ],
-                    "type": "object"
-                  }
-                },
-                "required": [
-                  "data",
-                  "links"
-                ],
-                "type": "object"
-              },
-              "shopify-orders": {
-                "properties": {
-                  "links": {
-                    "properties": {
-                      "self": {
-                        "type": "string"
-                      }
-                    },
-                    "required": [
-                      "self"
-                    ],
-                    "type": "object"
-                  },
-                  "meta": {
-                    "properties": {
-                      "kobject": {
-                        "type": "boolean"
-                      }
-                    },
-                    "required": [
-                      "kobject"
-                    ],
-                    "type": "object"
-                  }
-                },
-                "required": [
-                  "links",
-                  "meta"
-                ],
-                "type": "object"
+              "kobject": {
+                "type": ["null", "boolean"]
               }
             },
-            "required": [
-              "messages",
-              "org"
-            ],
-            "type": "object"
-          },
-          "type": {
-            "type": "string"
+
+            "type": ["null", "object"]
           }
         },
-        "required": [
-          "attributes",
-          "id",
-          "links",
-          "relationships",
-          "type"
-        ]
-      }
-    },
-    "links": {
-      "type": "object",
-      "properties": {
-        "first": {
-          "type": "string"
-        },
-        "last": {
-          "type": "string"
-        },
-        "next": {
-          "type": "string"
-        },
-        "prev": {
-          "type": "null"
-        },
-        "self": {
-          "type": "string"
-        }
-      }
-    },
-    "meta": {
-      "type": "object",
-      "properties": {
-        "aggregations": {
-          "type": "object"
-        },
-        "page": {
-          "type": "integer"
-        },
-        "pageSize": {
-          "type": "integer"
-        },
-        "timed_out": {
-          "type": "boolean"
-        },
-        "total": {
-          "type": "integer"
-        },
-        "totalPages": {
-          "type": "integer"
-        }
+        "type": ["null", "object"]
       }
     }
   }

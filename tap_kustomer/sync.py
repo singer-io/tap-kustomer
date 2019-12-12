@@ -1,4 +1,5 @@
 from datetime import timedelta
+import json
 import math
 import singer
 from singer import metrics, metadata, Transformer, utils
@@ -21,7 +22,8 @@ def write_schema(catalog, stream_name):
 
 def write_record(stream_name, record, time_extracted):
     try:
-        singer.messages.write_record(stream_name, record, time_extracted=time_extracted)
+        singer.messages.write_record(
+            stream_name, record, time_extracted=time_extracted)
     except OSError as err:
         LOGGER.info('OS Error writing record for: {}'.format(stream_name))
         LOGGER.info('record: {}'.format(record))
@@ -52,7 +54,7 @@ def transform_datetime(this_dttm):
     return new_dttm
 
 
-def process_records(catalog, #pylint: disable=too-many-branches
+def process_records(catalog,  # pylint: disable=too-many-branches
                     stream_name,
                     records,
                     time_extracted,
@@ -77,33 +79,36 @@ def process_records(catalog, #pylint: disable=too-many-branches
                 # Reset max_bookmark_value to new value if higher
                 if transformed_record.get(bookmark_field):
                     if max_bookmark_value is None or \
-                        transformed_record[bookmark_field] > transform_datetime(max_bookmark_value):
+                            transformed_record[bookmark_field] \
+                                > transform_datetime(max_bookmark_value):
                         max_bookmark_value = transformed_record[bookmark_field]
 
                 if bookmark_field and (bookmark_field in transformed_record):
                     if bookmark_type == 'integer':
                         # Keep only records whose bookmark is after the last_integer
                         if transformed_record[bookmark_field] >= last_integer:
-                            write_record(stream_name, transformed_record, \
-                                time_extracted=time_extracted)
+                            write_record(stream_name, transformed_record,
+                                         time_extracted=time_extracted)
                             counter.increment()
                     elif bookmark_type == 'datetime':
                         last_dttm = transform_datetime(last_datetime)
-                        bookmark_dttm = transform_datetime(transformed_record[bookmark_field])
+                        bookmark_dttm = transform_datetime(
+                            transformed_record[bookmark_field])
                         # Keep only records whose bookmark is after the last_datetime
                         if bookmark_dttm >= last_dttm:
-                            write_record(stream_name, transformed_record, \
-                                time_extracted=time_extracted)
+                            write_record(stream_name, transformed_record,
+                                         time_extracted=time_extracted)
                             counter.increment()
                 else:
-                    write_record(stream_name, transformed_record, time_extracted=time_extracted)
+                    write_record(stream_name, transformed_record,
+                                 time_extracted=time_extracted)
                     counter.increment()
 
         return max_bookmark_value, counter.value
 
 
 # Sync a specific endpoint
-def sync_endpoint(client, #pylint: disable=too-many-branches
+def sync_endpoint(client,  #pylint: disable=too-many-branches
                   catalog,
                   state,
                   start_date,
@@ -118,7 +123,6 @@ def sync_endpoint(client, #pylint: disable=too-many-branches
                   data_key=None,
                   id_fields=None,
                   days_interval=None):
-
 
     # Get the latest bookmark for the stream and set the last_integer/datetime
     last_datetime = None
@@ -147,15 +151,25 @@ def sync_endpoint(client, #pylint: disable=too-many-branches
         start_window = strptime_to_utc(last_datetime)
         end_window = now_datetime
         diff_sec = (end_window - start_window).seconds
-        days_interval = math.ceil(diff_sec / (3600 * 24)) # round-up difference to days
+        # round-up difference to days
+        days_interval = math.ceil(diff_sec / (3600 * 24))
     endpoint_total = 0
     total_records = 0
+
+    # Pagination: loop thru all pages of data
+    # Pagination types: none, body, params
+    # Each page has an offset (starting value) and a limit (batch size, number of records)
+    # Increase the "offset" by the "limit" for each batch.
+    # Continue until the "offset" exceeds the total_records.
+    offset = 0  # Starting offset value for each batch API call
+    limit = 25000  # Batch size; Number of records per API call
+    total_records = limit  # Initialize total; set to actual total on first API call
     while start_window < now_datetime:
         LOGGER.info('START Sync for Stream: {}{}'.format(
             stream_name,
-            ', Date window from: {} to {}'.format(start_window, end_window) \
-                if bookmark_query_field_from else ''))
-        params = static_params # adds in endpoint specific, sort, filter params
+            ', Date window from: {} to {}'.format(start_window, end_window)
+            if bookmark_query_field_from else ''))
+        params = static_params  # adds in endpoint specific, sort, filter params
         if bookmark_query_field_from:
             # For datetime bookmark_type, tap allows from/to date window
             # For integer bookmark_type, tap allows from last_integer
@@ -171,13 +185,14 @@ def sync_endpoint(client, #pylint: disable=too-many-branches
         page = 1
         next_url = '{}/{}'.format(client.base_url, path)
         offset = 0
-        limit = 100 # Default limit for Kustomer API, unable to change this in v1.0
+        limit = 100  # Default limit for Kustomer API, unable to change this in v1.0
         total_records = 0
         while next_url is not None:
             # Need URL querystring for 1st page; subsequent pages provided by next_url
             # querystring: Squash query params into string
             if page == 1 and not params == {}:
-                querystring = '&'.join(['%s=%s' % (key, value) for (key, value) in params.items()])
+                querystring = '&'.join(['%s=%s' % (key, value)
+                                        for (key, value) in params.items()])
             else:
                 querystring = None
             LOGGER.info('URL for Stream {}: {}{}{}'.format(
@@ -187,38 +202,52 @@ def sync_endpoint(client, #pylint: disable=too-many-branches
                 '?{}'.format(querystring) if querystring else ''))
 
             # API request data
-            data = {}
-            data = client.fetch(
+
+            body = endpoint_config.get('body')
+            body['and'][0][endpoint_config.get('bookmark_query_field')]['gte'] = strftime(start_window)
+
+            response = {}
+            response = client.fetch(
                 url=next_url,
                 method=endpoint_config.get('api_method'),
                 path=path,
                 params=querystring,
-                endpoint=stream_name)
+                endpoint=stream_name,
+                data=json.dumps(body))
 
             # time_extracted: datetime when the data was extracted from the API
             time_extracted = utils.now()
-            if not data or data is None or data == {}:
+            if not response or response is None or response == {}:
                 total_records = 0
-                break # No data results
+                break  # No data results
+
+            # set total_records and next_url for pagination
+            total_records = response.get('meta').get('total')
+            total_pages = response.get('meta').get('totalPages')
+            last_updated = response.get('data')[-1]['attributes']['updatedAt']
+            next_url = response.get('next', None)
 
             # Transform data with transform_json from transform.py
             # The data_key identifies the array/list of records below the <root> element
             # LOGGER.info('data = {}'.format(data)) # TESTING, comment out
-            transformed_data = [] # initialize the record list
+            transformed_data = []  # initialize the record list
             # If a single record dictionary, append to a list[]
             if data_key is None:
-                transformed_data = transform_json(data, stream_name, endpoint_config, 'results')
-            elif data_key in data:
-                transformed_data = transform_json(data, stream_name, endpoint_config, data_key)
+                transformed_data = transform_json(
+                    response, stream_name, endpoint_config, 'results')
+            elif data_key in response:
+                transformed_data = transform_json(
+                    response, stream_name, endpoint_config, data_key)
             # LOGGER.info('transformed_data = {}'.format(transformed_data))  # TESTING, comment out
             if not transformed_data or transformed_data is None:
-                LOGGER.info('No transformed data for data = {}'.format(data)) 
+                LOGGER.info('No transformed data for data = {}'.format(response))
                 total_records = 0
-                break # No data results
-            for record in transformed_data:
-                for key in id_fields:
-                    if not record.get(key):
-                        LOGGER.info('xxx Missing key {} in record: {}'.format(key, record))
+                break  # No data results
+            # for record in transformed_data:
+            #     for key in id_fields:
+            #         if not record.get(key):
+            #             LOGGER.info(
+            #                 'xxx Missing key {} in record: {}'.format(key, record))
 
             # Process records and get the max_bookmark_value and record_count for the set of records
             max_bookmark_value, record_count = process_records(
@@ -234,9 +263,6 @@ def sync_endpoint(client, #pylint: disable=too-many-branches
             LOGGER.info('Stream {}, batch processed {} records'.format(
                 stream_name, record_count))
 
-            # set total_records and next_url for pagination
-            total_records = data.get('count', 0)
-            next_url = data.get('next', None)
 
             # Update the state with the max_bookmark_value for the stream
             if bookmark_field:
@@ -258,7 +284,7 @@ def sync_endpoint(client, #pylint: disable=too-many-branches
             page = page + 1
 
         # Increment date window
-        start_window = end_window
+        start_window = strptime_to_utc(last_updated)
         next_end_window = end_window + timedelta(days=days_interval)
         if next_end_window > now_datetime:
             end_window = now_datetime
@@ -304,7 +330,8 @@ def sync(client, config, catalog, state):
         update_currently_syncing(state, stream_name)
         endpoint_config = STREAMS[stream_name]
         path = endpoint_config.get('path', stream_name)
-        bookmark_field = next(iter(endpoint_config.get('replication_keys', [])), None)
+        bookmark_field = next(
+            iter(endpoint_config.get('replication_keys', [])), None)
         total_records = sync_endpoint(
             client=client,
             catalog=catalog,
@@ -314,7 +341,8 @@ def sync(client, config, catalog, state):
             path=path,
             endpoint_config=endpoint_config,
             static_params=endpoint_config.get('params', {}),
-            bookmark_query_field_from=endpoint_config.get('bookmark_query_field_from'),
+            bookmark_query_field_from=endpoint_config.get(
+                'bookmark_query_field_from'),
             # bookmark_query_field_to=endpoint_config.get('bookmark_query_field_to'),
             bookmark_field=bookmark_field,
             bookmark_type=endpoint_config.get('bookmark_type'),

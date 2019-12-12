@@ -1,6 +1,5 @@
 import backoff
 import requests
-from requests.exceptions import ConnectionError
 from singer import metrics
 import singer
 
@@ -96,7 +95,7 @@ class KustomerClient(object):
         self.__user_agent = user_agent
         self.__session = requests.Session()
         self.__verified = False
-        self.base_url = 'https://api.kustomer.co//{}'.format(API_VERSION)
+        self.base_url = 'https://api.kustomerapp.com/{}'.format(API_VERSION)
 
     def __enter__(self):
         self.__verified = self.check_token()
@@ -115,7 +114,7 @@ class KustomerClient(object):
         headers = {}
         if self.__user_agent:
             headers['User-Agent'] = self.__user_agent
-        headers['Authorization'] = 'Token {}'.format(self.__token)
+        headers['Authorization'] = 'Bearer {}'.format(self.__token)
         headers['Accept'] = 'application/json'
         response = self.__session.get(
             # Simple endpoint that returns 1 Account record (to check API/token access):
@@ -128,8 +127,7 @@ class KustomerClient(object):
             resp = response.json()
             if 'results' in resp:
                 return True
-            else:
-                return False
+        return False
 
 
     @backoff.on_exception(backoff.expo,
@@ -151,7 +149,7 @@ class KustomerClient(object):
 
         if 'headers' not in kwargs:
             kwargs['headers'] = {}
-        kwargs['headers']['Authorization'] = 'Token {}'.format(self.__token)
+        kwargs['headers']['Authorization'] = 'Bearer {}'.format(self.__token)
         kwargs['headers']['Accept'] = 'application/json'
 
         if self.__user_agent:
@@ -159,7 +157,9 @@ class KustomerClient(object):
 
         if method == 'POST':
             kwargs['headers']['Content-Type'] = 'application/json'
+            
 
+        LOGGER.info("Requesting url: {} method {}: args {}".format(method, url, kwargs['data']))
         with metrics.http_request_timer(endpoint) as timer:
             response = self.__session.request(method, url, **kwargs)
             timer.tags[metrics.Tag.http_status_code] = response.status_code
@@ -181,5 +181,4 @@ class KustomerClient(object):
     def fetch(self, method, path, **kwargs):
         if method == 'POST':
             return self.post(path=path, **kwargs)
-        else:
-            return self.get(path=path, **kwargs)
+        return self.get(path=path, **kwargs)

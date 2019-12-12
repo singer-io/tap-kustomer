@@ -1,408 +1,154 @@
 {
-  "$schema": "http://json-schema.org/schema#",
   "additionalProperties": false,
   "properties": {
-    "data": {
+    "app": {
+      "type": ["null", "string"]
+    },
+    "assignedTeams": {
+      "type": "array"
+    },
+    "assignedUsers": {
       "items": {
-        "properties": {
-          "attributes": {
-            "properties": {
-              "app": {
-                "type": "string"
-              },
-              "assignedTeams": {
-                "type": "array"
-              },
-              "assignedUsers": {
-                "items": {
-                  "type": "string"
-                },
-                "type": "array"
-              },
-              "auto": {
-                "type": "boolean"
-              },
-              "channel": {
-                "type": "string"
-              },
-              "createdAt": {
-                "type": "string"
-              },
-              "createdByTeams": {
-                "type": "array"
-              },
-              "direction": {
-                "type": "string"
-              },
-              "directionType": {
-                "type": "string"
-              },
-              "externalId": {
-                "type": "string"
-              },
-              "importedAt": {
-                "type": "string"
-              },
-              "meta": {
-                "properties": {
-                  "from": {
-                    "type": [
-                      "null",
-                      "string"
-                    ]
-                  },
-                  "subject": {
-                    "type": "string"
-                  },
-                  "to": {
-                    "items": {
-                      "anyOf": [
-                        {
-                          "type": "null"
-                        },
-                        {
-                          "properties": {
-                            "email": {
-                              "type": [
-                                "null",
-                                "string"
-                              ]
-                            }
-                          },
-                          "required": [
-                            "email"
-                          ],
-                          "type": "object"
-                        }
-                      ]
-                    },
-                    "type": "array"
-                  }
-                },
-                "type": "object"
-              },
-              "modifiedAt": {
-                "type": "string"
-              },
-              "preview": {
-                "type": "string"
-              },
-              "redacted": {
-                "type": "boolean"
-              },
-              "sentAt": {
-                "type": "string"
-              },
-              "size": {
-                "type": "integer"
-              },
-              "status": {
-                "type": "string"
-              },
-              "updatedAt": {
-                "type": "string"
-              }
-            },
-            "required": [
-              "app",
-              "assignedTeams",
-              "assignedUsers",
-              "auto",
-              "channel",
-              "createdAt",
-              "createdByTeams",
-              "direction",
-              "directionType",
-              "meta",
-              "preview",
-              "redacted",
-              "sentAt",
-              "size",
-              "status",
-              "updatedAt"
-            ],
-            "type": "object"
-          },
-          "id": {
-            "type": "string"
-          },
-          "links": {
-            "properties": {
-              "related": {
-                "type": "string"
-              },
-              "self": {
-                "type": "string"
-              }
-            },
-            "required": [
-              "self"
-            ],
-            "type": "object"
-          },
-          "relationships": {
-            "properties": {
-              "conversation": {
-                "properties": {
-                  "data": {
-                    "properties": {
-                      "id": {
-                        "type": "string"
-                      },
-                      "type": {
-                        "type": "string"
-                      }
-                    },
-                    "required": [
-                      "id",
-                      "type"
-                    ],
-                    "type": "object"
-                  },
-                  "links": {
-                    "properties": {
-                      "self": {
-                        "type": "string"
-                      }
-                    },
-                    "required": [
-                      "self"
-                    ],
-                    "type": "object"
-                  }
-                },
-                "required": [
-                  "data",
-                  "links"
-                ],
-                "type": "object"
-              },
-              "createdBy": {
-                "properties": {
-                  "data": {
-                    "properties": {
-                      "id": {
-                        "type": "string"
-                      },
-                      "type": {
-                        "type": "string"
-                      }
-                    },
-                    "required": [
-                      "id",
-                      "type"
-                    ],
-                    "type": "object"
-                  },
-                  "links": {
-                    "properties": {
-                      "self": {
-                        "type": "string"
-                      }
-                    },
-                    "required": [
-                      "self"
-                    ],
-                    "type": "object"
-                  }
-                },
-                "required": [
-                  "data",
-                  "links"
-                ],
-                "type": "object"
-              },
-              "customer": {
-                "properties": {
-                  "data": {
-                    "properties": {
-                      "id": {
-                        "type": "string"
-                      },
-                      "type": {
-                        "type": "string"
-                      }
-                    },
-                    "required": [
-                      "id",
-                      "type"
-                    ],
-                    "type": "object"
-                  },
-                  "links": {
-                    "properties": {
-                      "self": {
-                        "type": "string"
-                      }
-                    },
-                    "required": [
-                      "self"
-                    ],
-                    "type": "object"
-                  }
-                },
-                "required": [
-                  "data",
-                  "links"
-                ],
-                "type": "object"
-              },
-              "modifiedBy": {
-                "properties": {
-                  "data": {
-                    "properties": {
-                      "id": {
-                        "type": "string"
-                      },
-                      "type": {
-                        "type": "string"
-                      }
-                    },
-                    "required": [
-                      "id",
-                      "type"
-                    ],
-                    "type": "object"
-                  },
-                  "links": {
-                    "properties": {
-                      "self": {
-                        "type": "string"
-                      }
-                    },
-                    "required": [
-                      "self"
-                    ],
-                    "type": "object"
-                  }
-                },
-                "required": [
-                  "data",
-                  "links"
-                ],
-                "type": "object"
-              },
-              "org": {
-                "properties": {
-                  "data": {
-                    "properties": {
-                      "id": {
-                        "type": "string"
-                      },
-                      "type": {
-                        "type": "string"
-                      }
-                    },
-                    "required": [
-                      "id",
-                      "type"
-                    ],
-                    "type": "object"
-                  },
-                  "links": {
-                    "properties": {
-                      "self": {
-                        "type": "string"
-                      }
-                    },
-                    "required": [
-                      "self"
-                    ],
-                    "type": "object"
-                  }
-                },
-                "required": [
-                  "data",
-                  "links"
-                ],
-                "type": "object"
-              }
-            },
-            "required": [
-              "conversation",
-              "customer",
-              "org"
-            ],
-            "type": "object"
-          },
-          "type": {
-            "type": "string"
-          }
-        },
-        "required": [
-          "attributes",
-          "id",
-          "links",
-          "relationships",
-          "type"
-        ],
-        "type": "object"
+        "type": ["null", "string"]
       },
       "type": "array"
     },
-    "links": {
-      "properties": {
-        "first": {
-          "type": "string"
-        },
-        "last": {
-          "type": "string"
-        },
-        "next": {
-          "type": "string"
-        },
-        "prev": {
-          "type": "null"
-        },
-        "self": {
-          "type": "string"
-        }
-      },
-      "required": [
-        "first",
-        "last",
-        "next",
-        "prev",
-        "self"
-      ],
-      "type": "object"
+    "auto": {
+      "type": ["null", "boolean"]
+    },
+    "channel": {
+      "type": ["null", "string"]
+    },
+    "createdAt": {
+      "type": ["null", "string"]
+    },
+    "createdByTeams": {
+      "type": "array"
+    },
+    "direction": {
+      "type": ["null", "string"]
+    },
+    "directionType": {
+      "type": ["null", "string"]
+    },
+    "externalId": {
+      "type": ["null", "string"]
+    },
+    "importedAt": {
+      "type": ["null", "string"]
     },
     "meta": {
       "properties": {
-        "aggregations": {
-          "type": "object"
+        "from": {
+          "type": ["null", "string"]
         },
-        "page": {
-          "type": "integer"
+        "subject": {
+          "type": ["null", "string"]
         },
-        "pageSize": {
-          "type": "integer"
-        },
-        "timed_out": {
-          "type": "boolean"
-        },
-        "total": {
-          "type": "integer"
-        },
-        "totalPages": {
-          "type": "integer"
+        "to": {
+          "items": {
+            "anyOf": [
+              {
+                "type": "null"
+              },
+              {
+                "properties": {
+                  "email": {
+                    "type": ["null", "string"]
+                  }
+                },
+
+                "type": ["null", "object"]
+              }
+            ]
+          },
+          "type": "array"
         }
       },
-      "required": [
-        "aggregations",
-        "page",
-        "pageSize",
-        "timed_out",
-        "total",
-        "totalPages"
-      ],
-      "type": "object"
+      "type": ["null", "object"]
+    },
+    "modifiedAt": {
+      "type": ["null", "string"]
+    },
+    "preview": {
+      "type": ["null", "string"]
+    },
+    "redacted": {
+      "type": ["null", "boolean"]
+    },
+    "sentAt": {
+      "type": ["null", "string"]
+    },
+    "size": {
+      "type": ["null", "integer"]
+    },
+    "status": {
+      "type": ["null", "string"]
+    },
+    "updatedAt": {
+      "type": ["null", "string"]
+    },
+    "id": {
+      "type": ["null", "string"]
+    },
+    "conversation": {
+      "type": ["null", "object"],
+      "properties": {
+        "id": {
+          "type": ["null", "string"]
+        },
+        "type": {
+          "type": ["null", "string"]
+        }
+      }
+    },
+    "createdBy": {
+      "type": ["null", "object"],
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": ["null", "string"]
+        },
+        "type": {
+          "type": ["null", "string"]
+        }
+      },
+      "customer": {
+        "type": ["null", "object"],
+        "properties": {
+          "id": {
+            "type": ["null", "string"]
+          },
+          "type": {
+            "type": ["null", "string"]
+          }
+        }
+      }
+    },
+    "modifiedBy": {
+      "type": ["null", "object"],
+      "properties": {
+        "id": {
+          "type": ["null", "string"]
+        },
+        "type": {
+          "type": ["null", "string"]
+        }
+      }
+    },
+    "org": {
+      "type": ["null", "object"],
+      "properties": {
+        "id": {
+          "type": ["null", "string"]
+        },
+        "type": {
+          "type": ["null", "string"]
+        }
+      }
+    },
+    "type": {
+      "type": ["null", "string"]
     }
-  },
-  "required": [
-    "data",
-    "links",
-    "meta"
-  ],
-  "type": "object"
+  }
 }

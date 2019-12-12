@@ -1,612 +1,306 @@
 {
-  "$schema": "http://json-schema.org/schema#",
   "additionalProperties": false,
+  "type": ["null", "object"],
   "properties": {
-    "data": {
+    "assignedTeams": {
+      "type": "array"
+    },
+    "assignedUsers": {
       "items": {
-        "properties": {
-          "attributes": {
-            "properties": {
-              "assignedTeams": {
-                "type": "array"
-              },
-              "assignedUsers": {
-                "items": {
-                  "type": "string"
-                },
-                "type": "array"
-              },
-              "channels": {
-                "items": {
-                  "type": "string"
-                },
-                "type": "array"
-              },
-              "createdAt": {
-                "type": "string"
-              },
-              "custom": {
-                "properties": {
-                  "deskTicketUrl": {
-                    "type": "string"
-                  },
-                  "newOrderStr": {
-                    "type": "string"
-                  },
-                  "newPrimaryMenuStr": {
-                    "type": "string"
-                  },
-                  "refundStatusStr": {
-                    "type": "string"
-                  },
-                  "returnStr": {
-                    "type": "string"
-                  },
-                  "returnTrackingStr": {
-                    "type": "string"
-                  }
-                },
-                "required": [
-                  "deskTicketUrl"
-                ],
-                "type": "object"
-              },
-              "direction": {
-                "type": "string"
-              },
-              "externalId": {
-                "type": "string"
-              },
-              "firstDone": {
-                "properties": {
-                  "assignedTeams": {
-                    "type": "array"
-                  },
-                  "assignedUsers": {
-                    "type": "array"
-                  },
-                  "createdByTeams": {
-                    "type": "array"
-                  }
-                },
-                "required": [
-                  "assignedTeams",
-                  "assignedUsers",
-                  "createdByTeams"
-                ],
-                "type": "object"
-              },
-              "firstMessageIn": {
-                "properties": {
-                  "channel": {
-                    "type": "string"
-                  },
-                  "createdAt": {
-                    "type": "string"
-                  },
-                  "directionType": {
-                    "type": "string"
-                  },
-                  "id": {
-                    "type": "string"
-                  },
-                  "sentAt": {
-                    "type": "string"
-                  }
-                },
-                "required": [
-                  "channel",
-                  "createdAt",
-                  "directionType",
-                  "id",
-                  "sentAt"
-                ],
-                "type": "object"
-              },
-              "firstMessageOut": {
-                "properties": {
-                  "channel": {
-                    "type": "string"
-                  },
-                  "createdAt": {
-                    "type": "string"
-                  },
-                  "createdBy": {
-                    "type": "string"
-                  },
-                  "createdByTeams": {
-                    "type": "array"
-                  },
-                  "directionType": {
-                    "type": "string"
-                  },
-                  "id": {
-                    "type": "string"
-                  },
-                  "sentAt": {
-                    "type": "string"
-                  }
-                },
-                "required": [
-                  "channel",
-                  "createdAt",
-                  "createdBy",
-                  "createdByTeams",
-                  "directionType",
-                  "id",
-                  "sentAt"
-                ],
-                "type": "object"
-              },
-              "firstResponse": {
-                "properties": {
-                  "assignedTeams": {
-                    "type": "array"
-                  },
-                  "assignedUsers": {
-                    "type": "array"
-                  },
-                  "createdByTeams": {
-                    "type": "array"
-                  }
-                },
-                "required": [
-                  "assignedTeams",
-                  "assignedUsers",
-                  "createdByTeams"
-                ],
-                "type": "object"
-              },
-              "importedAt": {
-                "type": "string"
-              },
-              "lastActivityAt": {
-                "type": "string"
-              },
-              "lastDone": {
-                "properties": {
-                  "assignedTeams": {
-                    "type": "array"
-                  },
-                  "assignedUsers": {
-                    "type": "array"
-                  },
-                  "createdByTeams": {
-                    "type": "array"
-                  }
-                },
-                "required": [
-                  "assignedTeams",
-                  "assignedUsers",
-                  "createdByTeams"
-                ],
-                "type": "object"
-              },
-              "lastMessageAt": {
-                "type": "string"
-              },
-              "lastMessageDirection": {
-                "type": "string"
-              },
-              "lastMessageIn": {
-                "properties": {
-                  "id": {
-                    "type": "string"
-                  },
-                  "sentAt": {
-                    "type": "string"
-                  }
-                },
-                "required": [
-                  "id",
-                  "sentAt"
-                ],
-                "type": "object"
-              },
-              "lastMessageOut": {
-                "properties": {
-                  "id": {
-                    "type": "string"
-                  },
-                  "sentAt": {
-                    "type": "string"
-                  }
-                },
-                "required": [
-                  "id",
-                  "sentAt"
-                ],
-                "type": "object"
-              },
-              "lastMessageUnrespondedTo": {
-                "properties": {
-                  "id": {
-                    "type": "string"
-                  },
-                  "sentAt": {
-                    "type": "string"
-                  }
-                },
-                "required": [
-                  "id",
-                  "sentAt"
-                ],
-                "type": "object"
-              },
-              "lastReceivedAt": {
-                "type": "string"
-              },
-              "lastResponse": {
-                "properties": {
-                  "assignedTeams": {
-                    "type": "array"
-                  },
-                  "assignedUsers": {
-                    "type": "array"
-                  },
-                  "createdByTeams": {
-                    "type": "array"
-                  }
-                },
-                "required": [
-                  "assignedTeams",
-                  "assignedUsers",
-                  "createdByTeams"
-                ],
-                "type": "object"
-              },
-              "messageCount": {
-                "type": "integer"
-              },
-              "modifiedAt": {
-                "type": "string"
-              },
-              "name": {
-                "type": "string"
-              },
-              "noteCount": {
-                "type": "integer"
-              },
-              "outboundMessageCount": {
-                "type": "integer"
-              },
-              "preview": {
-                "type": "string"
-              },
-              "priority": {
-                "type": "integer"
-              },
-              "rev": {
-                "type": "integer"
-              },
-              "satisfaction": {
-                "type": "integer"
-              },
-              "status": {
-                "type": "string"
-              },
-              "suggestedTags": {
-                "type": "array"
-              },
-              "tags": {
-                "items": {
-                  "type": "string"
-                },
-                "type": "array"
-              },
-              "totalDone": {
-                "properties": {
-                  "businessTime": {
-                    "type": "integer"
-                  },
-                  "time": {
-                    "type": "integer"
-                  }
-                },
-                "required": [
-                  "businessTime",
-                  "time"
-                ],
-                "type": "object"
-              },
-              "updatedAt": {
-                "type": "string"
-              }
-            },
-            "required": [
-              "assignedTeams",
-              "assignedUsers",
-              "channels",
-              "createdAt",
-              "custom",
-              "direction",
-              "externalId",
-              "firstDone",
-              "firstResponse",
-              "importedAt",
-              "lastActivityAt",
-              "lastDone",
-              "lastMessageAt",
-              "lastMessageDirection",
-              "lastResponse",
-              "messageCount",
-              "modifiedAt",
-              "name",
-              "noteCount",
-              "outboundMessageCount",
-              "priority",
-              "rev",
-              "satisfaction",
-              "status",
-              "suggestedTags",
-              "tags",
-              "updatedAt"
-            ],
-            "type": "object"
-          },
-          "id": {
-            "type": "string"
-          },
-          "links": {
-            "properties": {
-              "self": {
-                "type": "string"
-              }
-            },
-            "required": [
-              "self"
-            ],
-            "type": "object"
-          },
-          "relationships": {
-            "properties": {
-              "createdBy": {
-                "properties": {
-                  "data": {
-                    "properties": {
-                      "id": {
-                        "type": "string"
-                      },
-                      "type": {
-                        "type": "string"
-                      }
-                    },
-                    "required": [
-                      "id",
-                      "type"
-                    ],
-                    "type": "object"
-                  },
-                  "links": {
-                    "properties": {
-                      "self": {
-                        "type": "string"
-                      }
-                    },
-                    "required": [
-                      "self"
-                    ],
-                    "type": "object"
-                  }
-                },
-                "required": [
-                  "data",
-                  "links"
-                ],
-                "type": "object"
-              },
-              "customer": {
-                "properties": {
-                  "data": {
-                    "properties": {
-                      "id": {
-                        "type": "string"
-                      },
-                      "type": {
-                        "type": "string"
-                      }
-                    },
-                    "required": [
-                      "id",
-                      "type"
-                    ],
-                    "type": "object"
-                  },
-                  "links": {
-                    "properties": {
-                      "self": {
-                        "type": "string"
-                      }
-                    },
-                    "required": [
-                      "self"
-                    ],
-                    "type": "object"
-                  }
-                },
-                "required": [
-                  "data",
-                  "links"
-                ],
-                "type": "object"
-              },
-              "messages": {
-                "properties": {
-                  "links": {
-                    "properties": {
-                      "self": {
-                        "type": "string"
-                      }
-                    },
-                    "required": [
-                      "self"
-                    ],
-                    "type": "object"
-                  }
-                },
-                "required": [
-                  "links"
-                ],
-                "type": "object"
-              },
-              "modifiedBy": {
-                "properties": {
-                  "data": {
-                    "properties": {
-                      "id": {
-                        "type": "string"
-                      },
-                      "type": {
-                        "type": "string"
-                      }
-                    },
-                    "required": [
-                      "id",
-                      "type"
-                    ],
-                    "type": "object"
-                  },
-                  "links": {
-                    "properties": {
-                      "self": {
-                        "type": "string"
-                      }
-                    },
-                    "required": [
-                      "self"
-                    ],
-                    "type": "object"
-                  }
-                },
-                "required": [
-                  "data",
-                  "links"
-                ],
-                "type": "object"
-              },
-              "org": {
-                "properties": {
-                  "data": {
-                    "properties": {
-                      "id": {
-                        "type": "string"
-                      },
-                      "type": {
-                        "type": "string"
-                      }
-                    },
-                    "required": [
-                      "id",
-                      "type"
-                    ],
-                    "type": "object"
-                  },
-                  "links": {
-                    "properties": {
-                      "self": {
-                        "type": "string"
-                      }
-                    },
-                    "required": [
-                      "self"
-                    ],
-                    "type": "object"
-                  }
-                },
-                "required": [
-                  "data",
-                  "links"
-                ],
-                "type": "object"
-              }
-            },
-            "required": [
-              "createdBy",
-              "customer",
-              "messages",
-              "modifiedBy",
-              "org"
-            ],
-            "type": "object"
-          },
-          "type": {
-            "type": "string"
-          }
-        },
-        "required": [
-          "attributes",
-          "id",
-          "links",
-          "relationships",
-          "type"
-        ],
-        "type": "object"
+        "type": ["null", "string"]
       },
       "type": "array"
     },
-    "links": {
-      "properties": {
-        "first": {
-          "type": "string"
-        },
-        "last": {
-          "type": "string"
-        },
-        "next": {
-          "type": "string"
-        },
-        "prev": {
-          "type": "null"
-        },
-        "self": {
-          "type": "string"
-        }
+    "channels": {
+      "items": {
+        "type": ["null", "string"]
       },
-      "required": [
-        "first",
-        "last",
-        "next",
-        "prev",
-        "self"
-      ],
-      "type": "object"
+      "type": "array"
     },
-    "meta": {
+    "createdAt": {
+      "type": ["null", "string"]
+    },
+    "custom": {
       "properties": {
-        "aggregations": {
-          "type": "object"
+        "deskTicketUrl": {
+          "type": ["null", "string"]
         },
-        "page": {
-          "type": "integer"
+        "newOrderStr": {
+          "type": ["null", "string"]
         },
-        "pageSize": {
-          "type": "integer"
+        "newPrimaryMenuStr": {
+          "type": ["null", "string"]
         },
-        "timed_out": {
-          "type": "boolean"
+        "refundStatusStr": {
+          "type": ["null", "string"]
         },
-        "total": {
-          "type": "integer"
+        "returnStr": {
+          "type": ["null", "string"]
         },
-        "totalPages": {
-          "type": "integer"
+        "returnTrackingStr": {
+          "type": ["null", "string"]
         }
       },
-      "required": [
-        "aggregations",
-        "page",
-        "pageSize",
-        "timed_out",
-        "total",
-        "totalPages"
-      ],
-      "type": "object"
+      "type": ["null", "object"]
+    },
+    "direction": {
+      "type": ["null", "string"]
+    },
+    "externalId": {
+      "type": ["null", "string"]
+    },
+    "firstDone": {
+      "properties": {
+        "assignedTeams": {
+          "type": "array"
+        },
+        "assignedUsers": {
+          "type": "array"
+        },
+        "createdByTeams": {
+          "type": "array"
+        }
+      },
+      "type": ["null", "object"]
+    },
+    "firstMessageIn": {
+      "properties": {
+        "channel": {
+          "type": ["null", "string"]
+        },
+        "createdAt": {
+          "type": ["null", "string"]
+        },
+        "directionType": {
+          "type": ["null", "string"]
+        },
+        "id": {
+          "type": ["null", "string"]
+        },
+        "sentAt": {
+          "type": ["null", "string"]
+        }
+      },
+      "type": ["null", "object"]
+    },
+    "firstMessageOut": {
+      "properties": {
+        "channel": {
+          "type": ["null", "string"]
+        },
+        "createdAt": {
+          "type": ["null", "string"]
+        },
+        "createdBy": {
+          "type": ["null", "string"]
+        },
+        "createdByTeams": {
+          "type": "array"
+        },
+        "directionType": {
+          "type": ["null", "string"]
+        },
+        "id": {
+          "type": ["null", "string"]
+        },
+        "sentAt": {
+          "type": ["null", "string"]
+        }
+      },
+      "type": ["null", "object"]
+    },
+    "firstResponse": {
+      "properties": {
+        "assignedTeams": {
+          "type": "array"
+        },
+        "assignedUsers": {
+          "type": "array"
+        },
+        "createdByTeams": {
+          "type": "array"
+        }
+      },
+      "type": ["null", "object"]
+    },
+    "importedAt": {
+      "type": ["null", "string"]
+    },
+    "lastActivityAt": {
+      "type": ["null", "string"]
+    },
+    "lastDone": {
+      "properties": {
+        "assignedTeams": {
+          "type": "array"
+        },
+        "assignedUsers": {
+          "type": "array"
+        },
+        "createdByTeams": {
+          "type": "array"
+        }
+      },
+      "type": ["null", "object"]
+    },
+    "lastMessageAt": {
+      "type": ["null", "string"]
+    },
+    "lastMessageDirection": {
+      "type": ["null", "string"]
+    },
+    "lastMessageIn": {
+      "properties": {
+        "id": {
+          "type": ["null", "string"]
+        },
+        "sentAt": {
+          "type": ["null", "string"]
+        }
+      },
+      "type": ["null", "object"]
+    },
+    "lastMessageOut": {
+      "properties": {
+        "id": {
+          "type": ["null", "string"]
+        },
+        "sentAt": {
+          "type": ["null", "string"]
+        }
+      },
+      "type": ["null", "object"]
+    },
+    "lastMessageUnrespondedTo": {
+      "properties": {
+        "id": {
+          "type": ["null", "string"]
+        },
+        "sentAt": {
+          "type": ["null", "string"]
+        }
+      },
+      "type": ["null", "object"]
+    },
+    "lastReceivedAt": {
+      "type": ["null", "string"]
+    },
+    "lastResponse": {
+      "properties": {
+        "assignedTeams": {
+          "type": "array"
+        },
+        "assignedUsers": {
+          "type": "array"
+        },
+        "createdByTeams": {
+          "type": "array"
+        }
+      },
+      "type": ["null", "object"]
+    },
+    "messageCount": {
+      "type": ["null", "integer"]
+    },
+    "modifiedAt": {
+      "type": ["null", "string"]
+    },
+    "name": {
+      "type": ["null", "string"]
+    },
+    "noteCount": {
+      "type": ["null", "integer"]
+    },
+    "outboundMessageCount": {
+      "type": ["null", "integer"]
+    },
+    "preview": {
+      "type": ["null", "string"]
+    },
+    "priority": {
+      "type": ["null", "integer"]
+    },
+    "rev": {
+      "type": ["null", "integer"]
+    },
+    "satisfaction": {
+      "type": ["null", "integer"]
+    },
+    "status": {
+      "type": ["null", "string"]
+    },
+    "suggestedTags": {
+      "type": "array"
+    },
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": ["null", "string"]
+      }
+    },
+    "totalDone": {
+      "properties": {
+        "businessTime": {
+          "type": ["null", "integer"]
+        },
+        "time": {
+          "type": ["null", "integer"]
+        }
+      },
+      "type": ["null", "object"]
+    },
+    "updatedAt": {
+      "type": ["null", "string"]
+    },
+    "id": {
+      "type": ["null", "string"]
+    },
+    "createdBy": {
+      "type": ["null", "object"],
+      "properties": {
+        "id": {
+          "type": ["null", "string"]
+        },
+        "type": {
+          "type": ["null", "string"]
+        }
+      }
+    },
+    "customer": {
+      "type": ["null", "object"],
+      "properties": {
+        "id": {
+          "type": ["null", "string"]
+        },
+        "type": {
+          "type": ["null", "string"]
+        }
+      }
+    },
+    "modifiedBy": {
+      "type": ["null", "object"],
+      "properties": {
+        "id": {
+          "type": ["null", "string"]
+        },
+        "type": {
+          "type": ["null", "string"]
+        }
+      }
+    },
+    "org": {
+      "type": ["null", "object"],
+      "properties": {
+        "id": {
+          "type": ["null", "string"]
+        },
+        "type": {
+          "type": ["null", "string"]
+        }
+      }
+    },
+    "type": {
+      "type": ["null", "string"]
     }
-  },
-  "required": [
-    "data",
-    "links",
-    "meta"
-  ],
-  "type": "object"
+  }
 }
