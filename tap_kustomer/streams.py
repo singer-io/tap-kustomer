@@ -89,6 +89,62 @@ STREAMS = {
             ],
             "sort": [{"message_updated_at": "asc"}],
             "queryContext": "message"
+        }
+    },
+    "users": {
+        "denest": "attributes,relationships.data",
+        "params": {
+            "page": "{page}"
         },
+        "replication_method": "INCREMENTAL",
+        "key_properties": "id",
+        "path": "users",
+        "replication_keys": ["updated_at"],
+        "api_method": "GET",
+        "data_key": "data",
+        "bookmark_query_field": "updated_at",
+        "bookmark_type": "datetime"
+    },
+    "teams": {
+        "denest": "attributes,relationships.data",
+        "params": {
+            "page": "{page}"
+        },
+        "replication_method": "INCREMENTAL",
+        "key_properties": "id",
+        "path": "teams",
+        "replication_keys": ["updated_at"],
+        "api_method": "GET",
+        "data_key": "data",
+        "bookmark_query_field": "updated_at",
+        "bookmark_type": "datetime"
+    },
+    "tags": {
+        "denest": "attributes,relationships.data",
+        "params": {
+            "page": "{page}"
+        },
+        "replication_method": "INCREMENTAL",
+        "key_properties": "id",
+        "path": "tags",
+        "replication_keys": ["updated_at"],
+        "api_method": "GET",
+        "data_key": "data",
+        "bookmark_query_field": "updated_at",
+        "bookmark_type": "datetime"
+    },
+    "shortcuts": {
+        "denest": "attributes,relationships.data",
+        "params": {
+            "page": "{page}"
+        },
+        "replication_method": "INCREMENTAL",
+        "key_properties": "id",
+        "path": "shortcuts",
+        "replication_keys": ["updated_at"],
+        "api_method": "GET",
+        "data_key": "data",
+        "bookmark_query_field": "updated_at",
+        "bookmark_type": "datetime"
     }
 }

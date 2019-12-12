@@ -138,7 +138,7 @@ class KustomerClient(object):
                           max_tries=5,
                           factor=2)
     @utils.ratelimit(250, 60)
-    def request(self, method, path=None, url=None, **kwargs):
+    def request(self, method, path=None, url=None, data=None, **kwargs):
         if not self.__verified:
             self.__verified = self.check_token()
 
@@ -163,9 +163,9 @@ class KustomerClient(object):
             kwargs['headers']['Content-Type'] = 'application/json'
             
 
-        LOGGER.info("Requesting url: {} method {}: args {}".format(method, url, kwargs['data']))
+        # LOGGER.info("Requesting url: {} method {}: args {}".format(method, url, kwargs['data']))
         with metrics.http_request_timer(endpoint) as timer:
-            response = self.__session.request(method, url, **kwargs)
+            response = self.__session.request(method, url, data=data, **kwargs)
             timer.tags[metrics.Tag.http_status_code] = response.status_code
 
         if response.status_code >= 500:
@@ -175,7 +175,7 @@ class KustomerClient(object):
         Kustomer API rate limiting. If rate limit exceeded wait until limit reset.
         See, https://dev.kustomer.com/v1/welcome/rate-limiting
         """
-        if int(response.headers['x-ratelimit-remaining']) <= 0:
+        if 'x-ratelimit-remaining' in response.headers and int(response.headers['x-ratelimit-remaining']) <= 0:
             if 'x-ratelimit-reset' in response.headers:
                 retry_in = datetime.fromtimestamp(response.headers['x-ratelimit-reset'])
                 LOGGER.info("Rate limit exceeded, retrying in {}: ".format(retry_in))
@@ -194,8 +194,8 @@ class KustomerClient(object):
     def get(self, path, **kwargs):
         return self.request('GET', path=path, **kwargs)
 
-    def post(self, path, **kwargs):
-        return self.request('POST', path=path, **kwargs)
+    def post(self, path, data, **kwargs):
+        return self.request('POST', path=path, data=data, **kwargs)
 
     def fetch(self, method, path, **kwargs):
         if method == 'POST':

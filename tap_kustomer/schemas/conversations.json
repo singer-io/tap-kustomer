@@ -15,7 +15,8 @@
       }
     },
     "created_at": {
-      "type": ["null", "string"]
+      "type": ["null", "string"],
+      "format": "date-time"
     },
     "created_by": {
       "type": ["null", "object"],
@@ -118,7 +119,8 @@
           "type": ["null", "string"]
         },
         "created_at": {
-          "type": ["null", "string"]
+          "type": ["null", "string"],
+          "format": "date-time"
         },
         "created_by": {
           "type": ["null", "string"]
@@ -172,7 +174,8 @@
           "type": [
             "null",
             "string"
-          ]
+          ],
+          "format": "date-time"
         },
         {
           "type": "None"
@@ -360,7 +363,8 @@
       "type": [
             "null",
             "string"
-          ]
+          ],
+      "format": "date-time"
     }
   }
 }

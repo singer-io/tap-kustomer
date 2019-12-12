@@ -148,6 +148,7 @@ def sync_endpoint(client,  #pylint: disable=too-many-branches
     #     if end_window > now_datetime:
     #         end_window = now_datetime
     # else:
+    page = 1
     start_window = strptime_to_utc(last_datetime)
     end_window = now_datetime
     diff_sec = (end_window - start_window).seconds
@@ -162,8 +163,11 @@ def sync_endpoint(client,  #pylint: disable=too-many-branches
     # Increase the "offset" by the "limit" for each batch.
     # Continue until the "offset" exceeds the total_records.
     offset = 0  # Starting offset value for each batch API call
-    limit = 100  # Batch size; Number of records per API call
+    # pagination: loop thru all pages of data using next (if not None)
+    next_url = '{}/{}'.format(client.base_url, path)
+    limit = 100  # Default limit for Kustomer API, unable to change this in v1.0
     total_records = limit  # Initialize total; set to actual total on first API call
+
     while start_window < now_datetime and total_records >= limit:
         LOGGER.info('START Sync for Stream: {}{}'.format(
             stream_name,
@@ -181,108 +185,122 @@ def sync_endpoint(client,  #pylint: disable=too-many-branches
                 if bookmark_type == 'integer':
                     params[bookmark_query_field_to] = strftime(end_window)
 
-        # pagination: loop thru all pages of data using next (if not None)
-        page = 1
-        next_url = '{}/{}'.format(client.base_url, path)
-        offset = 0
-        limit = 100  # Default limit for Kustomer API, unable to change this in v1.0
-        total_records = 0
-        while next_url is not None:
-            # Need URL querystring for 1st page; subsequent pages provided by next_url
-            # querystring: Squash query params into string
-            if page == 1 and not params == {}:
-                querystring = '&'.join(['%s=%s' % (key, value)
-                                        for (key, value) in params.items()])
+
+        # Need URL querystring for 1st page; subsequent pages provided by next_url
+        # querystring: Squash query params into string
+        if page == 1 and not params == {}:
+            querystring = '&'.join(['%s=%s' % (key, value)
+                                    for (key, value) in params.items()])
+        else:
+            querystring = None
+        LOGGER.info('URL for Stream {}: {}{}{}'.format(
+            stream_name,
+            next_url,
+            '/' if page == 1 else '',
+            '?{}'.format(querystring) if querystring else ''))
+
+        # API request data
+
+        params = {}
+        for key, value in endpoint_config.get('params').items():
+            if isinstance(value, str) and "{" in value:
+                params[key] = eval(value.strip("{}"))
             else:
-                querystring = None
-            LOGGER.info('URL for Stream {}: {}{}{}'.format(
-                stream_name,
-                next_url,
-                '/' if page == 1 else '',
-                '?{}'.format(querystring) if querystring else ''))
+                params[key] = value
 
-            # API request data
+        # Need URL querystring for 1st page; subsequent pages provided by next_url
+        # querystring: Squash query params into string
+        # if page != 1:
+        querystring = '&'.join(['%s=%s' % (key, value) for (key, value) in params.items()])
+        LOGGER.info('URL for Stream {}: {}{}'.format(stream_name, path,
+            '?{}'.format(querystring) if querystring else ''))
 
-            body = endpoint_config.get('body')
+        body = endpoint_config.get('body')
+        if body:
             body['and'][0][endpoint_config.get('bookmark_query_field')]['gte'] = strftime(start_window)
 
-            response = {}
-            response = client.fetch(
+        response = {}
+        if endpoint_config.get('api_method') == "POST":
+            response = client.post(
                 url=next_url,
-                method=endpoint_config.get('api_method'),
                 path=path,
                 params=querystring,
                 endpoint=stream_name,
                 data=json.dumps(body))
+        else:
+            response = client.get(url=next_url, path=path,
+                params=querystring, endpoint=stream_name)
 
-            # time_extracted: datetime when the data was extracted from the API
-            time_extracted = utils.now()
-            if not response or response is None or response == {}:
-                total_records = 0
-                break  # No data results
+        # time_extracted: datetime when the data was extracted from the API
+        time_extracted = utils.now()
+        if not response or response is None or response == {}:
+            total_records = 0
+            break  # No data results
 
-            # set total_records and next_url for pagination
-            total_records = response.get('meta').get('total')
+        # set total_records and and last updated for pagination
+        total_records = len(response.get('data'))
+        if 'totalPages' in response.get('meta'):
             total_pages = response.get('meta').get('totalPages')
+        if len(response.get('data')) > 0:
             last_updated = response.get('data')[-1]['attributes']['updatedAt']
 
-            next_url = response.get('next', None)
+        # next_url = response.get('links').get('next', None)
 
-            # Transform data with transform_json from transform.py
-            # The data_key identifies the array/list of records below the <root> element
-            # LOGGER.info('data = {}'.format(data)) # TESTING, comment out
-            transformed_data = []  # initialize the record list
-            # If a single record dictionary, append to a list[]
-            if data_key is None:
-                transformed_data = transform_json(
-                    response, stream_name, endpoint_config, 'results')
-            elif data_key in response:
-                transformed_data = transform_json(
-                    response, stream_name, endpoint_config, data_key)
-            # LOGGER.info('transformed_data = {}'.format(transformed_data))  # TESTING, comment out
-            if not transformed_data or transformed_data is None:
-                LOGGER.info('No transformed data for data = {}'.format(response))
-                total_records = 0
-                break  # No data results
-            # for record in transformed_data:
-            #     for key in id_fields:
-            #         if not record.get(key):
-            #             LOGGER.info(
-            #                 'xxx Missing key {} in record: {}'.format(key, record))
+        # Transform data with transform_json from transform.py
+        # The data_key identifies the array/list of records below the <root> element
+        # LOGGER.info('data = {}'.format(data)) # TESTING, comment out
+        transformed_data = []  # initialize the record list
+        # If a single record dictionary, append to a list[]
+        if data_key is None:
+            transformed_data = transform_json(
+                response, stream_name, endpoint_config, 'results')
+        elif data_key in response:
+            transformed_data = transform_json(
+                response, stream_name, endpoint_config, data_key)
+        # LOGGER.info('transformed_data = {}'.format(transformed_data))  # TESTING, comment out
+        if not transformed_data or transformed_data is None:
+            LOGGER.info('No transformed data for data = {}'.format(response))
+            # total_records = 0
+            break  # No data results
+        for record in transformed_data:
+            for key in id_fields:
+                if not record.get(key):
+                    LOGGER.info(
+                        'xxx Missing key {} in record: {}'.format(key, record))
 
-            # Process records and get the max_bookmark_value and record_count for the set of records
-            max_bookmark_value, record_count = process_records(
-                catalog=catalog,
-                stream_name=stream_name,
-                records=transformed_data,
-                time_extracted=time_extracted,
-                bookmark_field=bookmark_field,
-                bookmark_type=bookmark_type,
-                max_bookmark_value=max_bookmark_value,
-                last_datetime=last_datetime,
-                last_integer=last_integer)
-            LOGGER.info('Stream {}, batch processed {} records'.format(
-                stream_name, record_count))
+        # Process records and get the max_bookmark_value and record_count for the set of records
+        max_bookmark_value, record_count = process_records(
+            catalog=catalog,
+            stream_name=stream_name,
+            records=transformed_data,
+            time_extracted=time_extracted,
+            bookmark_field=bookmark_field,
+            bookmark_type=bookmark_type,
+            max_bookmark_value=max_bookmark_value,
+            last_datetime=last_datetime,
+            last_integer=last_integer)
+        LOGGER.info('Stream {}, batch processed {} records'.format(
+            stream_name, record_count))
 
 
-            # Update the state with the max_bookmark_value for the stream
-            if bookmark_field:
-                write_bookmark(state, stream_name, max_bookmark_value)
+        # Update the state with the max_bookmark_value for the stream
+        if bookmark_field:
+            write_bookmark(state, stream_name, max_bookmark_value)
 
-            # to_rec: to record; ending record for the batch page
-            to_rec = offset + limit
-            if to_rec > total_records:
-                to_rec = total_records
+        # to_rec: to record; ending record for the batch page
+        to_rec = offset + limit
+        if to_rec > total_records:
+            to_rec = total_records
 
-            LOGGER.info('Synced Stream: {}, page: {}, {} to {} of total records: {}'.format(
-                stream_name,
-                page,
-                offset,
-                to_rec,
-                total_records))
-            # Pagination: increment the offset by the limit (batch-size) and page
-            offset = offset + limit
-            page = page + 1
+        LOGGER.info('Synced Stream: {}, page: {}, {} to {} of total records: {}'.format(
+            stream_name,
+            page,
+            offset,
+            to_rec,
+            total_records))
+        # Pagination: increment the offset by the limit (batch-size) and page
+        offset = offset + limit
+        page = page + 1
 
         # Increment date window
         start_window = strptime_to_utc(last_updated)

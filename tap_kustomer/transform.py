@@ -126,7 +126,7 @@ def denest_targeted_nodes(index, data_key, record, new_json, denest_key):
     if denest_key.split(".")[0] in record:
         target_key = denest_key.split(".")[0]
         for key in record[target_key].copy().keys():
-            if target_value in record[target_key][key].keys():
+            if isinstance(record[target_key][key], dict) and target_value in record[target_key][key].keys():
                 if key in new_json[data_key][index].keys():
                     # raise AssertionException('Denested key {} exists in parent {}'.format(
                     #     key, new_json[data_key][index]))
