@@ -81,7 +81,7 @@ git merge upstream/master
 # target-stitch incremental load (state_previous.json)
 
 ```
-~/.virtualenvs/tap-kustomer/bin/tap-kustomer --config ~/code/bytecode/Stitch/tap-kustomer/tap_kustomer/tap_config.json --catalog ~/code/bytecode/Stitch/tap-kustomer/catalog.json --state ~/code/bytecode/Stitch/tap-kustomer/state_previous.json | ~/.virtualenvs/target-stitch/bin/target-stitch --config ~/code/bytecode/Stitch/tap-kustomer/target_config.json > ~/code/bytecode/Stitch/tap-kustomer/state.json
+~/.virtualenvs/tap-kustomer/bin/tap-kustomer --config ~/code/bytecode/Stitch/tap-kustomer/tap_kustomer/tap_config.json --catalog ~/code/bytecode/Stitch/tap-kustomer/catalog.json --state ~/code/bytecode/Stitch/tap-kustomer/state_previous.json | ~/.virtualenvs/target-stitch/bin/target-stitch --config ~/code/bytecode/Stitch/tap-kustomer/tap_kustomer/target_config.json > ~/code/bytecode/Stitch/tap-kustomer/state.json
 ```
 ​
 # pylint

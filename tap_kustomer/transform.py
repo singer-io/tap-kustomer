@@ -85,43 +85,43 @@ def denest(this_json, data_key, denest_keys):
 
 
 def denest_node_all_elements(index, record, denest_key, data_key, new_json):
-    """[summary]
+    """Denest all elements in child.
 
     Arguments:
-        index {[type]} -- [description]
-        record {[type]} -- [description]
-        denest_key {[type]} -- [description]
-        data_key {[type]} -- [description]
-        new_json {[type]} -- [description]
+        index {[type]} -- index of record in response
+        record {[type]} -- the record
+        denest_key {[type]} -- key to denest
+        data_key {[type]} -- data path in response
+        new_json {[type]} -- json to denest
 
     Raises:
-        AssertionException: [description]
+        AssertionException: When denested key exists in parent.
     """
     for key, val in record[denest_key].copy().items():
         if key in new_json[data_key][index].keys():
             raise AssertionException(
                 'Denested key {} exists in parent {}'.format(key, new_json[data_key][index]))
         if val == None:
-            new_json[data_key][index][key] = ''
+            new_json[data_key][index][key] = None
         else:
             new_json[data_key][index][key] = val
     new_json[data_key][index].pop(denest_key)
 
 
 def denest_targeted_nodes(index, data_key, record, new_json, denest_key):
-    """[summary]
+    """Denest element in child. denest key in dot notation where prefix
+    is node to denest and postfix is the object which becomes the value.
 
     Arguments:
-        index {[type]} -- [description]
-        data_key {[type]} -- [description]
-        record {[type]} -- [description]
-        new_json {[type]} -- [description]
-        denest_key {[type]} -- [description]
+        index {[type]} -- index of record in response
+        record {[type]} -- the record
+        denest_key {[type]} -- key to denest
+        data_key {[type]} -- data path in response
+        new_json {[type]} -- json to denest
 
     Raises:
-        AssertionException: [description]
+        AssertionException: When denested key exists in parent.
     """
-
     target_value = denest_key.split(".")[1]
     if denest_key.split(".")[0] in record:
         target_key = denest_key.split(".")[0]
@@ -148,7 +148,6 @@ def transform_json(this_json, stream_name, endpoint_config, data_key):
     Returns:
         [type] -- [description]
     """
-
     LOGGER.info("Transforming response for data key {}: stream: {}".format(data_key, stream_name))
 
 

@@ -20,7 +20,8 @@
       }
     },
     "created_at": {
-      "type": ["null", "string"]
+      "type": ["null", "string"],
+      "format": "date-time"
     },
     "created_by": {
       "type": ["null", "object"],
@@ -34,24 +35,8 @@
       }
     },
     "custom": {
-      "type": ["null", "object"],
-      "properties": {
-        "accepts_marketing_bool": {
-          "type": ["null", "boolean"]
-        },
-        "last_order_id_num": {
-          "type": ["null", "integer"]
-        },
-        "last_order_name_str": {
-          "type": ["null", "string"]
-        },
-        "orders_count_num": {
-          "type": ["null", "integer"]
-        },
-        "total_spent_num": {
-          "type": ["null", "number"]
-        }
-      }
+      "additionalProperties": true,
+      "type": ["null", "object"]
     },
     "deleted": {
       "type": ["null", "boolean"]
@@ -112,7 +97,8 @@
       "type": ["null", "string"]
     },
     "imported_at": {
-      "type": ["null", "string"]
+      "type": ["null", "string"],
+      "format": "date-time"
     },
     "instagram_ids": {
       "type": "array",
@@ -121,7 +107,8 @@
       }
     },
     "last_activity_at": {
-      "type": ["null", "string"]
+      "type": ["null", "string"],
+      "format": "date-time"
     },
     "last_conversation": {
       "type": ["null", "object"],
@@ -147,10 +134,12 @@
       }
     },
     "last_customer_activity_at": {
-      "type": ["null", "string"]
+      "type": ["null", "string"],
+      "format": "date-time"
     },
     "last_message_at": {
-      "type": ["null", "string"]
+      "type": ["null", "string"],
+      "format": "date-time"
     },
     "last_message_in": {
       "type": ["null", "object"],
@@ -159,10 +148,11 @@
           "type": ["null", "string"]
         },
         "sent_at": {
-          "type": ["null", "string"]
+          "type": ["null", "string"],
+          "format": "date-time"
         },
         "sentiment": {
-          "type": "null"
+          "type": ["null", "object"]
         }
       }
     },
@@ -173,7 +163,8 @@
           "type": ["null", "string"]
         },
         "sent_at": {
-          "type": ["null", "string"]
+          "type": ["null", "string"],
+          "format": "date-time"
         }
       }
     },
@@ -195,7 +186,8 @@
       }
     },
     "modified_at": {
-      "type": ["null", "string"]
+      "type": ["null", "string"],
+      "format": "date-time"
     },
     "modified_by": {
       "type": ["null", "object"],
@@ -245,7 +237,8 @@
           "type": ["null", "string"]
         },
         "preview_at": {
-          "type": ["null", "string"]
+          "type": ["null", "string"],
+          "format": "date-time"
         },
         "subject": {
           "type": ["null", "string"]
@@ -269,7 +262,8 @@
       "type": ["null", "object"],
       "properties": {
         "updated_at": {
-          "type": ["null", "string"]
+          "type": ["null", "string"],
+          "format": "date-time"
         }
       }
     },
@@ -322,7 +316,8 @@
       "type": ["null", "string"]
     },
     "updated_at": {
-      "type": ["null", "string"]
+      "type": ["null", "string"],
+      "format": "date-time"
     },
     "urls": {
       "type": "array",

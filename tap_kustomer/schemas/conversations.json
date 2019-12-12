@@ -99,7 +99,8 @@
           "type": ["null", "string"]
         },
         "created_at": {
-          "type": ["null", "string"]
+          "type": ["null", "string"],
+          "format": "date-time"
         },
         "direction_type": {
           "type": ["null", "string"]
@@ -108,7 +109,8 @@
           "type": ["null", "string"]
         },
         "sent_at": {
-          "type": ["null", "string"]
+          "type": ["null", "string"],
+          "format": "date-time"
         }
       }
     },
@@ -138,7 +140,8 @@
           "type": ["null", "string"]
         },
         "sent_at": {
-          "type": ["null", "string"]
+          "type": ["null", "string"],
+          "format": "date-time"
         }
       }
     },
@@ -169,21 +172,12 @@
       "type": ["null", "string"]
     },
     "imported_at": {
-      "anyOf": [
-        {
-          "type": [
-            "null",
-            "string"
-          ],
-          "format": "date-time"
-        },
-        {
-          "type": "None"
-        }
-      ]
+      "type": ["null", "string"],
+      "format": "date-time"
     },
     "last_activity_at": {
-      "type": ["null", "string"]
+      "type": ["null", "string"],
+      "format": "date-time"
     },
     "last_done": {
       "type": ["null", "object"],
@@ -209,7 +203,8 @@
       }
     },
     "last_message_at": {
-      "type": ["null", "string"]
+      "type": ["null", "string"],
+      "format": "date-time"
     },
     "last_message_direction": {
       "type": ["null", "string"]
@@ -221,7 +216,8 @@
           "type": ["null", "string"]
         },
         "sent_at": {
-          "type": ["null", "string"]
+          "type": ["null", "string"],
+          "format": "date-time"
         }
       }
     },
@@ -232,7 +228,8 @@
             "type": ["null", "string"]
           },
           "sent_at": {
-            "type": ["null", "string"]
+            "type": ["null", "string"],
+            "format": "date-time"
           }
       }
     },
@@ -243,12 +240,14 @@
           "type": ["null", "string"]
         },
         "sent_at": {
-          "type": ["null", "string"]
+          "type": ["null", "string"],
+          "format": "date-time"
         }
       }
     },
     "last_received_at": {
-      "type": ["null", "string"]
+      "type": ["null", "string"],
+      "format": "date-time"
     },
     "last_response": {
       "type": ["null", "object"],
@@ -285,7 +284,8 @@
       "type": ["null", "integer"]
     },
     "modified_at": {
-      "type": ["null", "string"]
+      "type": ["null", "string"],
+      "format": "date-time"
     },
     "modified_by": {
       "type": ["null", "object"],

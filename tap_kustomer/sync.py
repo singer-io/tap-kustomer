@@ -244,8 +244,6 @@ def sync_endpoint(client,  #pylint: disable=too-many-branches
         if len(response.get('data')) > 0:
             last_updated = response.get('data')[-1]['attributes']['updatedAt']
 
-        # next_url = response.get('links').get('next', None)
-
         # Transform data with transform_json from transform.py
         # The data_key identifies the array/list of records below the <root> element
         # LOGGER.info('data = {}'.format(data)) # TESTING, comment out
