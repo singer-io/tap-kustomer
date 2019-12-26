@@ -6,7 +6,7 @@
       "anyOf": [
         {
           "items": {
-            "type": "string"
+            "type": ["null", "string"]
           },
           "type": "array"
         },
@@ -18,26 +18,26 @@
     "assigned_users": {
       "anyOf": [
         {
-          "type": "null"
+          "type": "array",
+          "items": {
+            "type": ["null", "string"]
+          }
         },
         {
-          "items": {
-            "type": "string"
-          },
-          "type": "array"
+          "type": "null"
         }
       ]
     },
     "channels": {
       "anyOf": [
         {
-          "type": "null"
+          "type": "array",
+          "items": {
+            "type": ["null", "string"]
+          }
         },
         {
-          "items": {
-            "type": "string"
-          },
-          "type": "array"
+          "type": "null"
         }
       ]
     },
@@ -45,6 +45,8 @@
       "type": ["null", "string"]
     },
     "created_by": {
+      "type": ["null", "object"],
+      "additionalProperties": false,
       "properties": {
         "id": {
           "type": ["null", "string"]
@@ -52,10 +54,11 @@
         "type": {
           "type": ["null", "string"]
         }
-      },
-      "type": ["null", "object"]
+      }
     },
     "custom": {
+      "type": ["null", "object"],
+      "additionalProperties": false,
       "properties": {
         "auto_response_at": {
           "type": ["null", "string"]
@@ -114,10 +117,11 @@
         "yale_serial_number_str": {
           "type": ["null", "string"]
         }
-      },
-      "type": ["null", "object"]
+      }
     },
     "customer": {
+      "type": ["null", "object"],
+      "additionalProperties": false,
       "properties": {
         "id": {
           "type": ["null", "string"]
@@ -125,8 +129,7 @@
         "type": {
           "type": ["null", "string"]
         }
-      },
-      "type": ["null", "object"]
+      }
     },
     "direction": {
       "type": ["null", "string"]
@@ -141,6 +144,7 @@
       "type": ["null", "string"]
     },
     "ended_by": {
+      "additionalProperties": false,
       "properties": {
         "id": {
           "type": ["null", "string"]
@@ -161,18 +165,34 @@
       "type": ["null", "string"]
     },
     "first_done": {
+      "type": ["null", "object"],
+      "additionalProperties": false,
       "properties": {
         "assigned_teams": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
+          "anyOf": [
+            {
+              "type": "array",
+              "items": {
+                "type": ["null", "string"]
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "assigned_users": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
+          "anyOf": [
+            {
+              "type": "array",
+              "items": {
+                "type": ["null", "string"]
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "business_time": {
           "type": ["null", "integer"]
@@ -184,10 +204,17 @@
           "type": ["null", "string"]
         },
         "created_by_teams": {
-          "items": {
-            "type": "string"
-          },
-          "type": "array"
+          "anyOf": [
+            {
+              "items": {
+                "type": ["null", "string"]
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "last_message_direction": {
           "type": ["null", "string"]
@@ -219,6 +246,8 @@
           "type": ["null", "integer"]
         },
         "outbound_message_count_by_channel": {
+          "type": ["null", "object"],
+          "additionalProperties": false,
           "properties": {
             "email": {
               "type": ["null", "integer"]
@@ -229,16 +258,16 @@
             "voice": {
               "type": ["null", "integer"]
             }
-          },
-          "type": ["null", "object"]
+          }
         },
         "time": {
           "type": ["null", "integer"]
         }
-      },
-      "type": ["null", "object"]
+      }
     },
     "first_message_in": {
+      "type": ["null", "object"],
+      "additionalProperties": false,
       "properties": {
         "channel": {
           "type": ["null", "string"]
@@ -255,10 +284,11 @@
         "sent_at": {
           "type": ["null", "string"]
         }
-      },
-      "type": ["null", "object"]
+      }
     },
     "first_message_out": {
+      "type": ["null", "object"],
+      "additionalProperties": false,
       "properties": {
         "channel": {
           "type": ["null", "string"]
@@ -270,10 +300,17 @@
           "type": ["null", "string"]
         },
         "created_by_teams": {
-          "items": {
-            "type": "string"
-          },
-          "type": "array"
+          "anyOf": [
+            {
+              "items": {
+                "type": ["null", "string"]
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "direction_type": {
           "type": ["null", "string"]
@@ -284,22 +321,37 @@
         "sent_at": {
           "type": ["null", "string"]
         }
-      },
-      "type": ["null", "object"]
+      }
     },
     "first_response": {
+      "type": ["null", "object"],
+      "additionalProperties": false,
       "properties": {
         "assigned_teams": {
-          "items": {
-            "type": "string"
-          },
-          "type": "array"
+          "anyOf": [
+            {
+              "items": {
+                "type": ["null", "string"]
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "assigned_users": {
-          "items": {
-            "type": "string"
-          },
-          "type": "array"
+          "anyOf": [
+            {
+              "items": {
+                "type": ["null", "string"]
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "business_time": {
           "type": ["null", "integer"]
@@ -311,10 +363,17 @@
           "type": ["null", "string"]
         },
         "created_by_teams": {
-          "items": {
-            "type": "string"
-          },
-          "type": "array"
+          "anyOf": [
+            {
+              "items": {
+                "type": ["null", "string"]
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "id": {
           "type": ["null", "string"]
@@ -328,22 +387,37 @@
         "time": {
           "type": ["null", "integer"]
         }
-      },
-      "type": ["null", "object"]
+      }
     },
     "first_response_since_last_done": {
+      "type": ["null", "object"],
+      "additionalProperties": false,
       "properties": {
         "assigned_teams": {
-          "items": {
-            "type": "string"
-          },
-          "type": "array"
+          "anyOf": [
+            {
+              "items": {
+                "type": ["null", "string"]
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "assigned_users": {
-          "items": {
-            "type": "string"
-          },
-          "type": "array"
+          "anyOf": [
+            {
+              "items": {
+                "type": ["null", "string"]
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "business_time": {
           "type": ["null", "integer"]
@@ -355,10 +429,17 @@
           "type": ["null", "string"]
         },
         "created_by_teams": {
-          "items": {
-            "type": "string"
-          },
-          "type": "array"
+          "anyOf": [
+            {
+              "items": {
+                "type": ["null", "string"]
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "id": {
           "type": ["null", "string"]
@@ -372,8 +453,7 @@
         "time": {
           "type": ["null", "integer"]
         }
-      },
-      "type": ["null", "object"]
+      }
     },
     "id": {
       "type": ["null", "string"]
@@ -385,18 +465,34 @@
       "type": ["null", "string"]
     },
     "last_done": {
+      "type": ["null", "object"],
+      "additionalProperties": false,
       "properties": {
         "assigned_teams": {
-          "items": {
-            "type": "string"
-          },
-          "type": "array"
+          "anyOf": [
+            {
+              "items": {
+                "type": ["null", "string"]
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "assigned_users": {
-          "items": {
-            "type": "string"
-          },
-          "type": "array"
+          "anyOf": [
+            {
+              "items": {
+                "type": ["null", "string"]
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "business_time": {
           "type": ["null", "integer"]
@@ -408,10 +504,17 @@
           "type": ["null", "string"]
         },
         "created_by_teams": {
-          "items": {
-            "type": "string"
-          },
-          "type": "array"
+          "anyOf": [
+            {
+              "items": {
+                "type": ["null", "string"]
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "last_message_direction": {
           "type": ["null", "string"]
@@ -423,25 +526,19 @@
           "type": ["null", "integer"]
         },
         "message_count_by_channel": {
-          "anyOf": [
-            {
-              "type": ["null", "object"],
-              "properties": {
-                "email": {
-                  "type": ["null", "integer"]
-                },
-                "sms": {
-                  "type": ["null", "integer"]
-                },
-                "voice": {
-                  "type": ["null", "integer"]
-                }
-              }
+          "type": ["null", "object"],
+          "additionalProperties": false,
+          "properties": {
+            "email": {
+              "type": ["null", "integer"]
             },
-            {
-              "type": "null"
+            "sms": {
+              "type": ["null", "integer"]
+            },
+            "voice": {
+              "type": ["null", "integer"]
             }
-          ]
+          }
         },
         "note_count": {
           "type": ["null", "integer"]
@@ -466,8 +563,7 @@
         "time": {
           "type": ["null", "integer"]
         }
-      },
-      "type": ["null", "object"]
+      }
     },
     "last_message_at": {
       "type": ["null", "string"]
@@ -476,6 +572,8 @@
       "type": ["null", "string"]
     },
     "last_message_in": {
+      "type": ["null", "object"],
+      "additionalProperties": false,
       "properties": {
         "created_at": {
           "type": ["null", "string"]
@@ -486,10 +584,11 @@
         "sent_at": {
           "type": ["null", "string"]
         }
-      },
-      "type": ["null", "object"]
+      }
     },
     "last_message_out": {
+      "type": ["null", "object"],
+      "additionalProperties": false,
       "properties": {
         "created_at": {
           "type": ["null", "string"]
@@ -500,10 +599,11 @@
         "sent_at": {
           "type": ["null", "string"]
         }
-      },
-      "type": ["null", "object"]
+      }
     },
     "last_message_unresponded_to": {
+      "type": ["null", "object"],
+      "additionalProperties": false,
       "properties": {
         "created_at": {
           "type": ["null", "string"]
@@ -514,10 +614,11 @@
         "sent_at": {
           "type": ["null", "string"]
         }
-      },
-      "type": ["null", "object"]
+      }
     },
     "last_message_unresponded_to_since_last_done": {
+      "type": ["null", "object"],
+      "additionalProperties": false,
       "properties": {
         "created_at": {
           "type": ["null", "string"]
@@ -528,25 +629,40 @@
         "sent_at": {
           "type": ["null", "string"]
         }
-      },
-      "type": ["null", "object"]
+      }
     },
     "last_received_at": {
       "type": ["null", "string"]
     },
     "last_response": {
+      "type": ["null", "object"],
+      "additionalProperties": false,
       "properties": {
         "assigned_teams": {
-          "items": {
-            "type": "string"
-          },
-          "type": "array"
+          "anyOf": [
+            {
+              "items": {
+                "type": ["null", "string"]
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "assigned_users": {
-          "items": {
-            "type": "string"
-          },
-          "type": "array"
+          "anyOf": [
+            {
+              "items": {
+                "type": ["null", "string"]
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "business_time": {
           "type": ["null", "integer"]
@@ -558,10 +674,17 @@
           "type": ["null", "string"]
         },
         "created_by_teams": {
-          "items": {
-            "type": "string"
-          },
-          "type": "array"
+          "anyOf": [
+            {
+              "items": {
+                "type": ["null", "string"]
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "id": {
           "type": ["null", "string"]
@@ -569,16 +692,16 @@
         "time": {
           "type": ["null", "integer"]
         }
-      },
-      "type": ["null", "object"]
+      }
     },
     "links": {
+      "type": ["null", "object"],
+      "additionalProperties": false,
       "properties": {
         "self": {
           "type": ["null", "string"]
         }
-      },
-      "type": ["null", "object"]
+      }
     },
     "merged_target": {
       "type": ["null", "boolean"]
@@ -590,6 +713,8 @@
       "type": ["null", "string"]
     },
     "modified_by": {
+      "type": ["null", "object"],
+      "additionalProperties": false,
       "properties": {
         "id": {
           "type": ["null", "string"]
@@ -597,8 +722,7 @@
         "type": {
           "type": ["null", "string"]
         }
-      },
-      "type": ["null", "object"]
+      }
     },
     "name": {
       "type": ["null", "string"]
@@ -652,10 +776,17 @@
     "satisfaction_level": {
       "properties": {
         "sent_by_teams": {
-          "items": {
-            "type": "string"
-          },
-          "type": "array"
+          "anyOf": [
+            {
+              "items": {
+                "type": ["null", "string"]
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "type": ["null", "object"]
@@ -727,6 +858,7 @@
       "type": ["null", "object"]
     },
     "sla_data": {
+      "type": ["null", "object"],
       "properties": {
         "id": {
           "type": ["null", "string"]
@@ -734,10 +866,10 @@
         "type": {
           "type": ["null", "string"]
         }
-      },
-      "type": ["null", "object"]
+      }
     },
     "sla_version": {
+      "type": ["null", "object"],
       "properties": {
         "id": {
           "type": ["null", "string"]
@@ -745,29 +877,22 @@
         "type": {
           "type": ["null", "string"]
         }
-      },
-      "type": ["null", "object"]
+      }
     },
     "snooze": {
-      "anyOf": [
-        {
-          "type": "null"
+      "type": ["null", "string", "object"],
+      "additionalProperties": false,
+      "properties": {
+        "status": {
+          "type": ["null", "string"]
         },
-        {
-          "properties": {
-            "status": {
-              "type": ["null", "string"]
-            },
-            "status_at": {
-              "type": ["null", "string"]
-            },
-            "time": {
-              "type": ["null", "string"]
-            }
-          },
-          "type": ["null", "object"]
+        "status_at": {
+          "type": ["null", "string"]
+        },
+        "time": {
+          "type": ["null", "string"]
         }
-      ]
+      }
     },
     "snooze_count": {
       "type": ["null", "integer"]
@@ -786,7 +911,7 @@
         {
           "type": "array",
           "items": {
-            "type": "string"
+            "type": ["null", "string"]
           }
         },
         {
@@ -795,6 +920,8 @@
       ]
     },
     "total_done": {
+      "type": ["null", "object"],
+      "additionalProperties": false,
       "properties": {
         "business_time": {
           "type": ["null", "integer"]
@@ -802,8 +929,7 @@
         "time": {
           "type": ["null", "integer"]
         }
-      },
-      "type": ["null", "object"]
+      }
     },
     "total_open": {
       "properties": {

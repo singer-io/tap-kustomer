@@ -6,14 +6,41 @@ spec](https://github.com/singer-io/getting-started/blob/master/SPEC.md).
 
 This tap:
 
-- Pulls raw data from the [https://api.kustomerapp.com]([xxx](https://api.kustomerapp.com))
+- Pulls raw data from the [https://api.kustomerapp.com](https://api.kustomerapp.com)
 - Extracts the following resources:
-  - Customers, Messages, Teams, Tags, Kobjects, Conversations, Shortcuts, Users
+  - Conversations, Customers, Kobjects, Messages, Notes, Teams, Tags, Shortcuts, Users
 - Outputs the schema for each resource
 - Incrementally pulls data based on the input state
 
 
 ## Streams
+
+[Conversations](https://api.kustomerapp.com/v1/customers/search)
+- Endpoint: POST https://api.kustomerapp.com/v1/customers/search
+- Body
+  ```json
+    {
+    "and": [
+        {
+        "conversation_updated_at": {
+            "gte": "2017-01-01"
+        }
+        }
+    ],
+    "sort": [
+        {
+        "conversation_updated_at": "asc"
+        }
+    ],
+    "queryContext": "conversation"
+    }
+  ```
+- Primary key fields: id
+- Replication strategy: INCREMENTAL (query filtered)
+  - Bookmark query fields: gte
+  - Bookmark: date-time
+- Transformations: Nodes attributes and relationships denested.
+  - `attributes.sla` renamed to `sla_data`
 
 [Customers](https://api.kustomerapp.com/v1/customers/search)
 - Endpoint: POST https://api.kustomerapp.com/v1/customers/search
@@ -37,7 +64,7 @@ This tap:
   ```
 - Primary key fields: id
 - Replication strategy: INCREMENTAL (query filtered)
-  - Bookmark query fields: end_window
+  - Bookmark query fields: gte
   - Bookmark: date-time
 - Transformations: Nodes attributes and relationships denested.
 
@@ -63,33 +90,7 @@ This tap:
   ```
 - Primary key fields: id
 - Replication strategy: INCREMENTAL (query filtered)
-  - Bookmark query fields: end_window
-  - Bookmark: date-time
-- Transformations: Nodes attributes and relationships denested.
-
-[Conversations](https://api.kustomerapp.com/v1/customers/search)
-- Endpoint: POST https://api.kustomerapp.com/v1/customers/search
-- Body
-  ```json
-    {
-    "and": [
-        {
-        "conversation_updated_at": {
-            "gte": "2017-01-01"
-        }
-        }
-    ],
-    "sort": [
-        {
-        "conversation_updated_at": "asc"
-        }
-    ],
-    "queryContext": "conversation"
-    }
-  ```
-- Primary key fields: id
-- Replication strategy: INCREMENTAL (query filtered)
-  - Bookmark query fields: end_window
+  - Bookmark query fields: gte
   - Bookmark: date-time
 - Transformations: Nodes attributes and relationships denested.
 
@@ -115,7 +116,7 @@ This tap:
   ```
 - Primary key fields: id
 - Replication strategy: INCREMENTAL (query filtered)
-  - Bookmark query fields: end_window
+  - Bookmark query fields: gte
   - Bookmark: date-time
 - Transformations: Nodes attributes and relationships denested.
 
@@ -141,7 +142,31 @@ This tap:
   ```
 - Primary key fields: id
 - Replication strategy: INCREMENTAL (query filtered)
-  - Bookmark query fields: end_window
+  - Bookmark query fields: gte
+  - Bookmark: date-time
+- Transformations: Nodes attributes and relationships denested.
+
+[Shortcuts](https://api.kustomerapp.com/v1/shortcuts?page=1)
+- Endpoint: GET https://api.kustomerapp.com/v1/shortcuts?page=1
+- Primary key fields: id
+- Replication strategy: INCREMENTAL (query filtered)
+  - Bookmark query fields: updated_at
+  - Bookmark: date-time
+- Transformations: Nodes attributes and relationships denested.
+
+[Tags](https://api.kustomerapp.com/v1/tags?page=1)
+- Endpoint: GET https://api.kustomerapp.com/v1/tag?page=1
+- Primary key fields: id
+- Replication strategy: INCREMENTAL (query filtered)
+  - Bookmark query fields: updated_at
+  - Bookmark: date-time
+- Transformations: Nodes attributes and relationships denested.
+
+[Teams](https://api.kustomerapp.com/v1/teams?page=1)
+- Endpoint: GET https://api.kustomerapp.com/v1/teams?page=1
+- Primary key fields: id
+- Replication strategy: INCREMENTAL (query filtered)
+  - Bookmark query fields: updated_at
   - Bookmark: date-time
 - Transformations: Nodes attributes and relationships denested.
 
@@ -195,16 +220,18 @@ This tap:
     Optionally, also create a `state.json` file. `currently_syncing` is an optional attribute used for identifying the last object to be synced in case the job is interrupted mid-stream. The next run would begin where the last job left off.
 
     ```json
-    {
-        "currently_syncing": "registers",
+      {
         "bookmarks": {
-            "customers": "2019-06-11T13:37:51Z",
-            "conversations": "2019-06-19T19:48:42Z",
-            "kobjects": "2019-06-18T18:23:53Z",
-            "teams": "2019-06-20T00:52:44Z",
-            "users": "2019-06-19T19:48:45Z"
-        }
-    }
+          "conversations": "2019-12-26T18:35:41.583Z",
+          "customers": "2019-12-26T18:39:38.186Z",
+          "kobjects": "2019-12-26T18:24:18.283Z",
+          "messages": "2019-12-26T18:39:45.018Z",
+          "shortcuts": "2019-12-25T18:00:00Z",
+          "tags": "2019-12-25T18:00:00Z",
+          "users": "2019-12-25T18:00:00Z"
+        },
+        "currently_syncing": "teams"
+      }
     ```
 
 4. Run the Tap in Discovery Mode
@@ -253,18 +280,26 @@ This tap:
     Check tap resulted in the following:
     ```bash
     The output is valid.
-    It contained 8240 messages for 16 streams.
+    It contained 35416 messages for 16 streams.
 
-        16 schema messages
-    8108 record messages
-        116 state messages
+    16 schema messages
+    35416 record messages
+    116 state messages
 
     Details by stream:
-    +-----------------------------+---------+---------+
-    | stream                      | records | schemas |
-    +-----------------------------+---------+---------+
-    | **ENDPOINT_A**              | 23      | 1       |
-    +-----------------------------+---------+---------+
+   +---------------+---------+---------+
+   | stream        | records | schemas |
+   +---------------+---------+---------+
+   | conversations | 1274    | 1       |
+   | kobjects      | 258     | 1       |
+   | tags          | 0       | 1       |
+   | notes         | 0       | 1       |
+   | users         | 0       | 1       |
+   | customers     | 32300   | 1       |
+   | shortcuts     | 0       | 1       |
+   | teams         | 0       | 1       |
+   | messages      | 1584    | 1       |
+   +---------------+---------+---------+
     ```
 ---
 
