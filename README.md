@@ -6,23 +6,152 @@ spec](https://github.com/singer-io/getting-started/blob/master/SPEC.md).
 
 This tap:
 
-- Pulls raw data from the [**CLIENT** API](xxx)
+- Pulls raw data from the [https://api.kustomerapp.com]([xxx](https://api.kustomerapp.com))
 - Extracts the following resources:
-  - **TBD**
+  - Customers, Messages, Teams, Tags, Kobjects, Conversations, Shortcuts, Users
 - Outputs the schema for each resource
 - Incrementally pulls data based on the input state
 
 
 ## Streams
 
-[**ENDPOINT_A**](**URL**)
-- Endpoint: **URL**
-- Primary key fields: 
-- Foreign key fields: 
+[Customers](https://api.kustomerapp.com/v1/customers/search)
+- Endpoint: POST https://api.kustomerapp.com/v1/customers/search
+- Body
+  ```json
+    {
+    "and": [
+        {
+        "customer_updated_at": {
+            "gte": "2017-01-01"
+        }
+        }
+    ],
+    "sort": [
+        {
+        "customer_updated_at": "asc"
+        }
+    ],
+    "queryContext": "customer"
+    }
+  ```
+- Primary key fields: id
 - Replication strategy: INCREMENTAL (query filtered)
-  - Bookmark query fields:
-  - Bookmark: ex: modified (date-time)
-- Transformations: none
+  - Bookmark query fields: end_window
+  - Bookmark: date-time
+- Transformations: Nodes attributes and relationships denested.
+
+[Kobjects](https://api.kustomerapp.com/v1/customers/search)
+- Endpoint: POST https://api.kustomerapp.com/v1/customers/search
+- Body
+  ```json
+    {
+    "and": [
+        {
+        "kobject_updated_at": {
+            "gte": "2017-01-01"
+        }
+        }
+    ],
+    "sort": [
+        {
+        "kobject_updated_at": "asc"
+        }
+    ],
+    "queryContext": "kobject"
+    }
+  ```
+- Primary key fields: id
+- Replication strategy: INCREMENTAL (query filtered)
+  - Bookmark query fields: end_window
+  - Bookmark: date-time
+- Transformations: Nodes attributes and relationships denested.
+
+[Conversations](https://api.kustomerapp.com/v1/customers/search)
+- Endpoint: POST https://api.kustomerapp.com/v1/customers/search
+- Body
+  ```json
+    {
+    "and": [
+        {
+        "conversation_updated_at": {
+            "gte": "2017-01-01"
+        }
+        }
+    ],
+    "sort": [
+        {
+        "conversation_updated_at": "asc"
+        }
+    ],
+    "queryContext": "conversation"
+    }
+  ```
+- Primary key fields: id
+- Replication strategy: INCREMENTAL (query filtered)
+  - Bookmark query fields: end_window
+  - Bookmark: date-time
+- Transformations: Nodes attributes and relationships denested.
+
+[Messages](https://api.kustomerapp.com/v1/customers/search)
+- Endpoint: POST https://api.kustomerapp.com/v1/customers/search
+- Body
+  ```json
+    {
+    "and": [
+        {
+        "message_updated_at": {
+            "gte": "2017-01-01"
+        }
+        }
+    ],
+    "sort": [
+        {
+        "message_updated_at": "asc"
+        }
+    ],
+    "queryContext": "message"
+    }
+  ```
+- Primary key fields: id
+- Replication strategy: INCREMENTAL (query filtered)
+  - Bookmark query fields: end_window
+  - Bookmark: date-time
+- Transformations: Nodes attributes and relationships denested.
+
+[Notes](https://api.kustomerapp.com/v1/customers/search)
+- Endpoint: POST https://api.kustomerapp.com/v1/customers/search
+- Body 
+  ```json
+    {
+    "and": [
+        {
+        "note_updated_at": {
+            "gte": "2017-01-01"
+        }
+        }
+    ],
+    "sort": [
+        {
+        "note_updated_at": "asc"
+        }
+    ],
+    "queryContext": "note"
+    }
+  ```
+- Primary key fields: id
+- Replication strategy: INCREMENTAL (query filtered)
+  - Bookmark query fields: end_window
+  - Bookmark: date-time
+- Transformations: Nodes attributes and relationships denested.
+
+[Users](https://api.kustomerapp.com/v1/users?page=1)
+- Endpoint: GET https://api.kustomerapp.com/v1/users?page=1
+- Primary key fields: id
+- Replication strategy: INCREMENTAL (query filtered)
+  - Bookmark query fields: updated_at
+  - Bookmark: date-time
+- Transformations: Nodes attributes and relationships denested.
 
 ## Quick Start
 
@@ -70,12 +199,10 @@ This tap:
         "currently_syncing": "registers",
         "bookmarks": {
             "customers": "2019-06-11T13:37:51Z",
-            "contracts": "2019-06-19T19:48:42Z",
-            "invoices": "2019-06-18T18:23:53Z",
-            "items": "2019-06-20T00:52:44Z",
-            "transactions": "2019-06-19T19:48:45Z",
-            "registers": "2019-06-11T13:37:56Z",
-            "revenue_entries": "2019-06-19T19:48:47Z"
+            "conversations": "2019-06-19T19:48:42Z",
+            "kobjects": "2019-06-18T18:23:53Z",
+            "teams": "2019-06-20T00:52:44Z",
+            "users": "2019-06-19T19:48:45Z"
         }
     }
     ```

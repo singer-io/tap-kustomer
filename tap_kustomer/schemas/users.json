@@ -1,6 +1,9 @@
 {
   "additionalProperties": false,
-  "type": "object",
+  "type": [
+    "null",
+    "object"
+  ],
   "properties": {
     "avatar_url": {
       "type": [
@@ -176,22 +179,36 @@
       ]
     },
     "role_groups": {
-      "items": {
-        "type": [
-          "null",
-          "string"
-        ]
-      },
-      "type": "array"
+      "anyOf": [
+        {
+          "items": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "type": "array"
+        },
+        {
+          "type": "null"
+        }
+      ]
     },
     "roles": {
-      "items": {
-        "type": [
-          "null",
-          "string"
-        ]
-      },
-      "type": "array"
+      "anyOf": [
+        {
+          "items": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "type": "array"
+        },
+        {
+          "type": "null"
+        }
+      ]
     },
     "type": {
       "type": [

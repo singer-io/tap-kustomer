@@ -149,16 +149,21 @@ STREAMS = {
     },
     "notes": {
         "denest": "attributes,relationships.data",
-        "params": {
-            "page": "{page}"
-        },
+        "params": {},
         "replication_method": "INCREMENTAL",
         "key_properties": ["id"],
-        "path": "notes",
+        "path": "customers/search",
         "replication_keys": ["updated_at"],
-        "api_method": "GET",
+        "api_method": "POST",
         "data_key": "data",
-        "bookmark_query_field": "updated_at",
-        "bookmark_type": "datetime"
+        "bookmark_query_field": "note_updated_at",
+        "bookmark_type": "datetime",
+        "body": {
+            "and": [
+                {"note_updated_at": {"gte": '{end_window}'}}
+            ],
+            "sort": [{"note_updated_at": "asc"}],
+            "queryContext": "note"
+        }
     }
 }

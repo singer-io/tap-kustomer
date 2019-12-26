@@ -1,10 +1,9 @@
 import re
-import hashlib
-import json
 import singer
 from tap_kustomer.error import AssertionException
 
 LOGGER = singer.get_logger()
+
 
 def transform_for_key(this_json, stream_name, endpoint_config, data_key):
     # LOGGER.info("Transforming for stream {} endpoint_config {} data_key {}: ".format(
@@ -97,11 +96,11 @@ def denest_node_all_elements(index, record, denest_key, data_key, new_json):
     Raises:
         AssertionException: When denested key exists in parent.
     """
-    for key, val in record[denest_key].copy().items():
-        if key in new_json[data_key][index].keys():
-            raise AssertionException(
-                'Denested key {} exists in parent {}'.format(key, new_json[data_key][index]))
-        if val == None:
+    for key, val in record[denest_key].items():
+        # if key in new_json[data_key][index].keys():
+        #     raise AssertionException(
+        #         'Denested key {} exists in parent {}'.format(key, new_json[data_key][index]))
+        if not val:
             new_json[data_key][index][key] = None
         else:
             new_json[data_key][index][key] = val
@@ -118,21 +117,21 @@ def denest_targeted_nodes(index, data_key, record, new_json, denest_key):
         denest_key {[type]} -- key to denest
         data_key {[type]} -- data path in response
         new_json {[type]} -- json to denest
-
-    Raises:
-        AssertionException: When denested key exists in parent.
     """
     target_value = denest_key.split(".")[1]
     if denest_key.split(".")[0] in record:
         target_key = denest_key.split(".")[0]
         for key in record[target_key].copy().keys():
-            if isinstance(record[target_key][key], dict) and target_value in record[target_key][key].keys():
-                if key in new_json[data_key][index].keys():
-                    # raise AssertionException('Denested key {} exists in parent {}'.format(
-                    #     key, new_json[data_key][index]))
-                    LOGGER.info('Denested key {} exists in parent'.format(key))
+            if isinstance(record[target_key][key], dict) and \
+                    target_value in record[target_key][key].keys():
+                # Transform keyname if exists
+                if key == 'sla':
+                    new_key = key + "_" + target_value
+                    new_json[data_key][index][new_key] = record[target_key][key][target_value].copy(
+                    )
                 else:
-                    new_json[data_key][index][key] = record[target_key][key][target_value].copy()
+                    new_json[data_key][index][key] = record[target_key][key][target_value].copy(
+                    )
     new_json[data_key][index].pop(target_key)
 
 
@@ -148,16 +147,17 @@ def transform_json(this_json, stream_name, endpoint_config, data_key):
     Returns:
         [type] -- [description]
     """
-    LOGGER.info("Transforming response for data key {}: stream: {}".format(data_key, stream_name))
-
+    LOGGER.info("Transforming response for data key {}: stream: {}".format(
+        data_key, stream_name))
 
     # response = this_json
+    # tofix before testing: rename sla in schema
     converted_json = convert_json(this_json)
     if endpoint_config['denest']:
-        LOGGER.info("Denesting for keys {}:".format(endpoint_config['denest']))
+        LOGGER.info("Denesting for keys {}:".format(
+            endpoint_config['denest']))
         for key in endpoint_config['denest'].split(","):
             denest(converted_json, data_key, key)
     if data_key is not None:
         return converted_json[data_key]
-    else:
-        return converted_json
+    return converted_json

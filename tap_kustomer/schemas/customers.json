@@ -71,24 +71,38 @@
       "type": ["null", "string"]
     },
     "external_ids": {
-      "type": "array",
-      "items": {
-        "type": ["null", "object"],
-        "properties": {
-          "external_id": {
-            "type": ["null", "string"]
-          },
-          "verified": {
-            "type": ["null", "boolean"]
+      "anyOf": [
+        {
+          "type": "array",
+          "items": {
+            "type": ["null", "object"],
+            "properties": {
+              "external_id": {
+                "type": ["null", "string"]
+              },
+              "verified": {
+                "type": ["null", "boolean"]
+              }
+            }
           }
+        },
+        {
+          "type": "null"
         }
-      }
+      ]
     },
     "facebook_ids": {
-      "type": "array",
-      "items": {
-            "type": ["null", "string"]
-      }
+      "anyOf": [
+        {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        {
+          "type": "null"
+        }
+      ]
     },
     "first_name": {
       "type": ["null", "string"]
@@ -101,10 +115,17 @@
       "format": "date-time"
     },
     "instagram_ids": {
-      "type": "array",
-      "items": {
+      "anyOf": [
+        {
+          "type": "array",
+          "items": {
             "type": ["null", "string"]
-      }
+          }
+        },
+        {
+          "type": "null"
+        }
+      ]
     },
     "last_activity_at": {
       "type": ["null", "string"],
@@ -114,10 +135,17 @@
       "type": ["null", "object"],
       "properties": {
         "channels": {
-          "type": "array",
-          "items": {
-            "type": ["null", "string"]
-          }
+          "anyOf": [
+            {
+              "type": "array",
+              "items": {
+                "type": ["null", "string"]
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "id": {
           "type": ["null", "string"]
@@ -126,10 +154,17 @@
           "type": ["null", "object"]
         },
         "tags": {
-          "type": "array",
-          "items": {
-            "type": ["null", "string"]
-          }
+          "anyOf": [
+            {
+              "type": "array",
+              "items": {
+                "type": ["null", "string"]
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       }
     },
@@ -180,10 +215,17 @@
       }
     },
     "locations": {
-      "type": "array",
-      "items": {
-        "type": ["null", "string"]
-      }
+      "anyOf": [
+        {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        {
+          "type": "null"
+        }
+      ]
     },
     "modified_at": {
       "type": ["null", "string"],
@@ -215,21 +257,28 @@
       }
     },
     "phones": {
-      "type": "array",
-      "items": {
-        "type": ["null", "object"],
-        "properties": {
-          "phone": {
-            "type": ["null", "string"]
-          },
-          "type": {
-            "type": ["null", "string"]
-          },
-          "verified": {
-            "type": ["null", "boolean"]
+      "anyOf": [
+        {
+          "type": "array",
+          "items": {
+            "type": ["null", "object"],
+            "properties": {
+              "phone": {
+                "type": ["null", "string"]
+              },
+              "type": {
+                "type": ["null", "string"]
+              },
+              "verified": {
+                "type": ["null", "boolean"]
+              }
+            }
           }
+        },
+        {
+          "type": "null"
         }
-      }
+      ]
     },
     "preview": {
       "properties": {
@@ -253,10 +302,7 @@
       "type": ["null", "object"]
     },
     "progressive_status": {
-      "type": [
-        "null",
-        "string"
-      ]
+      "type": ["null", "string"]
     },
     "recent_location": {
       "type": ["null", "object"],
@@ -271,46 +317,95 @@
       "type": ["null", "integer"]
     },
     "shared_emails": {
-      "type": "array",
-      "items": {
-        "type": ["null", "string"]
-      }
+      "anyOf": [
+        {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        {
+          "type": "null"
+        }
+      ]
     },
     "shared_external_ids": {
-      "type": "array",
-      "items": {
-        "type": ["null", "string"]
-      }
+      "anyOf": [
+        {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        {
+          "type": "null"
+        }
+      ]
     },
     "shared_phones": {
-      "type": "array",
-      "items": {
-        "type": ["null", "string"]
-      }
+      "anyOf": [
+        {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        {
+          "type": "null"
+        }
+      ]
     },
     "shared_socials": {
-      "type": "array",
-      "items": {
-        "type": ["null", "string"]
-      }
+      "anyOf": [
+        {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        {
+          "type": "null"
+        }
+      ]
     },
     "smooch_ids": {
-      "type": "array",
-      "items": {
-        "type": ["null", "string"]
-      }
+      "anyOf": [
+        {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        {
+          "type": "null"
+        }
+      ]
     },
     "socials": {
-      "type": "array",
-      "items": {
-        "type": ["null", "string"]
-      }
+      "anyOf": [
+        {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        {
+          "type": "null"
+        }
+      ]
     },
     "tags": {
-      "type": "array",
-      "items": {
-        "type": ["null", "string"]
-      }
+      "anyOf": [
+        {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        {
+          "type": "null"
+        }
+      ]
     },
     "type": {
       "type": ["null", "string"]
@@ -320,25 +415,46 @@
       "format": "date-time"
     },
     "urls": {
-      "type": "array",
-      "items": {
-        "type": ["null", "string"]
-      }
+      "anyOf": [
+        {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        {
+          "type": "null"
+        }
+      ]
     },
     "verified": {
       "type": ["null", "boolean"]
     },
     "watchers": {
-      "type": "array",
-      "items": {
-        "type": ["null", "string"]
-      }
+      "anyOf": [
+        {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        {
+          "type": "null"
+        }
+      ]
     },
     "whatsapps": {
-      "type": "array",
-      "items": {
-        "type": ["null", "string"]
-      }
+      "anyOf": [
+        {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        {
+          "type": "null"
+        }
+      ]
     }
   }
 }

@@ -1,6 +1,7 @@
 {
     "additionalProperties": false,
-    "type": "object",
+    "type":
+        "object",
     "properties": {
         "body": {
             "type": [
@@ -33,7 +34,10 @@
             ]
         },
         "created_at": {
-            "type": ["null", "string"],
+            "type": [
+                "null",
+                "string"
+            ],
             "format": "date-time"
         },
         "created_by": {
@@ -226,24 +230,34 @@
             "format": "date-time"
         },
         "user_mentions": {
-            "type": "array",
-            "items": {
-              "type": ["null", "object"],
-                "properties": {
-                    "id": {
-                        "type": [
-                            "null",
-                            "string"
-                        ]
-                    },
-                    "type": {
-                        "type": [
-                            "null",
-                            "string"
-                        ]
+            "anyOf": [
+                {
+                "type": "array",
+                "items": {
+                    "type": [
+                        "null",
+                        "object"
+                    ],
+                    "properties": {
+                        "id": {
+                            "type": [
+                                "null",
+                                "string"
+                            ]
+                        },
+                        "type": {
+                            "type": [
+                                "null",
+                                "string"
+                            ]
+                        }
                     }
                 }
+            },
+            {
+                "type": "null"
             }
+            ]
         }
     }
 }

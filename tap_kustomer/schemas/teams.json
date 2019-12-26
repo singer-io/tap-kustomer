@@ -1,9 +1,6 @@
 {
   "additionalProperties": false,
-  "type": [
-    "null",
-    "object"
-  ],
+  "type": "object",
   "properties": {
     "created_at": {
       "type": [
@@ -100,13 +97,20 @@
       ]
     },
     "members": {
-      "items": {
-        "type": [
-          "null",
-          "string"
-        ]
-      },
-      "type": "array"
+      "anyOf": [
+        {
+          "items": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "type": "array"
+        },
+        {
+          "type": "null"
+        }
+      ]
     },
     "modified_at": {
       "type": [
@@ -163,13 +167,20 @@
       ]
     },
     "role_groups": {
-      "type": "array",
-      "items": {
-        "type": [
-          "null",
-          "string"
-        ]
-      }
+      "anyOf": [
+        {
+          "type": "array",
+          "items": {
+            "type": [
+              "null",
+              "string"
+            ]
+          }
+        },
+        {
+          "type": "null"
+        }
+      ]
     },
     "type": {
       "type": [
