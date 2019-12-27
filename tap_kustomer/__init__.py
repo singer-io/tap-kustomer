@@ -35,8 +35,7 @@ def main():
     parsed_args = singer.utils.parse_args(REQUIRED_CONFIG_KEYS)
 
     with KustomerClient(parsed_args.config['api_token'],
-                        parsed_args.config['user_agent'],
-                        ) as client:
+                        parsed_args.config['user_agent']) as client:
 
         state = {}
         if parsed_args.state:

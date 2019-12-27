@@ -14,7 +14,8 @@ def write_schema(catalog, stream_name):
     stream = catalog.get_stream(stream_name)
     schema = stream.schema.to_dict()
     try:
-        singer.write_schema(stream_name, schema, stream.key_properties)
+        singer.write_schema(stream_name, schema,
+                            stream.key_properties)
     except OSError as err:
         LOGGER.info(
             'OS Error writing schema for: {}'.format(stream_name))
@@ -49,7 +50,8 @@ def write_bookmark(state, stream, value):
 
 def transform_datetime(this_dttm):
     with Transformer() as transformer:
-        new_dttm = transformer._transform_datetime(this_dttm)
+        new_dttm = transformer._transform_datetime(  # pylint: disable=protected-access
+            this_dttm)
     return new_dttm
 
 
@@ -69,8 +71,9 @@ def process_records(catalog,  # pylint: disable=too-many-branches
 
                 # Reset max_bookmark_value to new value if higher
                 if transformed_record.get(bookmark_field):
-                    if max_bookmark_value is None or transformed_record[bookmark_field] > transform_datetime(
-                            max_bookmark_value):
+                    if max_bookmark_value is None or \
+                        transformed_record[bookmark_field] > \
+                            transform_datetime(max_bookmark_value):
                         max_bookmark_value = transformed_record[bookmark_field]
 
                 if bookmark_field and (bookmark_field in transformed_record):
@@ -135,12 +138,12 @@ def sync_endpoint(client,  # pylint: disable=too-many-branches
     offset = 0  # Starting offset value for each batch API call
     # pagination: loop thru all pages of data using next (if not None)
     next_url = '{}/{}'.format(client.base_url, path)
-    next_page = next_url
     total_records = 0
     limit = 100  # Default limit for Kustomer API, unable to change this in v1.0
     total_page = limit  # Initialize total; set to actual total on first API call
+    total_pages = 2
 
-    while start_window < now_datetime and total_page >= limit:
+    while start_window < now_datetime and total_page >= limit or page <= total_pages:
         params = static_params  # adds in endpoint specific, sort, filter params
         if bookmark_query_field_from:
             # For datetime bookmark_type, tap allows from/to date window
@@ -163,7 +166,10 @@ def sync_endpoint(client,  # pylint: disable=too-many-branches
         else:
             querystring = None
         LOGGER.info('URL for Stream {}: {}{}{}'.format(stream_name, next_url,
-                                                       '/' if page == 1 else '', '?{}'.format(querystring) if querystring else ''))
+                                                       '/' if page == 1 else '',
+                                                       '?{}'.format(
+                                                           querystring)
+                                                       if querystring else ''))
 
         # API request data
 
@@ -233,14 +239,15 @@ def sync_endpoint(client,  # pylint: disable=too-many-branches
             for key in id_fields:
                 if not record.get(key):
                     LOGGER.info(
-                        'xxx Missing key {} in record: {}'.format(key, record))
+                        'Missing key {} in record: {}'.format(key, record))
 
         # Process records and get the max_bookmark_value and record_count for the set of records
-        max_bookmark_value, record_count = process_records(catalog=catalog, stream_name=stream_name,
-                                                           records=transformed_data, time_extracted=time_extracted,
-                                                           bookmark_field=bookmark_field, bookmark_type=bookmark_type,
-                                                           max_bookmark_value=max_bookmark_value,
-                                                           last_datetime=last_datetime, last_integer=last_integer)
+        max_bookmark_value, record_count = \
+            process_records(catalog=catalog,
+                            stream_name=stream_name, records=transformed_data,
+                            time_extracted=time_extracted, bookmark_field=bookmark_field,
+                            bookmark_type=bookmark_type, max_bookmark_value=max_bookmark_value,
+                            last_datetime=last_datetime, last_integer=last_integer)
         LOGGER.info('Stream {}, batch processed {} records'.format(
             stream_name, record_count))
 
@@ -251,6 +258,7 @@ def sync_endpoint(client,  # pylint: disable=too-many-branches
         # to_rec: to record; ending record for the batch page
         to_rec = offset + limit
         if total_page < limit:
+            total_pages = page
             to_rec = to_rec + total_page
 
         LOGGER.info(
@@ -292,7 +300,8 @@ def sync(client, config, catalog, state):
     # Get selected_streams from catalog, based on state last_stream
     #   last_stream = Previous currently synced stream, if the load was interrupted
     last_stream = singer.get_currently_syncing(state)
-    LOGGER.info('last/currently syncing stream: {}'.format(last_stream))
+    LOGGER.info(
+        'last/currently syncing stream: {}'.format(last_stream))
     selected_streams = []
     for stream in catalog.get_selected_streams(state):
         selected_streams.append(stream.stream)

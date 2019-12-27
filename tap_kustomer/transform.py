@@ -1,13 +1,10 @@
 import re
 import singer
-from tap_kustomer.error import AssertionException
 
 LOGGER = singer.get_logger()
 
 
 def transform_for_key(this_json, stream_name, endpoint_config, data_key):
-    # LOGGER.info("Transforming for stream {} endpoint_config {} data_key {}: ".format(
-    #     stream_name, endpoint_config, data_key))
     transformed_json = transform_json(
         this_json, stream_name, endpoint_config, data_key)
     data = []
@@ -56,15 +53,13 @@ def convert_json(this_json):
 
 def denest(this_json, data_key, denest_keys):
     """Denest by path and key. Moves all elements at key to parent level if
-    no target provided. Target provided by dot syntax, e.g. key.target.
+    no target provided. Target provided by dot syntax, e.g. key.target. If
+    target exists node is taken as value for key.
 
     Arguments:
-        this_json {[type]} -- [description]
-        data_key {[type]} -- [description]
-        denest_keys {[type]} -- [description]
-
-    Raises:
-        AssertionException: If denested key exists in parent.
+        this_json {[type]} -- JSON to denest
+        data_key {[type]} -- Path to data in JSON
+        denest_keys {[type]} -- Keys to denest
 
     Returns:
         json -- Transformed json with denested keys.
@@ -84,28 +79,7 @@ def denest(this_json, data_key, denest_keys):
 
 
 def denest_node_all_elements(index, record, denest_key, data_key, new_json):
-    """Denest all elements in child.
-
-    Arguments:
-        index {[type]} -- index of record in response
-        record {[type]} -- the record
-        denest_key {[type]} -- key to denest
-        data_key {[type]} -- data path in response
-        new_json {[type]} -- json to denest
-
-    Raises:
-        AssertionException: When denested key exists in parent.
-    """
     for key, val in record[denest_key].items():
-        # if key in new_json[data_key][index].keys():
-        #     raise AssertionException(
-        #         'Denested key {} exists in parent {}'.format(key, new_json[data_key][index]))
-        # if not val:
-        #     new_json[data_key][index][key] = None
-        # else:
-        # if val is None:
-        #     new_json[data_key][index][key] = "null"
-        # else:
         new_json[data_key][index][key] = val
     new_json[data_key][index].pop(denest_key)
 
@@ -157,8 +131,6 @@ def transform_json(this_json, stream_name, endpoint_config, data_key):
     # tofix before testing: rename sla in schema
     converted_json = convert_json(this_json)
     if endpoint_config['denest']:
-        LOGGER.info("Denesting for keys {}:".format(
-            endpoint_config['denest']))
         for key in endpoint_config['denest'].split(","):
             denest(converted_json, data_key, key)
     if data_key is not None:

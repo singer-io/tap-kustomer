@@ -204,13 +204,11 @@ This tap:
     - [singer-tools](https://github.com/singer-io/singer-tools)
     - [target-stitch](https://github.com/singer-io/target-stitch)
 
-3. Create your tap's `config.json` file. The `api_sub_domain` is everything before `.kustomer.com.` in the KUSTOMER URL.  The `account_name` is everything between `.kustomer.co.com.` and `api` in the KUSTOMER URL. The `date_window_size` is the integer number of days (between the from and to dates) for date-windowing through the date-filtered endpoints (default = 60).
+3. Create your tap's `config.json` file. The `token` is the credential supplied from the Kustomer integration. The `date_window_size` is the integer number of days (between the from and to dates) for date-windowing through the date-filtered endpoints (default = 60).
 
     ```json
     {
         "token": "YOUR_API_TOKEN",
-        "account_name": "YOUR_ACCOUNT_NAME",
-        "server_subdomain": "YOUR_SERVER_SUBDOMAIN",
         "start_date": "2019-01-01T00:00:00Z",
         "user_agent": "tap-kustomer <api_user_email@your_company.com>",
         "date_window_size": "60"
