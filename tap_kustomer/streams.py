@@ -21,7 +21,9 @@ STREAMS = {
         "bookmark_type": "datetime",
         "key_properties": ["id"],
         "denest": "attributes,relationships.data",
-        "params": {},
+        "params": {
+            "pageSize": "200"
+        },
         "path": "customers/search",
         "body": {
             "and": [
@@ -36,7 +38,9 @@ STREAMS = {
     },
     "kobjects": {
         "denest": "attributes,relationships.data",
-        "params": {},
+        "params": {
+            "pageSize": "200"
+        },
         "replication_method": "INCREMENTAL",
         "key_properties": ["id"],
         "path": "customers/search",
@@ -55,7 +59,9 @@ STREAMS = {
     },
     "conversations": {
         "denest": "attributes,relationships.data",
-        "params": {},
+        "params": {
+            "pageSize": "200"
+        },
         "replication_method": "INCREMENTAL",
         "key_properties": ["id"],
         "path": "customers/search",
@@ -74,7 +80,9 @@ STREAMS = {
     },
     "messages": {
         "denest": "attributes,relationships.data",
-        "params": {},
+        "params": {
+            "pageSize": "200"
+        },
         "replication_method": "INCREMENTAL",
         "key_properties": ["id"],
         "path": "customers/search",
@@ -94,7 +102,8 @@ STREAMS = {
     "users": {
         "denest": "attributes,relationships.data",
         "params": {
-            "page": "{page}"
+            "page": "{page}",
+            "pageSize": "200"
         },
         "replication_method": "INCREMENTAL",
         "key_properties": ["id"],
@@ -108,7 +117,8 @@ STREAMS = {
     "teams": {
         "denest": "attributes,relationships.data",
         "params": {
-            "page": "{page}"
+            "page": "{page}",
+            "pageSize": "200"
         },
         "replication_method": "INCREMENTAL",
         "key_properties": ["id"],
@@ -122,7 +132,8 @@ STREAMS = {
     "tags": {
         "denest": "attributes,relationships.data",
         "params": {
-            "page": "{page}"
+            "page": "{page}",
+            "pageSize": "200"
         },
         "replication_method": "INCREMENTAL",
         "key_properties": ["id"],
@@ -136,7 +147,8 @@ STREAMS = {
     "shortcuts": {
         "denest": "attributes,relationships.data",
         "params": {
-            "page": "{page}"
+            "page": "{page}",
+            "pageSize": "200"
         },
         "replication_method": "INCREMENTAL",
         "key_properties": ["id"],
@@ -149,7 +161,9 @@ STREAMS = {
     },
     "notes": {
         "denest": "attributes,relationships.data",
-        "params": {},
+        "params": {
+            "pageSize": "200"
+        },
         "replication_method": "INCREMENTAL",
         "key_properties": ["id"],
         "path": "customers/search",

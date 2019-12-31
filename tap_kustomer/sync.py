@@ -139,7 +139,7 @@ def sync_endpoint(client,  # pylint: disable=too-many-branches
     # pagination: loop thru all pages of data using next (if not None)
     next_url = '{}/{}'.format(client.base_url, path)
     total_records = 0
-    limit = 100  # Default limit for Kustomer API, unable to change this in v1.0
+    limit = 200  # Default limit for Kustomer API, unable to change this in v1.0
     total_page = limit  # Initialize total; set to actual total on first API call
     total_pages = 2
 
