@@ -173,12 +173,11 @@ def sync_endpoint(client,  # pylint: disable=too-many-branches
 
         # API request data
 
+        # Set request params
         params = {}
         for key, value in endpoint_config.get('params').items():
-            if isinstance(value, str) and "{" in value:
-                params[key] = eval(value.strip("{}"))
-            else:
-                params[key] = value
+            if key == 'page':
+                params[key] = page
 
         # Need URL querystring for 1st page; subsequent pages provided by next_url
         # querystring: Squash query params into string
@@ -189,6 +188,7 @@ def sync_endpoint(client,  # pylint: disable=too-many-branches
             'URL for Stream {}: {}{}'.format(stream_name, path, '?{}'.format(querystring)
                                              if querystring else ''))
 
+        # Set POST request body
         body = endpoint_config.get('body')
         if body:
             body['and'][0][endpoint_config.get(
