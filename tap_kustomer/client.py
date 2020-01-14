@@ -175,7 +175,9 @@ class KustomerClient():
         if RATE_LIMIT_REMAINING in response.headers and int(
                 response.headers[RATE_LIMIT_REMAINING]) <= 0:
             if RATE_LIMIT_RESET in response.headers:
-                retry_in = response.headers[RATE_LIMIT_RESET]
+                reset_in = response.headers[RATE_LIMIT_RESET]
+                now = datetime.now().timestamp()
+                retry_in = reset_in - now
                 LOGGER.info(
                     "Rate limit exceeded, retrying in {}: ".format(retry_in))
                 sleep(retry_in)
