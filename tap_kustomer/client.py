@@ -169,16 +169,16 @@ class KustomerClient():
 
         # Kustomer API rate limiting. If rate limit exceeded wait until limit reset.
         # See, https://dev.kustomer.com/v1/welcome/rate-limiting
+        # x-ratelimit-reset is the header returned when the rate limit has
+        # been exceeded, and represents the time (UTC epoch seconds) when
+        # the rate limit window will reset.
         if RATE_LIMIT_REMAINING in response.headers and int(
                 response.headers[RATE_LIMIT_REMAINING]) <= 0:
             if RATE_LIMIT_RESET in response.headers:
-                retry_in = datetime.fromtimestamp(
-                    response.headers[RATE_LIMIT_RESET])
+                retry_in = response.headers[RATE_LIMIT_RESET]
                 LOGGER.info(
                     "Rate limit exceeded, retrying in {}: ".format(retry_in))
-                now = datetime.datetime.now().timestamp()
-                while retry_in >= now:
-                    sleep(1)
+                sleep(retry_in)
                 raise Server429Error()
 
         if response.status_code != 200:
