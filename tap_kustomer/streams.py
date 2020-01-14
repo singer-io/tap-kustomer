@@ -20,9 +20,10 @@ STREAMS = {
         "data_key": "data",
         "bookmark_type": "datetime",
         "key_properties": ["id"],
-        "denest": "attributes,relationships.data",
-        "params": {},
-        "path": "customers/search",
+        "denest": ["attributes","relationships.data"],
+        "params": {
+            "pageSize": "pageSize"
+        },
         "body": {
             "and": [
                 {"customer_updated_at": {"gte": '{end_window}'}}
@@ -30,21 +31,16 @@ STREAMS = {
             "sort": [{"customer_updated_at": "asc"}],
             "queryContext": "customer"
         },
+        "path": "customers/search",
         "replication_method": "INCREMENTAL",
         "replication_keys": ["updated_at"],
         "bookmark_query_field": "customer_updated_at"
     },
     "kobjects": {
-        "denest": "attributes,relationships.data",
-        "params": {},
-        "replication_method": "INCREMENTAL",
-        "key_properties": ["id"],
-        "path": "customers/search",
-        "replication_keys": ["updated_at"],
-        "api_method": "POST",
-        "data_key": "data",
-        "bookmark_query_field": "kobject_updated_at",
-        "bookmark_type": "datetime",
+        "denest": ["attributes","relationships.data"],
+        "params": {
+            "pageSize": "pageSize"
+        },
         "body": {
             "and": [
                 {"kobject_updated_at": {"gte": '{end_window}'}}
@@ -52,18 +48,20 @@ STREAMS = {
             "sort": [{"kobject_updated_at": "asc"}],
             "queryContext": "kobject"
         },
-    },
-    "conversations": {
-        "denest": "attributes,relationships.data",
-        "params": {},
         "replication_method": "INCREMENTAL",
         "key_properties": ["id"],
         "path": "customers/search",
         "replication_keys": ["updated_at"],
         "api_method": "POST",
         "data_key": "data",
-        "bookmark_query_field": "conversation_updated_at",
-        "bookmark_type": "datetime",
+        "bookmark_query_field": "kobject_updated_at",
+        "bookmark_type": "datetime"
+    },
+    "conversations": {
+        "denest": ["attributes","relationships.data"],
+        "params": {
+            "pageSize": "pageSize"
+        },
         "body": {
             "and": [
                 {"conversation_updated_at": {"gte": '{end_window}'}}
@@ -71,10 +69,27 @@ STREAMS = {
             "sort": [{"conversation_updated_at": "asc"}],
             "queryContext": "conversation"
         },
+        "replication_method": "INCREMENTAL",
+        "key_properties": ["id"],
+        "path": "customers/search",
+        "replication_keys": ["updated_at"],
+        "api_method": "POST",
+        "data_key": "data",
+        "bookmark_query_field": "conversation_updated_at",
+        "bookmark_type": "datetime"
     },
     "messages": {
-        "denest": "attributes,relationships.data",
-        "params": {},
+        "denest": ["attributes","relationships.data"],
+        "params": {
+            "pageSize": "pageSize"
+        },
+        "body": {
+            "and": [
+                {"message_updated_at": {"gte": '{end_window}'}}
+            ],
+            "sort": [{"message_updated_at": "asc"}],
+            "queryContext": "message"
+        },
         "replication_method": "INCREMENTAL",
         "key_properties": ["id"],
         "path": "customers/search",
@@ -82,17 +97,10 @@ STREAMS = {
         "api_method": "POST",
         "data_key": "data",
         "bookmark_query_field": "message_updated_at",
-        "bookmark_type": "datetime",
-        "body": {
-            "and": [
-                {"message_updated_at": {"gte": '{end_window}'}}
-            ],
-            "sort": [{"message_updated_at": "asc"}],
-            "queryContext": "message"
-        }
+        "bookmark_type": "datetime"
     },
     "users": {
-        "denest": "attributes,relationships.data",
+        "denest": ["attributes","relationships.data"],
         "params": {
             "page": "{page}"
         },
@@ -106,9 +114,10 @@ STREAMS = {
         "bookmark_type": "datetime"
     },
     "teams": {
-        "denest": "attributes,relationships.data",
+        "denest": ["attributes","relationships.data"],
         "params": {
-            "page": "{page}"
+            "page": "{page}",
+            "pageSize": "pageSize"
         },
         "replication_method": "INCREMENTAL",
         "key_properties": ["id"],
@@ -120,9 +129,10 @@ STREAMS = {
         "bookmark_type": "datetime"
     },
     "tags": {
-        "denest": "attributes,relationships.data",
+        "denest": ["attributes","relationships.data"],
         "params": {
-            "page": "{page}"
+            "page": "{page}",
+            "pageSize": "pageSize"
         },
         "replication_method": "INCREMENTAL",
         "key_properties": ["id"],
@@ -134,9 +144,10 @@ STREAMS = {
         "bookmark_type": "datetime"
     },
     "shortcuts": {
-        "denest": "attributes,relationships.data",
+        "denest": ["attributes","relationships.data"],
         "params": {
-            "page": "{page}"
+            "page": "{page}",
+            "pageSize": "pageSize"
         },
         "replication_method": "INCREMENTAL",
         "key_properties": ["id"],
@@ -148,8 +159,17 @@ STREAMS = {
         "bookmark_type": "datetime"
     },
     "notes": {
-        "denest": "attributes,relationships.data",
-        "params": {},
+        "denest": ["attributes","relationships.data"],
+        "params": {
+            "pageSize": "pageSize"
+        },
+        "body": {
+            "and": [
+                {"note_updated_at": {"gte": '{end_window}'}}
+            ],
+            "sort": [{"note_updated_at": "asc"}],
+            "queryContext": "note"
+        },
         "replication_method": "INCREMENTAL",
         "key_properties": ["id"],
         "path": "customers/search",
@@ -157,13 +177,6 @@ STREAMS = {
         "api_method": "POST",
         "data_key": "data",
         "bookmark_query_field": "note_updated_at",
-        "bookmark_type": "datetime",
-        "body": {
-            "and": [
-                {"note_updated_at": {"gte": '{end_window}'}}
-            ],
-            "sort": [{"note_updated_at": "asc"}],
-            "queryContext": "note"
-        }
+        "bookmark_type": "datetime"
     }
 }

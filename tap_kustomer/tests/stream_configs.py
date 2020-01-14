@@ -3,13 +3,12 @@ STREAMS = {
         "api_method": "POST",
         "data_key": "data",
         "bookmark_type": "datetime",
-        "key_properties": "id",
-        "denest": "attributes,relationships.data",
+        "key_properties": ["id"],
         "params": {},
         "path": "customers/search",
         "body": {
             "and": [
-                {"customer_updated_at": {"gte": '{next_date}'}}
+                {"customer_updated_at": {"gte": '{end_window}'}}
             ],
             "sort": [{"customer_updated_at": "asc"}],
             "queryContext": "customer"

@@ -428,6 +428,23 @@ NESTED_VALID_DICTS = {
                     "acceptsMarketingBool": True,
                     "ordersCountNum": 1
                 },
+                "sla": {
+                    "version": 4,
+                    "matchedAt": "2019-11-25T15:19:24.807Z",
+                    "metrics": {
+                        "firstResponse": {
+                            "satisfiedAt": "2019-11-25T15:19:25.038Z"
+                        },
+                        "longestUnrespondedMessage": {
+                            "satisfiedAt": "2019-11-25T15:19:25.038Z"
+                        }
+                    },
+                    "breached": False,
+                    "status": "done",
+                    "summary": {
+                        "satisfiedAt": "2019-11-25T15:19:25.038Z"
+                    }
+                },
                 "progressiveStatus": None,
                 "verified": True,
                 "rev": 2,
@@ -455,6 +472,21 @@ NESTED_VALID_DICTS = {
                     },
                     "meta": {
                         "kobject": True
+                    }
+                },
+                "sla": {
+                    "data": {
+                        "type": "sla",
+                        "id": "5a7b6d7067cd0a00013a7982"
+                    },
+                    "links": {
+                        "self": "/v1/slas/5a7b6d7067cd0a00013a7982"
+                    }
+                },
+                "slaVersion": {
+                    "data": {
+                        "type": "sla_version",
+                        "id": "5b182948f57cbd12d8f21ef0"
                     }
                 }
             },
