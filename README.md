@@ -9,6 +9,10 @@ This tap:
 - Pulls raw data from the [https://api.kustomerapp.com](https://api.kustomerapp.com)
 - Extracts the following resources:
   - Conversations, Customers, Kobjects, Messages, Notes, Teams, Tags, Shortcuts, Users
+- Pagination for Conversations, Custoemrs, Kobjects, Messages, Note
+  - Next request based on last `updatedAt` in respose.
+  - See, https://dev.kustomer.com/v1/customers/customer-search#pagination
+  - `pageSize` set to 300 to circumvent large numbers of records with same `updatedAt`
 - Outputs the schema for each resource
 - Incrementally pulls data based on the input state
 
@@ -24,7 +28,7 @@ This tap:
         {
         "conversation_updated_at": {
             "gte": "2017-01-01"
-        }
+            }
         }
     ],
     "sort": [
@@ -41,6 +45,7 @@ This tap:
   - Bookmark: date-time
 - Transformations: Nodes attributes and relationships denested.
   - `attributes.sla` renamed to `sla_data`
+  - Snake to camel case
 
 [Customers](https://api.kustomerapp.com/v1/customers/search)
 - Endpoint: POST https://api.kustomerapp.com/v1/customers/search
@@ -51,7 +56,7 @@ This tap:
         {
         "customer_updated_at": {
             "gte": "2017-01-01"
-        }
+            }
         }
     ],
     "sort": [
@@ -66,7 +71,9 @@ This tap:
 - Replication strategy: INCREMENTAL (query filtered)
   - Bookmark query fields: gte
   - Bookmark: date-time
-- Transformations: Nodes attributes and relationships denested.
+- Transformations: 
+  - Nodes attributes and relationships denested.
+  - Snake to camel case
 
 [Kobjects](https://api.kustomerapp.com/v1/customers/search)
 - Endpoint: POST https://api.kustomerapp.com/v1/customers/search
@@ -77,7 +84,7 @@ This tap:
         {
         "kobject_updated_at": {
             "gte": "2017-01-01"
-        }
+            }
         }
     ],
     "sort": [
@@ -92,7 +99,9 @@ This tap:
 - Replication strategy: INCREMENTAL (query filtered)
   - Bookmark query fields: gte
   - Bookmark: date-time
-- Transformations: Nodes attributes and relationships denested.
+- Transformations
+  - Nodes attributes and relationships denested.
+  - Snake to camel case
 
 [Messages](https://api.kustomerapp.com/v1/customers/search)
 - Endpoint: POST https://api.kustomerapp.com/v1/customers/search
@@ -103,7 +112,7 @@ This tap:
         {
         "message_updated_at": {
             "gte": "2017-01-01"
-        }
+            }
         }
     ],
     "sort": [
@@ -118,7 +127,9 @@ This tap:
 - Replication strategy: INCREMENTAL (query filtered)
   - Bookmark query fields: gte
   - Bookmark: date-time
-- Transformations: Nodes attributes and relationships denested.
+- Transformations
+  - Nodes attributes and relationships denested.
+  - Snake to camel case
 
 [Notes](https://api.kustomerapp.com/v1/customers/search)
 - Endpoint: POST https://api.kustomerapp.com/v1/customers/search
@@ -129,7 +140,7 @@ This tap:
         {
         "note_updated_at": {
             "gte": "2017-01-01"
-        }
+            }
         }
     ],
     "sort": [
@@ -144,7 +155,9 @@ This tap:
 - Replication strategy: INCREMENTAL (query filtered)
   - Bookmark query fields: gte
   - Bookmark: date-time
-- Transformations: Nodes attributes and relationships denested.
+- Transformations
+  - Nodes attributes and relationships denested.
+  - Snake to camel case
 
 [Shortcuts](https://api.kustomerapp.com/v1/shortcuts?page=1)
 - Endpoint: GET https://api.kustomerapp.com/v1/shortcuts?page=1
@@ -152,7 +165,9 @@ This tap:
 - Replication strategy: INCREMENTAL (query filtered)
   - Bookmark query fields: updated_at
   - Bookmark: date-time
-- Transformations: Nodes attributes and relationships denested.
+- Transformations
+  - Nodes attributes and relationships denested
+  - Snake to camel case
 
 [Tags](https://api.kustomerapp.com/v1/tags?page=1)
 - Endpoint: GET https://api.kustomerapp.com/v1/tag?page=1
@@ -160,7 +175,9 @@ This tap:
 - Replication strategy: INCREMENTAL (query filtered)
   - Bookmark query fields: updated_at
   - Bookmark: date-time
-- Transformations: Nodes attributes and relationships denested.
+- Transformations
+  - Nodes attributes and relationships denested
+  - Snake to camel case
 
 [Teams](https://api.kustomerapp.com/v1/teams?page=1)
 - Endpoint: GET https://api.kustomerapp.com/v1/teams?page=1
@@ -168,7 +185,9 @@ This tap:
 - Replication strategy: INCREMENTAL (query filtered)
   - Bookmark query fields: updated_at
   - Bookmark: date-time
-- Transformations: Nodes attributes and relationships denested.
+- Transformations
+  - Nodes attributes and relationships denested
+  - Snake to camel case
 
 [Users](https://api.kustomerapp.com/v1/users?page=1)
 - Endpoint: GET https://api.kustomerapp.com/v1/users?page=1
@@ -176,7 +195,9 @@ This tap:
 - Replication strategy: INCREMENTAL (query filtered)
   - Bookmark query fields: updated_at
   - Bookmark: date-time
-- Transformations: Nodes attributes and relationships denested.
+- Transformations
+  - Nodes attributes and relationships denested
+  - Snake to camel case
 
 ## Quick Start
 
@@ -204,14 +225,15 @@ This tap:
     - [singer-tools](https://github.com/singer-io/singer-tools)
     - [target-stitch](https://github.com/singer-io/target-stitch)
 
-3. Create your tap's `config.json` file. The `token` is the credential supplied from the Kustomer integration. The `date_window_size` is the integer number of days (between the from and to dates) for date-windowing through the date-filtered endpoints (default = 60).
+3. Create your tap's `config.json` file. The `token` is the credential supplied from the Kustomer integration. The `date_window_size` is the integer number of days (between the from and to dates) for date-windowing through the date-filtered endpoints (default = 60). The `page_size_limit` is the integer number of records to return per API request. 
 
     ```json
     {
         "token": "YOUR_API_TOKEN",
         "start_date": "2019-01-01T00:00:00Z",
         "user_agent": "tap-kustomer <api_user_email@your_company.com>",
-        "date_window_size": "60"
+        "date_window_size": "60",
+        "page_size_limit": "100"
     }
     ```
     

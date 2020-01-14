@@ -7,6 +7,8 @@ import singer
 
 API_VERSION = 'v1'
 LOGGER = singer.get_logger()
+RATE_LIMIT_REMAINING = 'x-ratelimit-remaining'
+RATE_LIMIT_RESET = 'x-ratelimit-reset'
 
 
 class Server5xxError(Exception):
@@ -56,7 +58,8 @@ ERROR_CODE_EXCEPTION_MAPPING = {
     403: KustomerForbiddenError,
     404: KustomerNotFoundError,
     409: KustomerForbiddenError,
-    500: KustomerInternalServiceError}
+    500: KustomerInternalServiceError
+}
 
 
 def get_exception_for_error_code(error_code):
@@ -80,7 +83,8 @@ def raise_for_error(response):
                 error_code = response.get('error', {}).get('code')
                 ex = get_exception_for_error_code(error_code)
                 if response.status_code == 401 and 'Expired token' in message:
-                    LOGGER.error("Your API token has expired as per Kustomer’s security \
+                    LOGGER.error(
+                        "Your API token has expired as per Kustomer’s security \
                         policy. \n Please re-authenticate your connection to generate a new token \
                         and resume extraction.")
                     raise ex(message)
@@ -90,15 +94,12 @@ def raise_for_error(response):
 
 
 class KustomerClient():
-    def __init__(self,
-                 token,
-                 user_agent=None):
+    def __init__(self, token, user_agent=None):
         self.__token = token
         self.__user_agent = user_agent
         self.__session = requests.Session()
         self.__verified = False
-        self.base_url = 'https://api.kustomerapp.com/{}'.format(
-            API_VERSION)
+        self.base_url = 'https://api.kustomerapp.com/{}'.format(API_VERSION)
 
     def __enter__(self):
         self.__verified = self.check_token()
@@ -107,10 +108,7 @@ class KustomerClient():
     def __exit__(self, exception_type, exception_value, traceback):
         self.__session.close()
 
-    @backoff.on_exception(backoff.expo,
-                          Server5xxError,
-                          max_tries=5,
-                          factor=2)
+    @backoff.on_exception(backoff.expo, Server5xxError, max_tries=5, factor=2)
     @utils.ratelimit(250, 60)
     def check_token(self):
         if self.__token is None:
@@ -125,8 +123,7 @@ class KustomerClient():
             url='{}/{}/'.format(self.base_url, 'users/current'),
             headers=headers)
         if response.status_code != 200:
-            LOGGER.error('Error status_code = {}'.format(
-                response.status_code))
+            LOGGER.error('Error status_code = {}'.format(response.status_code))
             raise_for_error(response)
         else:
             resp = response.json()
@@ -154,8 +151,7 @@ class KustomerClient():
 
         if 'headers' not in kwargs:
             kwargs['headers'] = {}
-        kwargs['headers']['Authorization'] = 'Bearer {}'.format(
-            self.__token)
+        kwargs['headers']['Authorization'] = 'Bearer {}'.format(self.__token)
         kwargs['headers']['Accept'] = 'application/json'
 
         if self.__user_agent:
@@ -164,10 +160,8 @@ class KustomerClient():
         if method == 'POST':
             kwargs['headers']['Content-Type'] = 'application/json'
 
-        # LOGGER.info("Requesting url: {} method {}: args {}".format(method, url, kwargs['data']))
         with metrics.http_request_timer(endpoint) as timer:
-            response = self.__session.request(
-                method, url, data=data, **kwargs)
+            response = self.__session.request(method, url, data=data, **kwargs)
             timer.tags[metrics.Tag.http_status_code] = response.status_code
 
         if response.status_code >= 500:
@@ -175,11 +169,11 @@ class KustomerClient():
 
         # Kustomer API rate limiting. If rate limit exceeded wait until limit reset.
         # See, https://dev.kustomer.com/v1/welcome/rate-limiting
-        if 'x-ratelimit-remaining' in response.headers and \
-                int(response.headers['x-ratelimit-remaining']) <= 0:
-            if 'x-ratelimit-reset' in response.headers:
+        if RATE_LIMIT_REMAINING in response.headers and int(
+                response.headers[RATE_LIMIT_REMAINING]) <= 0:
+            if RATE_LIMIT_RESET in response.headers:
                 retry_in = datetime.fromtimestamp(
-                    response.headers['x-ratelimit-reset'])
+                    response.headers[RATE_LIMIT_RESET])
                 LOGGER.info(
                     "Rate limit exceeded, retrying in {}: ".format(retry_in))
                 now = datetime.datetime.now().timestamp()
@@ -192,13 +186,13 @@ class KustomerClient():
 
         return response.json()
 
-    def get(self, path, **kwargs):
-        return self.request('GET', path=path, **kwargs)
+    def get(self, url, path, **kwargs):
+        return self.request('GET', url=url, path=path, **kwargs)
 
-    def post(self, path, data, **kwargs):
-        return self.request('POST', path=path, data=data, **kwargs)
+    def post(self, url, path, data, **kwargs):
+        return self.request('POST', url=url, path=path, data=data, **kwargs)
 
-    def fetch(self, method, path, **kwargs):
+    def fetch(self, method, url, path, data=None, **kwargs):
         if method == 'POST':
-            return self.post(path=path, **kwargs)
-        return self.get(path=path, **kwargs)
+            return self.post(url=url, path=path, data=data, **kwargs)
+        return self.get(url=url, path=path, **kwargs)
