@@ -4,17 +4,6 @@ import singer
 LOGGER = singer.get_logger()
 
 
-def transform_for_key(this_json, endpoint_config, data_key):
-    transformed_json = transform_json(this_json, endpoint_config,
-                                      data_key)
-    data = []
-    if isinstance(transformed_json, dict):
-        for record in list(transformed_json.get(data_key, [])):
-            data.append(record)
-        return data
-    return transformed_json
-
-
 # Convert camelCase to snake_case
 def convert(name):
     regsub = re.sub('(.)([A-Z][a-z]+)', r'\1_\2', name)
