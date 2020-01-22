@@ -20,7 +20,7 @@ STREAMS = {
         "data_key": "data",
         "bookmark_type": "datetime",
         "key_properties": ["id"],
-        "denest": ["attributes","relationships.data"],
+        "denest": ["attributes", "relationships.data"],
         "params": {
             "pageSize": "pageSize"
         },
@@ -37,7 +37,7 @@ STREAMS = {
         "bookmark_query_field": "customer_updated_at"
     },
     "kobjects": {
-        "denest": ["attributes","relationships.data"],
+        "denest": ["attributes", "relationships.data"],
         "params": {
             "pageSize": "pageSize"
         },
@@ -58,7 +58,7 @@ STREAMS = {
         "bookmark_type": "datetime"
     },
     "conversations": {
-        "denest": ["attributes","relationships.data"],
+        "denest": ["attributes", "relationships.data"],
         "params": {
             "pageSize": "pageSize"
         },
@@ -79,7 +79,7 @@ STREAMS = {
         "bookmark_type": "datetime"
     },
     "messages": {
-        "denest": ["attributes","relationships.data"],
+        "denest": ["attributes", "relationships.data"],
         "params": {
             "pageSize": "pageSize"
         },
@@ -100,7 +100,7 @@ STREAMS = {
         "bookmark_type": "datetime"
     },
     "users": {
-        "denest": ["attributes","relationships.data"],
+        "denest": ["attributes", "relationships.data"],
         "params": {
             "page": "{page}"
         },
@@ -114,7 +114,7 @@ STREAMS = {
         "bookmark_type": "datetime"
     },
     "teams": {
-        "denest": ["attributes","relationships.data"],
+        "denest": ["attributes", "relationships.data"],
         "params": {
             "page": "{page}",
             "pageSize": "pageSize"
@@ -129,7 +129,7 @@ STREAMS = {
         "bookmark_type": "datetime"
     },
     "tags": {
-        "denest": ["attributes","relationships.data"],
+        "denest": ["attributes", "relationships.data"],
         "params": {
             "page": "{page}",
             "pageSize": "pageSize"
@@ -144,7 +144,7 @@ STREAMS = {
         "bookmark_type": "datetime"
     },
     "shortcuts": {
-        "denest": ["attributes","relationships.data"],
+        "denest": ["attributes", "relationships.data"],
         "params": {
             "page": "{page}",
             "pageSize": "pageSize"
@@ -159,7 +159,7 @@ STREAMS = {
         "bookmark_type": "datetime"
     },
     "notes": {
-        "denest": ["attributes","relationships.data"],
+        "denest": ["attributes", "relationships.data"],
         "params": {
             "pageSize": "pageSize"
         },

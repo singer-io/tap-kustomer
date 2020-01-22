@@ -19,7 +19,7 @@ def write_schema(catalog, stream_name):
     try:
         singer.write_schema(stream_name, schema, stream.key_properties)
     except OSError as err:
-        LOGGER.info('OS Error writing schema for: {}'.format(stream_name))
+        LOGGER.info('OS Error writing schema for: %s', stream_name)
         raise err
 
 
@@ -29,8 +29,8 @@ def write_record(stream_name, record, time_extracted):
                                      record,
                                      time_extracted=time_extracted)
     except OSError as err:
-        LOGGER.info('OS Error writing record for: {}'.format(stream_name))
-        LOGGER.info('record: {}'.format(record))
+        LOGGER.info('OS Error writing record for: %s', stream_name)
+        LOGGER.info('record: %s', record)
         raise err
 
 
@@ -44,7 +44,7 @@ def write_bookmark(state, stream, value):
     if 'bookmarks' not in state:
         state['bookmarks'] = {}
     state['bookmarks'][stream] = value
-    LOGGER.info('Write state for stream: {}, value: {}'.format(stream, value))
+    LOGGER.info('Write state for stream: %s, value: %s', stream, value)
     singer.write_state(state)
 
 
@@ -55,16 +55,13 @@ def transform_datetime(this_dttm):
     return new_dttm
 
 
-def process_records(
-    catalog,  # pylint: disable=too-many-branches
-    stream_name,
-    records,
-    time_extracted,
-    bookmark_field=None,
-    bookmark_type=None,
-    max_bookmark_value=None,
-    last_datetime=None,
-    last_integer=None):
+def process_records(catalog,  # pylint: disable=too-many-branches
+                    stream_name,
+                    records,
+                    time_extracted,
+                    bookmark_field=None,
+                    max_bookmark_value=None,
+                    last_datetime=None):
     stream = catalog.get_stream(stream_name)
     schema = stream.schema.to_dict()
     stream_metadata = metadata.to_map(stream.metadata)
@@ -103,23 +100,22 @@ def process_records(
 
 
 # Sync a specific endpoint
-def sync_endpoint(
-    client,  # pylint: disable=too-many-branches
-    catalog,
-    state,
-    start_date,
-    stream_name,
-    path,
-    endpoint_config,
-    static_params,
-    bookmark_query_field_from=None,
-    bookmark_query_field_to=None,
-    bookmark_field=None,
-    bookmark_type=None,
-    data_key=None,
-    id_fields=None,
-    days_interval=None,
-    page_size_limit=None):
+def sync_endpoint(client,  # pylint: disable=too-many-branches, too-many-statements
+                  catalog,
+                  state,
+                  start_date,
+                  stream_name,
+                  path,
+                  endpoint_config,
+                  static_params,
+                  bookmark_query_field_from=None,
+                  bookmark_query_field_to=None,
+                  bookmark_field=None,
+                  bookmark_type=None,
+                  data_key=None,
+                  id_fields=None,
+                  days_interval=None,
+                  page_size_limit=None):
     # Get the latest bookmark for the stream and set the last_integer/datetime
     last_datetime = None
     last_integer = None
@@ -156,7 +152,6 @@ def sync_endpoint(
     limit = page_size_limit
     # Initialize total; set to actual total on subsequent API calls
     total_page = limit
-    total_pages = 1
 
     # Retrieve pages until response header indicates no next page
     while next_page:
@@ -179,9 +174,11 @@ def sync_endpoint(
                 ['%s=%s' % (key, value) for (key, value) in params.items()])
         else:
             querystring = None
-        LOGGER.info('URL for Stream {}: {}{}{}'.format(
-            stream_name, next_url, '/' if page == 1 else '',
-            '?{}'.format(querystring) if querystring else ''))
+        LOGGER.info('URL for Stream %s: %s%s%s',
+                    stream_name,
+                    next_url,
+                    '/' if page == 1 else '',
+                    '?{}'.format(querystring) if querystring else '')
 
         # API request data
         # Set request params
@@ -197,9 +194,10 @@ def sync_endpoint(
         # if page != 1:
         querystring = '&'.join(
             ['%s=%s' % (key, value) for (key, value) in params.items()])
-        LOGGER.info('URL for Stream {}: {}{}'.format(
-            stream_name, path,
-            '?{}'.format(querystring) if querystring else ''))
+        LOGGER.info('URL for Stream %s: %s%s',
+                    stream_name,
+                    path,
+                    '?{}'.format(querystring) if querystring else '')
 
         # Set POST request body
         body = endpoint_config.get('body')
@@ -225,8 +223,6 @@ def sync_endpoint(
         total_page = len(response.get('data'))
         if 'total' in response.get('meta'):
             total_records = response.get('meta').get('total')
-        if 'totalPages' in response.get('meta'):
-            total_pages = response.get('meta').get('totalPages')
         if len(response.get('data')) > 0:
             last_updated = response.get('data')[-1]['attributes']['updatedAt']
         # Get next link for end of pagination indication across all endpoints
@@ -238,31 +234,27 @@ def sync_endpoint(
         transformed_data = []  # initialize the record list
         # If a single record dictionary, append to a list[]
         if data_key is None:
-            transformed_data = transform_json(response, stream_name,
-                                              endpoint_config, 'results')
+            transformed_data = transform_json(response, endpoint_config, 'results')
         elif data_key in response:
-            transformed_data = transform_json(response, stream_name,
-                                              endpoint_config, data_key)
+            transformed_data = transform_json(response, endpoint_config, data_key)
         # LOGGER.info('transformed_data = {}'.format(transformed_data))  # TESTING, comment out
         if not transformed_data or transformed_data is None:
-            LOGGER.info('No transformed data for data = {}'.format(response))
+            LOGGER.info('No transformed data for data = %s', response)
             # total_records = 0
             break  # No data results
         for record in transformed_data:
             for key in id_fields:
                 if not record.get(key):
-                    LOGGER.info('Missing key {} in record: {}'.format(
-                        key, record))
+                    LOGGER.info('Missing key %s in record: %s', key, record)
 
         # Process records and get the max_bookmark_value and record_count for the set of records
         max_bookmark_value, record_count = \
             process_records(catalog=catalog,
                             stream_name=stream_name, records=transformed_data,
                             time_extracted=time_extracted, bookmark_field=bookmark_field,
-                            bookmark_type=bookmark_type, max_bookmark_value=max_bookmark_value,
-                            last_datetime=last_datetime, last_integer=last_integer)
-        LOGGER.info('Stream {}, batch processed {} records'.format(
-            stream_name, record_count))
+                            max_bookmark_value=max_bookmark_value,
+                            last_datetime=last_datetime)
+        LOGGER.info('Stream %s, batch processed %s records', stream_name, record_count)
 
         # Update the state with the max_bookmark_value for the stream
         if bookmark_field:
@@ -271,12 +263,15 @@ def sync_endpoint(
         # to_rec: to record; ending record for the batch page
         to_rec = offset + limit
         if total_page < limit:
-            total_pages = page
             to_rec = to_rec + total_page
 
-        LOGGER.info(
-            'Synced Stream: {}, page: {}, {} to {} of total records: {}'.
-            format(stream_name, page, offset, to_rec, total_records))
+        LOGGER.info('Synced Stream: %s, page: %s, %s to %s of total records: %s',
+                    stream_name,
+                    page,
+                    offset,
+                    to_rec,
+                    total_records)
+
         # Pagination: increment the offset by the limit (batch-size) and page
         offset = offset + limit
         page = page + 1
@@ -313,18 +308,18 @@ def sync(client, config, catalog, state):
     # Get selected_streams from catalog, based on state last_stream
     #   last_stream = Previous currently synced stream, if the load was interrupted
     last_stream = singer.get_currently_syncing(state)
-    LOGGER.info('last/currently syncing stream: {}'.format(last_stream))
+    LOGGER.info('last/currently syncing stream: %s', last_stream)
     selected_streams = []
     for stream in catalog.get_selected_streams(state):
         selected_streams.append(stream.stream)
-    LOGGER.info('selected_streams: {}'.format(selected_streams))
+    LOGGER.info('selected_streams: %s', selected_streams)
 
     if not selected_streams:
         return
 
     # Loop through selected_streams
     for stream_name in selected_streams:
-        LOGGER.info('START Syncing: {}'.format(stream_name))
+        LOGGER.info('START Syncing: %s', stream_name)
         update_currently_syncing(state, stream_name)
         endpoint_config = STREAMS[stream_name]
         path = endpoint_config.get('path', stream_name)
@@ -351,5 +346,4 @@ def sync(client, config, catalog, state):
                 config.get('page_size_limit', RESULT_RETURN_LIMIT)))
 
         update_currently_syncing(state, None)
-        LOGGER.info('FINISHED Syncing: {}, total_records: {}'.format(
-            stream_name, total_records))
+        LOGGER.info('FINISHED Syncing: %s, total_records: %s', stream_name, total_records)

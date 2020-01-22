@@ -31,14 +31,14 @@ def key_iterator_assert_no_snake(data):
 def test_transform():
     """Test snake to camel transformation.
     """
-    transformed_data = transform_json(NESTED_VALID_DICTS, 'customers',
+    transformed_data = transform_json(NESTED_VALID_DICTS,
                                       STREAMS.get('customers_no_denest'),
                                       'data')
     key_iterator_assert_no_snake(transformed_data)
 
 
 def test_transform_camel():
-    transformed_data = transform_for_key(NESTED_VALID_DICTS, 'customers',
+    transformed_data = transform_for_key(NESTED_VALID_DICTS,
                                          STREAMS.get('customers_no_denest'),
                                          'data')
     key_iterator_assert_no_snake(transformed_data)
@@ -46,7 +46,6 @@ def test_transform_camel():
 
 def test_transform_for_key_dict_list():
     transformed_data = transform_for_key(DICTIONARY_LIST,
-                                         'customers_no_denest',
                                          STREAMS.get('customers_no_denest'),
                                          '')
     key_iterator_assert_no_snake(transformed_data)
