@@ -123,7 +123,7 @@ class KustomerClient():
             url='{}/{}/'.format(self.base_url, 'users/current'),
             headers=headers)
         if response.status_code != 200:
-            LOGGER.error('Error status_code = {}'.format(response.status_code))
+            LOGGER.error('Error status_code = %s', response.status_code)
             raise_for_error(response)
         else:
             resp = response.json()
@@ -178,8 +178,7 @@ class KustomerClient():
                 reset_in = response.headers[RATE_LIMIT_RESET]
                 now = datetime.now().timestamp()
                 retry_in = reset_in - now
-                LOGGER.info(
-                    "Rate limit exceeded, retrying in {}: ".format(retry_in))
+                LOGGER.info("Rate limit exceeded, retrying in %s: ", retry_in)
                 sleep(retry_in)
                 raise Server429Error()
 

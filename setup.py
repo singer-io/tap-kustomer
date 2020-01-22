@@ -13,6 +13,12 @@ setup(name='tap-kustomer',
           'requests==2.22.0',
           'singer-python==5.8.1'
       ],
+      extras_require={
+        'dev': [
+            'pylint',
+            'ipdb'
+        ]
+      },
       entry_points='''
           [console_scripts]
           tap-kustomer=tap_kustomer:main

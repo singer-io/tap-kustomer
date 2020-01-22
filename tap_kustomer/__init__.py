@@ -17,8 +17,6 @@ LOGGER = singer.get_logger()
 REQUIRED_CONFIG_KEYS = [
     'api_token',
     'start_date',
-    'user_agent',
-    'page_size_limit'
 ]
 
 

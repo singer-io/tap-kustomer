@@ -4,8 +4,8 @@ import singer
 LOGGER = singer.get_logger()
 
 
-def transform_for_key(this_json, stream_name, endpoint_config, data_key):
-    transformed_json = transform_json(this_json, stream_name, endpoint_config,
+def transform_for_key(this_json, endpoint_config, data_key):
+    transformed_json = transform_json(this_json, endpoint_config,
                                       data_key)
     data = []
     if isinstance(transformed_json, dict):
@@ -116,7 +116,7 @@ def denest(this_json, data_key, denest_keys):
     return new_json
 
 
-def transform_json(this_json, stream_name, endpoint_config, data_key):
+def transform_json(this_json, endpoint_config, data_key):
     converted_json = convert_json(this_json)
     if 'denest' in endpoint_config:
         for key in endpoint_config.get('denest', []):
