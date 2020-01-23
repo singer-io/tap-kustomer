@@ -10,6 +10,7 @@
             ]
         },
         "conversation": {
+            "additionalProperties": false,
             "properties": {
                 "id": {
                     "type": [
@@ -24,10 +25,6 @@
                     ]
                 }
             },
-            "required": [
-                "id",
-                "type"
-            ],
             "type": [
                 "null",
                 "object"
@@ -41,6 +38,7 @@
             "format": "date-time"
         },
         "created_by": {
+            "additionalProperties": false,
             "properties": {
                 "id": {
                     "type": [
@@ -55,16 +53,13 @@
                     ]
                 }
             },
-            "required": [
-                "id",
-                "type"
-            ],
             "type": [
                 "null",
                 "object"
             ]
         },
         "customer": {
+            "additionalProperties": false,
             "properties": {
                 "id": {
                     "type": [
@@ -79,10 +74,6 @@
                     ]
                 }
             },
-            "required": [
-                "id",
-                "type"
-            ],
             "type": [
                 "null",
                 "object"
@@ -102,6 +93,7 @@
             "format": "date-time"
         },
         "deleted_by": {
+            "additionalProperties": false,
             "properties": {
                 "id": {
                     "type": [
@@ -116,10 +108,6 @@
                     ]
                 }
             },
-            "required": [
-                "id",
-                "type"
-            ],
             "type": [
                 "null",
                 "object"
@@ -145,6 +133,7 @@
             "format": "date-time"
         },
         "links": {
+            "additionalProperties": false,
             "properties": {
                 "self": {
                     "type": [
@@ -153,9 +142,6 @@
                     ]
                 }
             },
-            "required": [
-                "self"
-            ],
             "type": [
                 "null",
                 "object"
@@ -169,6 +155,7 @@
             "format": "date-time"
         },
         "modified_by": {
+            "additionalProperties": false,
             "properties": {
                 "id": {
                     "type": [
@@ -183,16 +170,13 @@
                     ]
                 }
             },
-            "required": [
-                "id",
-                "type"
-            ],
             "type": [
                 "null",
                 "object"
             ]
         },
         "org": {
+            "additionalProperties": false,
             "properties": {
                 "id": {
                     "type": [
@@ -207,10 +191,6 @@
                     ]
                 }
             },
-            "required": [
-                "id",
-                "type"
-            ],
             "type": [
                 "null",
                 "object"
@@ -238,6 +218,7 @@
                         "null",
                         "object"
                     ],
+                    "additionalProperties": false,
                     "properties": {
                         "id": {
                             "type": [
