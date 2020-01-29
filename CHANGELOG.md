@@ -1,7 +1,7 @@
 # Changelog
 
 ## 0.0.4
-  * Fixed issues with object sub-nodes in json schemas: missing type and additionalProperties
+  * Removed unused function and tests for that function
 
 ## 0.0.3
   * Added circleci files
