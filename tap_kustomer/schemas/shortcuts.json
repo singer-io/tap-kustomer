@@ -7,8 +7,14 @@
         "null",
         "object"
       ],
+      "additionalProperties": false,
       "properties": {
         "name": {
+          "type": [
+            "null",
+            "object"
+          ],
+          "additionalProperties": false,
           "properties": {
             "operator": {
               "type": [
@@ -29,6 +35,7 @@
             "null",
             "object"
           ],
+          "additionalProperties": false,
           "properties": {
             "operator": {
               "type": [
@@ -57,6 +64,7 @@
       "format": "date-time"
     },
     "created_by": {
+      "additionalProperties": false,
       "properties": {
         "id": {
           "type": [
@@ -83,6 +91,7 @@
       ]
     },
     "draft": {
+      "additionalProperties": false,
       "properties": {
         "text": {
           "type": [
@@ -109,6 +118,7 @@
       ]
     },
     "links": {
+      "additionalProperties": false,
       "properties": {
         "self": {
           "type": [
@@ -129,6 +139,7 @@
       ]
     },
     "modified_by": {
+      "additionalProperties": false,
       "properties": {
         "id": {
           "type": [
