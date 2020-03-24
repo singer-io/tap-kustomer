@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.0.0
+  * No changes as it releases to prod.
+
 ## 0.0.5
   * Fixed issues with object sub-nodes in json schemas: missing type and additionalProperties [#5](https://github.com/singer-io/tap-kustomer/pull/5)
 
