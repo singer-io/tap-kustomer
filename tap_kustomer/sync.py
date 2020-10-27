@@ -215,7 +215,7 @@ def sync_endpoint(client,  # pylint: disable=too-many-branches, too-many-stateme
 
         # time_extracted: datetime when the data was extracted from the API
         time_extracted = utils.now()
-        if not response or response is None or response == {}:
+        if not response or response is None or response == {} or not response.get('data'):
             total_page = 0
             break  # No data results
 
