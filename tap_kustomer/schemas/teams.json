@@ -40,7 +40,8 @@
       "type": [
         "null",
         "string"
-      ]
+      ],
+      "format": "date-time"
     },
     "deleted_by": {
       "additionalProperties": false,
@@ -116,7 +117,8 @@
       "type": [
         "null",
         "string"
-      ]
+      ],
+      "format": "date-time"
     },
     "modified_by": {
       "additionalProperties": false,
