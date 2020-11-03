@@ -126,6 +126,24 @@
                 }
             }
         },
+        "conversation": {
+            "type": ["null", "object"],
+            "additionalProperties": false,
+            "properties": {
+                "id": {
+                    "type": ["null", "string"]
+                }
+            }
+        },
+        "created_by": {
+            "type": ["null", "object"],
+            "additionalProperties": false,
+            "properties": {
+                "id": {
+                    "type": ["null", "string"]
+                }
+            }
+        },
         "tags": {
             "type": "array"
         },
