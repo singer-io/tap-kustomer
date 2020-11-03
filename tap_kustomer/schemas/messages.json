@@ -6,6 +6,56 @@
             "type": ["null", "string"],
             "format": "date-time"
         },
+        "channel": {
+            "type": ["null", "string"]
+        },
+        "app": {
+            "type": ["null", "string"]
+        },
+        "size": {
+            "type": ["null", "integer"]
+        },
+        "direction": {
+            "type": ["null", "string"]
+        },
+        "direction_type": {
+            "type": ["null", "string"]
+        },
+        "preview": {
+            "type": ["null", "string"]
+        },
+        "subject": {
+            "type": ["null", "string"]
+        },
+        "status": {
+            "type": ["null", "string"]
+        },
+        "auto": {
+            "type": "boolean"
+        },
+        "redacted": {
+            "type": "boolean"
+        },
+        "sent_at": {
+            "type": ["null", "string"],
+            "format": "date-time"
+        },
+        "source": {
+            "type": ["null", "string"]
+        },
+        "assigned_users": {
+            "anyOf": [
+                {
+                    "type": "array",
+                    "items": {
+                        "type": ["null", "string"]
+                    }
+                },
+                {
+                    "type": "null"
+                }
+            ]
+        },
         "custom": {
             "additionalProperties": false,
             "properties": {
