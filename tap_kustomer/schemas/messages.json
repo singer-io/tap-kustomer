@@ -135,7 +135,7 @@
                 }
             }
         },
-        "createdBy": {
+        "created_by": {
             "type": ["null", "object"],
             "additionalProperties": false,
             "properties": {
