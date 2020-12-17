@@ -10,7 +10,7 @@ from tap_kustomer.streams import STREAMS
 LOGGER = singer.get_logger()
 
 DATE_WINDOW_DEFAULT = 60
-RESULT_RETURN_LIMIT = 100
+RESULT_RETURN_LIMIT = 500
 
 
 def write_schema(catalog, stream_name):
