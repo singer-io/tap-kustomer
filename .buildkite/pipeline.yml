@@ -1,0 +1,23 @@
+env:
+  AWS_DEFAULT_REGION: us-east-1
+
+steps:
+  - label: ":ecr: Build and push"
+    key: build_and_push
+    branches: "master v*.*.*"
+    commands: |
+      if [[ "$BUILDKITE_BRANCH" == "master" ]]; then
+        DOCKER_BUILD_TAGS="latest,${BUILDKITE_COMMIT}"
+      elif [[ ! -z "BUILDKITE_TAG" ]]; then
+        DOCKER_BUILD_TAGS="${BUILDKITE_TAG}"
+      else
+        DOCKER_BUILD_TAGS="${BUILDKITE_COMMIT}"
+      fi
+
+      source assume-role "arn:aws:iam::488130211206:role/l3-admins"
+
+      pipelines build_and_push_to_ecr \
+        --service beam-dialpad \
+        --account data \
+        --tags "$$DOCKER_BUILD_TAGS" \
+        --branch-name $BUILDKITE_BRANCH
