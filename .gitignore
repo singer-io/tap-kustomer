@@ -2,8 +2,8 @@
 /.ipynb_checkpoints/*
 config/
 virtualenvs/
-*catalog*.json
-*config*.json
+#*catalog*.json
+#*config*.json
 *state*.json
 target*.json
 *.sublime-*
@@ -21,3 +21,6 @@ tap_google_search_console/.vscode/settings.json
 test_configuration.py
 tap_target_commands.sh
 .pytest_cache/
+kustomer-config.json
+kustomer-state.json
+stitch-config.json

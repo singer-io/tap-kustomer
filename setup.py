@@ -11,7 +11,8 @@ setup(name='tap-kustomer',
       install_requires=[
           'backoff==1.8.0',
           'requests==2.22.0',
-          'singer-python==5.8.1'
+          'singer-python==5.8.0',
+          'attrs==16.3.0'
       ],
       extras_require={
         'dev': [
