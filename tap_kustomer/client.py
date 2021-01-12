@@ -87,10 +87,10 @@ def raise_for_error(response):
                         "Your API token has expired as per Kustomer’s security \
                         policy. \n Please re-authenticate your connection to generate a new token \
                         and resume extraction.")
-                    raise ex(message)
-                raise KustomerError(error)
+                    raise ex(message) from error
+                raise KustomerError(error) from error
         except (ValueError, TypeError):
-            raise KustomerError(error)
+            raise KustomerError(error) from error
 
 
 class KustomerClient():
