@@ -1,2 +1,2 @@
 include LICENSE
-include tap_Kustomer/schemas/*.json
+include tap_kustomer/schemas/*.json

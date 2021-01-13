@@ -1,5 +1,8 @@
 # Changelog
 
+## v1.0.2
+* Fix MANIFEST.in file
+
 ## [v1.0.1](https://github.com/singer-io/tap-kustomer/tree/v1.0.1) (2021-01-13)
 
 [Full Changelog](https://github.com/singer-io/tap-kustomer/compare/v1.0.0...v1.0.1)
