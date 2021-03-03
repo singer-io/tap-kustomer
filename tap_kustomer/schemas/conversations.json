@@ -792,6 +792,12 @@
               "type": "null"
             }
           ]
+        },
+        "rating": {
+          "type": ["null","integer"]
+        },
+        "score": {
+          "type": ["null","integer"]
         }
       },
       "type": ["null", "object"]
