@@ -17,3 +17,9 @@ jobs:
           command: |
             source /usr/local/share/virtualenvs/tap-kustomer/bin/activate
             make lint
+workflows:
+  version: 2
+  commit:
+    jobs:
+      - build:
+          context: circleci-user
