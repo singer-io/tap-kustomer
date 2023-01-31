@@ -99,7 +99,7 @@ class KustomerClient():
         self.__user_agent = user_agent
         self.__session = requests.Session()
         self.__verified = False
-        self.base_url = 'https://api.kustomerapp.com/{}'.format(API_VERSION)
+        self.base_url = 'https://api.prod2.kustomerapp.com/{}'.format(API_VERSION)
 
     def __enter__(self):
         self.__verified = self.check_token()
