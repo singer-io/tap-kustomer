@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.0.3
+  * Dependabot update [#24](https://github.com/singer-io/tap-kustomer/pull/24)
+
 ## v1.0.2
 * Fix MANIFEST.in file
 
