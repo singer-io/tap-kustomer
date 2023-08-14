@@ -146,6 +146,7 @@ def sync_endpoint(client,  # pylint: disable=too-many-branches, too-many-stateme
     # next page is next url for page 1
     next_page = next_url
     total_records = 0
+    total_page_count = 0
 
     # Tap configurable page size. 300 value currently as API often returns
     # 200+ which have the same date time.
@@ -166,44 +167,32 @@ def sync_endpoint(client,  # pylint: disable=too-many-branches, too-many-stateme
             if bookmark_query_field_to:
                 if bookmark_type == 'integer':
                     params[bookmark_query_field_to] = strftime(end_window)
-
-        # Need URL querystring for 1st page; subsequent pages provided by next_url
-        # querystring: Squash query params into string
-        if page == 1 and not params == {}:
-            querystring = '&'.join(
-                ['%s=%s' % (key, value) for (key, value) in params.items()])
-        else:
-            querystring = None
-        LOGGER.info('URL for Stream %s: %s%s%s',
-                    stream_name,
-                    next_url,
-                    '/' if page == 1 else '',
-                    '?{}'.format(querystring) if querystring else '')
-
-        # API request data
-        # Set request params
-        params = {}
+        
         for key, _ in endpoint_config.get('params').items():
             if key == 'page':
                 params[key] = page
             if key == 'pageSize':
                 params[key] = limit
 
-        # Need URL querystring for 1st page; subsequent pages provided by next_url
+        # Need URL querystring for 1st page; subsequent pages provided by next_page
         # querystring: Squash query params into string
-        # if page != 1:
-        querystring = '&'.join(
-            ['%s=%s' % (key, value) for (key, value) in params.items()])
-        LOGGER.info('URL for Stream %s: %s%s',
-                    stream_name,
-                    path,
-                    '?{}'.format(querystring) if querystring else '')
+        if page == 1 and not params == {}:
+            querystring = '&'.join(
+                ['%s=%s' % (key, value) for (key, value) in params.items()])
+        else:
+            querystring = None
 
         # Set POST request body
         body = endpoint_config.get('body')
+        bookmark_query_field = endpoint_config.get('bookmark_query_field')
         if body:
-            body['and'][0][endpoint_config.get(
-                'bookmark_query_field')]['gte'] = strftime(start_window)
+            body['and'][0][bookmark_query_field]['gte'] = strftime(start_window)
+
+        LOGGER.info('URL for Stream %s: %s%s %s',
+                    stream_name,
+                    next_url,
+                    '?{}'.format(querystring) if querystring else '',
+                    f'({bookmark_query_field}: {strftime(start_window)})' if body else '')
 
         response = {}
         response = client.fetch(endpoint_config.get('api_method'),
@@ -222,11 +211,19 @@ def sync_endpoint(client,  # pylint: disable=too-many-branches, too-many-stateme
         # set total_records and and last updated for pagination
         total_page = len(response.get('data'))
         if 'total' in response.get('meta'):
-            total_records = response.get('meta').get('total')
+            total_records = response['meta']['total']
+        if 'totalPages' in response.get('meta'):
+            total_page_count = response['meta']['totalPages']
         if len(response.get('data')) > 0:
             last_updated = response.get('data')[-1]['attributes']['updatedAt']
+
         # Get next link for end of pagination indication across all endpoints
+        # Note: sometimes the response does not return links even though
+        # there is supposedly more pages available. Manually requesting
+        # subsequent pages will return a 404 response code.
         next_page = response.get('links').get('next', None)
+        if next_page: 
+            next_url = '{}{}'.format(client.base_url, next_page)
 
         # Transform data with transform_json from transform.py
         # The data_key identifies the array/list of records below the <root> element
@@ -265,9 +262,10 @@ def sync_endpoint(client,  # pylint: disable=too-many-branches, too-many-stateme
         if total_page < limit:
             to_rec = to_rec + total_page
 
-        LOGGER.info('Synced Stream: %s, page: %s, %s to %s of total records: %s',
+        LOGGER.info('Synced Stream: %s, page: %s of %s, %s to %s of total records: %s',
                     stream_name,
                     page,
+                    total_page_count,
                     offset,
                     to_rec,
                     total_records)
@@ -283,6 +281,7 @@ def sync_endpoint(client,  # pylint: disable=too-many-branches, too-many-stateme
             end_window = now_datetime
         else:
             end_window = next_end_window
+
         endpoint_total = endpoint_total + total_page
 
     # Return endpoint_total across all batches
