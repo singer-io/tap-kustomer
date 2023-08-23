@@ -5,7 +5,6 @@ import requests
 from singer import metrics, utils
 import singer
 
-API_VERSION = 'v1'
 LOGGER = singer.get_logger()
 RATE_LIMIT_REMAINING = 'x-ratelimit-remaining'
 RATE_LIMIT_RESET = 'x-ratelimit-reset'
@@ -99,7 +98,7 @@ class KustomerClient():
         self.__user_agent = user_agent
         self.__session = requests.Session()
         self.__verified = False
-        self.base_url = 'https://api.kustomerapp.com/{}'.format(API_VERSION)
+        self.base_url = 'https://api.kustomerapp.com'
 
     def __enter__(self):
         self.__verified = self.check_token()
@@ -120,7 +119,7 @@ class KustomerClient():
         headers['Accept'] = 'application/json'
         response = self.__session.get(
             # Simple endpoint that returns 1 Account record (to check API/token access):
-            url='{}/{}/'.format(self.base_url, 'users/current'),
+            url='{}/{}/'.format(self.base_url, '/v1/users/current'),
             headers=headers)
         if response.status_code != 200:
             LOGGER.error('Error status_code = %s', response.status_code)

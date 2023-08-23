@@ -167,7 +167,7 @@ def sync_endpoint(client,  # pylint: disable=too-many-branches, too-many-stateme
             if bookmark_query_field_to:
                 if bookmark_type == 'integer':
                     params[bookmark_query_field_to] = strftime(end_window)
-        
+
         for key, _ in endpoint_config.get('params').items():
             if key == 'page':
                 params[key] = page
@@ -222,7 +222,7 @@ def sync_endpoint(client,  # pylint: disable=too-many-branches, too-many-stateme
         # there is supposedly more pages available. Manually requesting
         # subsequent pages will return a 404 response code.
         next_page = response.get('links').get('next', None)
-        if next_page: 
+        if next_page:
             next_url = '{}{}'.format(client.base_url, next_page)
 
         # Transform data with transform_json from transform.py

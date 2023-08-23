@@ -14,6 +14,7 @@
 #   bookmark_query_field: From date-time field used for filtering the query
 #   bookmark_type: Data type for bookmark, integer or datetime
 
+API_VERSION = 'v1'
 STREAMS = {
     "customers": {
         "api_method": "POST",
@@ -31,7 +32,7 @@ STREAMS = {
             "sort": [{"customer_updated_at": "asc"}],
             "queryContext": "customer"
         },
-        "path": "customers/search",
+        "path": f'{API_VERSION}/customers/search',
         "replication_method": "INCREMENTAL",
         "replication_keys": ["updated_at"],
         "bookmark_query_field": "customer_updated_at"
@@ -50,7 +51,7 @@ STREAMS = {
         },
         "replication_method": "INCREMENTAL",
         "key_properties": ["id"],
-        "path": "customers/search",
+        "path": f'{API_VERSION}/customers/search',
         "replication_keys": ["updated_at"],
         "api_method": "POST",
         "data_key": "data",
@@ -71,7 +72,7 @@ STREAMS = {
         },
         "replication_method": "INCREMENTAL",
         "key_properties": ["id"],
-        "path": "customers/search",
+        "path": f'{API_VERSION}/customers/search',
         "replication_keys": ["updated_at"],
         "api_method": "POST",
         "data_key": "data",
@@ -92,7 +93,7 @@ STREAMS = {
         },
         "replication_method": "INCREMENTAL",
         "key_properties": ["id"],
-        "path": "customers/search",
+        "path": f'{API_VERSION}/customers/search',
         "replication_keys": ["updated_at"],
         "api_method": "POST",
         "data_key": "data",
@@ -106,7 +107,7 @@ STREAMS = {
         },
         "replication_method": "INCREMENTAL",
         "key_properties": ["id"],
-        "path": "users",
+        "path": f'{API_VERSION}/users',
         "replication_keys": ["updated_at"],
         "api_method": "GET",
         "data_key": "data",
@@ -121,7 +122,7 @@ STREAMS = {
         },
         "replication_method": "INCREMENTAL",
         "key_properties": ["id"],
-        "path": "teams",
+        "path": f'{API_VERSION}/teams',
         "replication_keys": ["updated_at"],
         "api_method": "GET",
         "data_key": "data",
@@ -136,7 +137,7 @@ STREAMS = {
         },
         "replication_method": "INCREMENTAL",
         "key_properties": ["id"],
-        "path": "tags",
+        "path": f'{API_VERSION}/tags',
         "replication_keys": ["updated_at"],
         "api_method": "GET",
         "data_key": "data",
@@ -151,7 +152,7 @@ STREAMS = {
         },
         "replication_method": "INCREMENTAL",
         "key_properties": ["id"],
-        "path": "shortcuts",
+        "path": f'{API_VERSION}/shortcuts',
         "replication_keys": ["updated_at"],
         "api_method": "GET",
         "data_key": "data",
@@ -172,7 +173,7 @@ STREAMS = {
         },
         "replication_method": "INCREMENTAL",
         "key_properties": ["id"],
-        "path": "customers/search",
+        "path": f'{API_VERSION}/customers/search',
         "replication_keys": ["updated_at"],
         "api_method": "POST",
         "data_key": "data",
