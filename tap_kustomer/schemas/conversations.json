@@ -116,6 +116,18 @@
         },
         "yale_serial_number_str": {
           "type": ["null", "string"]
+        },
+        "shopify_order_str": {
+          "type": ["null", "string"]
+        },
+        "business_area_str": {
+          "type": ["null", "string"]
+        },
+        "order_number_id": {
+          "type": ["null", "string"]
+        },
+        "issue_report_tree": {
+          "type": ["null", "string"]
         }
       }
     },
