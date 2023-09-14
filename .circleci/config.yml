@@ -16,7 +16,7 @@ jobs:
           name: 'pylint'
           command: |
             source /usr/local/share/virtualenvs/tap-kustomer/bin/activate
-            make lint
+            pylint tap_surveymonkey -d C,R,W
 workflows:
   version: 2
   commit:
