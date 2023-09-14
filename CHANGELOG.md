@@ -1,5 +1,8 @@
 # Changelog
 
+## v1.1.0
+* Update conversations schema  [#26](https://github.com/singer-io/tap-kustomer/pull/26)
+
 ## v1.0.2
 * Fix MANIFEST.in file
 
