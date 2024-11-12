@@ -45,12 +45,15 @@
       "type": ["null", "object"]
     },
     "custom": {
-      "additionalProperties": false,
+      "additionalProperties": true,
       "properties": {
         "accepts_marketing_bool": {
           "type": ["null", "boolean"]
         },
         "activation_date_str": {
+          "type": ["null", "string"]
+        },
+        "affiliate_name_str": {
           "type": ["null", "string"]
         },
         "app_version_str": {
@@ -72,6 +75,18 @@
           "type": ["null", "string"]
         },
         "connect_serial_number_str": {
+          "type": ["null", "string"]
+        },
+        "current_issuer_str": {
+          "type": ["null", "string"]
+        },
+        "delighted_comment_txt": {
+          "type": ["null", "string"]
+        },
+        "delighted_score_num": {
+          "type": ["integer", "null"]
+        },
+        "delighted_response_timestamp_at": {
           "type": ["null", "string"]
         },
         "doorbell_date_installed_at": {
@@ -110,6 +125,9 @@
         "latest_nps_num": {
           "type": ["integer", "null"]
         },
+        "lead_status_str": {
+          "type": ["null", "string"]
+        },
         "lock_date_installed_at": {
           "type": ["null", "string"]
         },
@@ -138,6 +156,9 @@
           "type": ["null", "string"]
         },
         "sales_force_id_str": {
+          "type": ["null", "string"]
+        },
+        "state_str": {
           "type": ["null", "string"]
         },
         "total_spent_num": {
