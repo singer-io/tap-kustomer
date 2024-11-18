@@ -56,6 +56,9 @@
         "affiliate_name_str": {
           "type": ["null", "string"]
         },
+        "all_user_ids_str": {
+          "type": ["null", "string"]
+        },
         "app_version_str": {
           "type": ["null", "string"]
         },
