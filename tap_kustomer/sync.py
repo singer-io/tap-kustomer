@@ -223,6 +223,7 @@ def sync_endpoint(client,  # pylint: disable=too-many-branches, too-many-stateme
         total_page = len(response.get('data'))
         if 'total' in response.get('meta'):
             total_records = response.get('meta').get('total')
+        last_updated = None
         if len(response.get('data')) > 0:
             last_updated = response.get('data')[-1]['attributes']['updatedAt']
         # Get next link for end of pagination indication across all endpoints
@@ -302,8 +303,7 @@ def update_currently_syncing(state, stream_name):
 
 
 def sync(client, config, catalog, state):
-    if 'start_date' in config:
-        start_date = config['start_date']
+    start_date = config.get('start_date', None)
 
     # Get selected_streams from catalog, based on state last_stream
     #   last_stream = Previous currently synced stream, if the load was interrupted
