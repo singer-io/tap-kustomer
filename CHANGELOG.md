@@ -1,5 +1,8 @@
 # Changelog
 
+## v1.2.0
+* Update backoff, requests and singer-python to 2.2.1, 2.32.4 and 6.1.1 [#31](https://github.com/singer-io/tap-kustomer/pull/31)
+
 ## v1.1.0
 * Update conversations schema  [#26](https://github.com/singer-io/tap-kustomer/pull/26)
 * Dependabot update [#24](https://github.com/singer-io/tap-kustomer/pull/24)
