@@ -1,5 +1,8 @@
 # Changelog
 
+## v1.1.1
+* Bump dependency versions for compliance [#34](https://github.com/singer-io/tap-kustomer/pull/34)
+
 ## v1.1.0
 * Update conversations schema  [#26](https://github.com/singer-io/tap-kustomer/pull/26)
 * Dependabot update [#24](https://github.com/singer-io/tap-kustomer/pull/24)
