@@ -187,6 +187,33 @@ class KustomerClient():
 
         return response.json()
 
+    def check_stream_access(self, method, path, body=None):
+        """Make a minimal request to check if stream is accessible.
+        Returns True if accessible, False if a 403 Forbidden is returned."""
+        if not self.__verified:
+            self.__verified = self.check_token()
+
+        url = '{}/{}/'.format(self.base_url, path)
+        headers = {
+            'Authorization': 'Bearer {}'.format(self.__token),
+            'Accept': 'application/json'
+        }
+        if self.__user_agent:
+            headers['User-Agent'] = self.__user_agent
+        if method == 'POST':
+            headers['Content-Type'] = 'application/json'
+
+        response = self.__session.request(method, url, data=body, headers=headers)
+        if response.status_code == 403:
+            LOGGER.warning(
+                "Unauthorized Stream: %s, excluding from catalog. "
+                "HTTP-Error-Message:'%s'",
+                path,
+                response.text,
+            )
+            return False
+        return True
+
     def get(self, url, path, **kwargs):
         return self.request('GET', url=url, path=path, **kwargs)
 
