@@ -176,6 +176,17 @@ class TestCheckStreamAccess:
         body = json.loads(call_args[1]['body'])
         assert body.get('queryContext') == 'customer'
 
+    def test_post_stream_replaces_placeholder_with_valid_timestamp(self):
+        client = MagicMock()
+        client.check_stream_access.return_value = True
+        _check_stream_access(client, 'customers', STREAMS['customers'])
+        call_args = client.check_stream_access.call_args
+        body = json.loads(call_args[1]['body'])
+        bookmark_field = STREAMS['customers']['bookmark_query_field']
+        gte_value = body['and'][0][bookmark_field]['gte']
+        assert gte_value == '2020-01-01T00:00:00Z'
+        assert '{end_window}' not in call_args[1]['body']
+
     def test_returns_false_when_forbidden(self):
         client = MagicMock()
         client.check_stream_access.return_value = False

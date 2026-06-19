@@ -13,7 +13,15 @@ def _check_stream_access(client, stream_name, stream_config):
     path = stream_config.get('path', stream_name)
     body = None
     if method == 'POST' and 'body' in stream_config:
-        body = json.dumps(stream_config['body'])
+        import copy
+        body_copy = copy.deepcopy(stream_config['body'])
+        # Replace placeholder with a valid timestamp for the access probe
+        bookmark_field = stream_config.get('bookmark_query_field')
+        if body_copy.get('and'):
+            for condition in body_copy['and']:
+                if bookmark_field and bookmark_field in condition:
+                    condition[bookmark_field]['gte'] = '2020-01-01T00:00:00Z'
+        body = json.dumps(body_copy)
     return client.check_stream_access(method, path, body=body)
 
 
