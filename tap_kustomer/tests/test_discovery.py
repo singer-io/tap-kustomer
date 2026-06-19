@@ -199,57 +199,34 @@ class TestCheckStreamAccessLogging:
 
     def test_logs_warning_on_403(self):
         from unittest.mock import patch
-        from tap_kustomer.client import KustomerClient
+        from tap_kustomer.client import KustomerClient, KustomerForbiddenError
 
-        with patch('tap_kustomer.client.LOGGER') as mock_logger, \
-             patch('requests.Session') as mock_session_cls:
-            mock_session = MagicMock()
-            mock_session_cls.return_value = mock_session
-
-            # Mock the check_token response
-            token_response = MagicMock()
-            token_response.status_code = 200
-            token_response.json.return_value = {'results': True}
-
-            # Mock the access check response as 403
-            forbidden_response = MagicMock()
-            forbidden_response.status_code = 403
-            forbidden_response.text = 'Forbidden: insufficient permissions'
-
-            mock_session.get.return_value = token_response
-            mock_session.request.return_value = forbidden_response
-
+        with patch('tap_kustomer.client.LOGGER') as mock_logger:
             client = KustomerClient('fake_token', 'test-agent')
-            client._KustomerClient__verified = True  # Skip token check
+            client._KustomerClient__verified = True
 
-            result = client.check_stream_access('GET', 'users')
+            with patch.object(client, 'request',
+                              side_effect=KustomerForbiddenError('403 Forbidden')):
+                result = client.check_stream_access('GET', 'users')
 
             assert result is False
             mock_logger.warning.assert_called_once_with(
                 "Unauthorized Stream: %s, excluding from catalog. "
                 "HTTP-Error-Message:'%s'",
                 'users',
-                'Forbidden: insufficient permissions',
+                '403 Forbidden',
             )
 
     def test_no_warning_on_success(self):
         from unittest.mock import patch
         from tap_kustomer.client import KustomerClient
 
-        with patch('tap_kustomer.client.LOGGER') as mock_logger, \
-             patch('requests.Session') as mock_session_cls:
-            mock_session = MagicMock()
-            mock_session_cls.return_value = mock_session
-
-            ok_response = MagicMock()
-            ok_response.status_code = 200
-
-            mock_session.request.return_value = ok_response
-
+        with patch('tap_kustomer.client.LOGGER') as mock_logger:
             client = KustomerClient('fake_token', 'test-agent')
             client._KustomerClient__verified = True
 
-            result = client.check_stream_access('GET', 'users')
+            with patch.object(client, 'request', return_value={}):
+                result = client.check_stream_access('GET', 'users')
 
             assert result is True
             mock_logger.warning.assert_not_called()

@@ -182,39 +182,29 @@ class KustomerClient():
                 sleep(retry_in)
                 raise Server429Error()
 
+        if response.status_code == 403:
+            raise KustomerForbiddenError(
+                'HTTP-error-code: 403, Error: Forbidden for path: {}'.format(url))
+
         if response.status_code != 200:
             raise_for_error(response)
 
         return response.json()
 
     def check_stream_access(self, method, path, body=None):
-        """Make a minimal request to check if stream is accessible.
-        Returns True if accessible, False if a 403 Forbidden is returned."""
-        if not self.__verified:
-            self.__verified = self.check_token()
-
-        url = '{}/{}/'.format(self.base_url, path)
-        headers = {
-            'Authorization': 'Bearer {}'.format(self.__token),
-            'Accept': 'application/json'
-        }
-        if self.__user_agent:
-            headers['User-Agent'] = self.__user_agent
-        if method == 'POST':
-            headers['Content-Type'] = 'application/json'
-
-        response = self.__session.request(method, url, data=body, headers=headers)
-        if response.status_code == 403:
+        """Verify that the API credentials have read access to this stream.
+        Returns True if accessible, False if a 403 Forbidden error is raised."""
+        try:
+            self.request(method, path=path, data=body)
+            return True
+        except KustomerForbiddenError as exc:
             LOGGER.warning(
                 "Unauthorized Stream: %s, excluding from catalog. "
                 "HTTP-Error-Message:'%s'",
                 path,
-                response.text,
+                str(exc),
             )
             return False
-        if response.status_code != 200:
-            raise_for_error(response)
-        return True
 
     def get(self, url, path, **kwargs):
         return self.request('GET', url=url, path=path, **kwargs)
