@@ -212,6 +212,8 @@ class KustomerClient():
                 response.text,
             )
             return False
+        if response.status_code != 200:
+            raise_for_error(response)
         return True
 
     def get(self, url, path, **kwargs):
