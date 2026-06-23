@@ -195,8 +195,6 @@ class KustomerClient():
         """Verify that the API credentials have read access to this stream.
         Returns True if accessible, False if a 403 Forbidden error is raised."""
         try:
-            if "teams" in path:
-                raise KustomerForbiddenError('HTTP-error-code: 403, Error: Forbidden for path: {}'.format(path))
             self.request(method, path=path, data=body)
             return True
         except KustomerForbiddenError as exc:
