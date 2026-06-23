@@ -233,9 +233,9 @@ class TestCheckStreamAccessLogging:
 
 
 class TestRequestRaises403:
-    """Unit test for the KustomerForbiddenError raised by request() on 403."""
+    """Unit test for the KustomerForbiddenError raised by request() on 401/403."""
 
-    def test_request_raises_forbidden_with_response_text(self):
+    def test_request_raises_forbidden_on_403_with_response_text(self):
         from unittest.mock import patch
         from tap_kustomer.client import KustomerClient, KustomerForbiddenError
 
@@ -259,3 +259,28 @@ class TestRequestRaises403:
 
             assert 'HTTP-error-code: 403' in str(exc_info.value)
             assert '{"error": "Access denied for this resource"}' in str(exc_info.value)
+
+    def test_request_raises_forbidden_on_401_with_response_text(self):
+        from unittest.mock import patch
+        from tap_kustomer.client import KustomerClient, KustomerForbiddenError
+
+        with patch('requests.Session') as mock_session_cls:
+            mock_session = MagicMock()
+            mock_session_cls.return_value = mock_session
+
+            unauthorized_response = MagicMock()
+            unauthorized_response.status_code = 401
+            unauthorized_response.text = '{"error": "Invalid or expired token"}'
+            unauthorized_response.headers = {}
+
+            mock_session.request.return_value = unauthorized_response
+
+            client = KustomerClient('fake_token', 'test-agent')
+            client._KustomerClient__verified = True
+
+            import pytest
+            with pytest.raises(KustomerForbiddenError) as exc_info:
+                client.request('GET', path='users')
+
+            assert 'HTTP-error-code: 403' in str(exc_info.value)
+            assert '{"error": "Invalid or expired token"}' in str(exc_info.value)
