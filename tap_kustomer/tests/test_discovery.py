@@ -230,3 +230,32 @@ class TestCheckStreamAccessLogging:
 
             assert result is True
             mock_logger.warning.assert_not_called()
+
+
+class TestRequestRaises403:
+    """Unit test for the KustomerForbiddenError raised by request() on 403."""
+
+    def test_request_raises_forbidden_with_response_text(self):
+        from unittest.mock import patch
+        from tap_kustomer.client import KustomerClient, KustomerForbiddenError
+
+        with patch('requests.Session') as mock_session_cls:
+            mock_session = MagicMock()
+            mock_session_cls.return_value = mock_session
+
+            forbidden_response = MagicMock()
+            forbidden_response.status_code = 403
+            forbidden_response.text = '{"error": "Access denied for this resource"}'
+            forbidden_response.headers = {}
+
+            mock_session.request.return_value = forbidden_response
+
+            client = KustomerClient('fake_token', 'test-agent')
+            client._KustomerClient__verified = True
+
+            import pytest
+            with pytest.raises(KustomerForbiddenError) as exc_info:
+                client.request('GET', path='teams')
+
+            assert 'HTTP-error-code: 403' in str(exc_info.value)
+            assert '{"error": "Access denied for this resource"}' in str(exc_info.value)
