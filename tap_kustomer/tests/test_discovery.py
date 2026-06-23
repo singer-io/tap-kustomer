@@ -13,7 +13,7 @@ def _mock_client(forbidden_streams=None):
     forbidden_streams = forbidden_streams or []
     client = MagicMock()
 
-    def _check_access(method, path, body=None):
+    def _check_access(stream_name, method, path, body=None):
         # Match stream by body queryContext (POST) or path (GET)
         if body:
             parsed = json.loads(body)
@@ -162,7 +162,7 @@ class TestCheckStreamAccess:
         result = _check_stream_access(client, 'users', STREAMS['users'])
         assert result is True
         client.check_stream_access.assert_called_once_with(
-            'GET', 'users', body=None
+            'users', 'GET', 'users', body=None
         )
 
     def test_post_stream_sends_body(self):
@@ -171,7 +171,8 @@ class TestCheckStreamAccess:
         result = _check_stream_access(client, 'customers', STREAMS['customers'])
         assert result is True
         call_args = client.check_stream_access.call_args
-        assert call_args[0][0] == 'POST'
+        assert call_args[0][0] == 'customers'
+        assert call_args[0][1] == 'POST'
         assert call_args[1]['body'] is not None
         body = json.loads(call_args[1]['body'])
         assert body.get('queryContext') == 'customer'
@@ -207,7 +208,7 @@ class TestCheckStreamAccessLogging:
 
             with patch.object(client, 'request',
                               side_effect=KustomerForbiddenError('403 Forbidden')):
-                result = client.check_stream_access('GET', 'users')
+                result = client.check_stream_access('users', 'GET', 'users')
 
             assert result is False
             mock_logger.warning.assert_called_once_with(
@@ -226,7 +227,7 @@ class TestCheckStreamAccessLogging:
             client._KustomerClient__verified = True
 
             with patch.object(client, 'request', return_value={}):
-                result = client.check_stream_access('GET', 'users')
+                result = client.check_stream_access('users', 'GET', 'users')
 
             assert result is True
             mock_logger.warning.assert_not_called()
