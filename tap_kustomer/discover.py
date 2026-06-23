@@ -1,4 +1,5 @@
 import json
+import copy
 import singer
 from singer.catalog import Catalog, CatalogEntry, Schema
 from tap_kustomer.schema import get_schemas, STREAMS
@@ -13,7 +14,6 @@ def _check_stream_access(client, stream_name, stream_config):
     path = stream_config.get('path', stream_name)
     body = None
     if method == 'POST' and 'body' in stream_config:
-        import copy
         body_copy = copy.deepcopy(stream_config['body'])
         # Replace placeholder with a valid timestamp for the access probe
         bookmark_field = stream_config.get('bookmark_query_field')

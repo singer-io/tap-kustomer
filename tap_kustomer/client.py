@@ -182,7 +182,7 @@ class KustomerClient():
                 sleep(retry_in)
                 raise Server429Error()
 
-        if response.status_code == 403:
+        if response.status_code in (401, 403):
             raise KustomerForbiddenError(
                 'HTTP-error-code: 403, Error: {}'.format(response.text))
 
