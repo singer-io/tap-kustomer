@@ -190,7 +190,7 @@ class KustomerClient():
 
         if response.status_code in (401, 403):
             raise KustomerForbiddenError(
-                'HTTP-error-code: 403, Error: {}'.format(response.text))
+                'HTTP-error-code: {}, Error: {}'.format(response.status_code, response.text))
 
         if response.status_code != 200:
             raise_for_error(response)
