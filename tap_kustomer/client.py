@@ -191,17 +191,17 @@ class KustomerClient():
 
         return response.json()
 
-    def check_stream_access(self, method, path, body=None):
+    def check_stream_access(self, stream_name, method, path, body=None):
         """Verify that the API credentials have read access to this stream.
         Returns True if accessible, False if a 403 Forbidden error is raised."""
         try:
-            self.request(method, path=path, data=body)
+            self.request(method=method, path=path, data=body)
             return True
         except KustomerForbiddenError as exc:
             LOGGER.warning(
                 "Unauthorized Stream: %s, excluding from catalog. "
                 "HTTP-Error-Message:'%s'",
-                path,
+                stream_name,
                 str(exc),
             )
             return False

@@ -22,7 +22,7 @@ def _check_stream_access(client, stream_name, stream_config):
                 if bookmark_field and bookmark_field in condition:
                     condition[bookmark_field]['gte'] = '2020-01-01T00:00:00Z'
         body = json.dumps(body_copy)
-    return client.check_stream_access(method, path, body=body)
+    return client.check_stream_access(stream_name, method, path, body=body)
 
 
 def _apply_access_checks(client, schemas, field_metadata):
