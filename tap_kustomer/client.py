@@ -67,6 +67,7 @@ def get_exception_for_error_code(error_code):
 
 
 def raise_for_error(response):
+    status_code = getattr(response, 'status_code', None)
     try:
         response.raise_for_status()
     except (requests.HTTPError, requests.ConnectionError) as error:
@@ -82,13 +83,13 @@ def raise_for_error(response):
                                       response.get('message', 'Unknown Error'))
                 error_code = response.get('error', {}).get('code')
                 ex = get_exception_for_error_code(error_code)
-                if response.status_code == 401 and 'Expired token' in message:
+                if status_code == 401 and 'Expired token' in message:
                     LOGGER.error(
                         "Your API token has expired as per Kustomer’s security \
                         policy. \n Please re-authenticate your connection to generate a new token \
                         and resume extraction.")
                     raise ex(message) from error
-                raise KustomerError(error) from error
+                raise ex(message) from error
         except (ValueError, TypeError):
             raise KustomerError(error) from error
 
@@ -177,7 +178,7 @@ class KustomerClient():
             if RATE_LIMIT_RESET in response.headers:
                 reset_in = response.headers[RATE_LIMIT_RESET]
                 now = datetime.now().timestamp()
-                retry_in = reset_in - now
+                retry_in = float(reset_in) - now
                 LOGGER.info("Rate limit exceeded, retrying in %s: ", retry_in)
                 sleep(retry_in)
                 raise Server429Error()
