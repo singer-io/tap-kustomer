@@ -1,14 +1,19 @@
 # Changelog
 
+## v1.2.0
+  * Updated python version 3.12 [#37](https://github.com/singer-io/tap-kustomer/pull/37)
+  * Upgraded dependancies
+  * Added integration tests.
+
 ## v1.1.1
-* Bump dependency versions for compliance [#34](https://github.com/singer-io/tap-kustomer/pull/34)
+  * Bump dependency versions for compliance [#34](https://github.com/singer-io/tap-kustomer/pull/34)
 
 ## v1.1.0
-* Update conversations schema  [#26](https://github.com/singer-io/tap-kustomer/pull/26)
-* Dependabot update [#24](https://github.com/singer-io/tap-kustomer/pull/24)
+  * Update conversations schema  [#26](https://github.com/singer-io/tap-kustomer/pull/26)
+  * Dependabot update [#24](https://github.com/singer-io/tap-kustomer/pull/24)
 
 ## v1.0.2
-* Fix MANIFEST.in file
+  * Fix MANIFEST.in file
 
 ## [v1.0.1](https://github.com/singer-io/tap-kustomer/tree/v1.0.1) (2021-01-13)
 
