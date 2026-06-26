@@ -21,7 +21,8 @@ jobs:
           name: 'Unit Tests'
           command: |
             source /usr/local/share/virtualenvs/tap-kustomer/bin/activate
-            coverage run -m pytest tests/unittests
+            mkdir -p test_output
+            coverage run -m pytest tests/unittests --junitxml=test_output/report.xml
             coverage html
           when: always
       - store_test_results:
