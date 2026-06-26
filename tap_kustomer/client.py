@@ -57,7 +57,7 @@ ERROR_CODE_EXCEPTION_MAPPING = {
     402: KustomerPaymentRequiredError,
     403: KustomerForbiddenError,
     404: KustomerNotFoundError,
-    409: KustomerForbiddenError,
+    409: KustomerConflictError,
     500: KustomerInternalServiceError
 }
 
@@ -77,17 +77,23 @@ def raise_for_error(response):
                 # There is nothing we can do here since Kustomer has neither sent
                 # us a 2xx response nor a response content.
                 return
-            response = response.json()
-            if ('error' in response) or ('errorCode' in response):
-                message = '%s: %s' % (response.get('error', str(error)),
-                                      response.get('message', 'Unknown Error'))
-                error_code = response.get('error', {}).get('code')
-                ex = get_exception_for_error_code(error_code)
+            status_code = response.status_code
+            response_json = response.json()
+            if ('error' in response_json) or ('errorCode' in response_json) or ('errors' in response_json):
+                if 'errors' in response_json:
+                    # Handle Kustomer's array-style error response
+                    err = response_json['errors'][0] if response_json['errors'] else {}
+                    message = '%s: %s' % (err.get('code', str(error)),
+                                          err.get('title', 'Unknown Error'))
+                else:
+                    message = '%s: %s' % (response_json.get('error', str(error)),
+                                          response_json.get('message', 'Unknown Error'))
+                ex = get_exception_for_error_code(status_code)
                 if status_code == 401 and 'Expired token' in message:
                     LOGGER.error(
-                        "Your API token has expired as per Kustomer’s security \
-                        policy. \n Please re-authenticate your connection to generate a new token \
-                        and resume extraction.")
+                        "Your API token has expired as per Kustomer's security "
+                        "policy. Please re-authenticate your connection to "
+                        "generate a new token and resume extraction.")
                     raise ex(message) from error
                 raise ex(message) from error
         except (ValueError, TypeError):
@@ -183,10 +189,29 @@ class KustomerClient():
                 sleep(retry_in)
                 raise Server429Error()
 
+        if response.status_code in (401, 403):
+            raise KustomerForbiddenError(
+                'HTTP-error-code: {}, Error: {}'.format(response.status_code, response.text))
+
         if response.status_code != 200:
             raise_for_error(response)
 
         return response.json()
+
+    def check_stream_access(self, stream_name, method, path, body=None):
+        """Verify that the API credentials have read access to this stream.
+        Returns True if accessible, False if a 403 Forbidden error is raised."""
+        try:
+            self.request(method=method, path=path, data=body)
+            return True
+        except KustomerForbiddenError as exc:
+            LOGGER.warning(
+                "Unauthorized Stream: %s, excluding from catalog. "
+                "HTTP-Error-Message:'%s'",
+                stream_name,
+                str(exc),
+            )
+            return False
 
     def get(self, url, path, **kwargs):
         return self.request('GET', url=url, path=path, **kwargs)
