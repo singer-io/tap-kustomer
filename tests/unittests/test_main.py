@@ -4,7 +4,6 @@ from types import SimpleNamespace
 from unittest.mock import MagicMock, patch
 
 from tap_kustomer.__init__ import do_discover, main
-from tap_kustomer.discover import discover
 from tap_kustomer.streams import STREAMS
 
 
@@ -44,7 +43,7 @@ class TestMainDiscover(unittest.TestCase):
         fake_catalog.to_dict.return_value = {"streams": []}
         mock_discover.return_value = fake_catalog
         client = _mock_client()
-        discover(client)
+        do_discover(client)
 
         fake_catalog.to_dict.assert_called_once()
         mock_dump.assert_called_once()
@@ -95,4 +94,6 @@ class TestMainDiscover(unittest.TestCase):
 
         main.__wrapped__()
 
-        mock_do_discover.assert_called_once_with()
+        mock_do_discover.assert_called_once_with(
+                client_cm.__enter__.return_value
+            )
