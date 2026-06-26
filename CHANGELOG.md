@@ -2,7 +2,7 @@
 
 ## v1.2.0
   * Updated python version 3.12 [#37](https://github.com/singer-io/tap-kustomer/pull/37)
-  * Upgraded dependancies
+  * Upgraded dependencies
   * Added integration tests.
   * Streams that the credentials cannot access (403) are now excluded from the catalog during discovery instead of raising an error [#35](https://github.com/singer-io/tap-kustomer/pull/35)
 
