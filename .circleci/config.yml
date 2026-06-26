@@ -27,6 +27,7 @@ jobs:
           when: always
       - store_test_results:
           path: test_output
+      - store_artifacts:
           path: htmlcov
       - run:
           name: 'Mocked Integration Tests'
