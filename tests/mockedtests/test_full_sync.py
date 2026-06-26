@@ -12,10 +12,11 @@ class FullSyncMockedIntegrationTest(KustomerBaseTest, unittest.TestCase):
     @patch("tap_kustomer.sync.singer.messages.write_record")
     @patch("tap_kustomer.sync.singer.write_schema")
     def test_sync_all_streams_with_mocked_fetch(self, mock_write_schema, mock_write_record, mock_write_state):
-        catalog = self._make_catalog()
 
         client = MagicMock()
         client.base_url = "https://api.kustomerapp.com/v1"
+
+        catalog = self._make_catalog(STREAMS.keys(), client=client)
 
         def _fetch_side_effect(method, url, path, data=None, **kwargs):
             return {

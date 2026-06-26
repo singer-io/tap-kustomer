@@ -38,8 +38,8 @@ class KustomerBaseTest:
         self.state = {}
 
     @staticmethod
-    def _make_catalog(stream_names=None):
-        catalog = discover()
+    def _make_catalog(stream_names, client):
+        catalog = discover(client)
         if stream_names is None:
             stream_names = {entry.tap_stream_id for entry in catalog.streams}
         else:

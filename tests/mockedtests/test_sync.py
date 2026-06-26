@@ -11,7 +11,6 @@ class SyncMockedIntegrationTest(KustomerBaseTest, unittest.TestCase):
     @patch("tap_kustomer.sync.singer.messages.write_record")
     @patch("tap_kustomer.sync.singer.write_schema")
     def test_sync_users_stream_with_mocked_fetch(self, mock_write_schema, mock_write_record, mock_write_state):
-        catalog = self._make_catalog({"users"})
 
         client = MagicMock()
         client.base_url = "https://api.kustomerapp.com/v1"
@@ -31,6 +30,7 @@ class SyncMockedIntegrationTest(KustomerBaseTest, unittest.TestCase):
             "meta": {"total": 1}
         }
 
+        catalog = self._make_catalog(["users"], client=client)
         sync(client=client, config=self.config, catalog=catalog, state=self.state)
 
         self.assertTrue(mock_write_schema.called)

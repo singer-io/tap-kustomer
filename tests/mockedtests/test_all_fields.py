@@ -36,7 +36,7 @@ class AllFieldsMockedIntegrationTest(KustomerBaseTest, unittest.TestCase):
         client.base_url = "https://api.kustomerapp.com/v1"
         client.fetch.return_value = payload
 
-        catalog = self._make_catalog([stream_name])
+        catalog = self._make_catalog([stream_name], client=client)
         written_records = []
 
         with patch("tap_kustomer.sync.singer.write_schema"), \

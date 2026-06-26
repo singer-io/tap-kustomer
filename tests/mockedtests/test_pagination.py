@@ -37,7 +37,7 @@ class PaginationMockedIntegrationTest(KustomerBaseTest, unittest.TestCase):
         client.base_url = "https://api.kustomerapp.com/v1"
         client.fetch.side_effect = [page_1, page_2]
 
-        catalog = self._make_catalog([stream_name])
+        catalog = self._make_catalog([stream_name], client=client)
         written_records = []
 
         with patch("tap_kustomer.sync.singer.write_schema"), \
