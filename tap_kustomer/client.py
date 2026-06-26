@@ -67,7 +67,6 @@ def get_exception_for_error_code(error_code):
 
 
 def raise_for_error(response):
-    status_code = getattr(response, 'status_code', None)
     try:
         response.raise_for_status()
     except (requests.HTTPError, requests.ConnectionError) as error:
