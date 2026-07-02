@@ -1,5 +1,6 @@
 import json
 import copy
+from datetime import datetime, timedelta, timezone
 import singer
 from singer.catalog import Catalog, CatalogEntry, Schema
 from tap_kustomer.schema import get_schemas, STREAMS
@@ -20,7 +21,9 @@ def _check_stream_access(client, stream_name, stream_config):
         if body_copy.get('and'):
             for condition in body_copy['and']:
                 if bookmark_field and bookmark_field in condition:
-                    condition[bookmark_field]['gte'] = '2020-01-01T00:00:00Z'
+                    # Use 1 day ago to keep the access probe lightweight
+                    one_day_ago = (datetime.now(timezone.utc) - timedelta(days=1)).strftime('%Y-%m-%dT%H:%M:%SZ')
+                    condition[bookmark_field]['gte'] = one_day_ago
         body = json.dumps(body_copy)
     return client.check_stream_access(stream_name, method, path, body=body)
 
@@ -49,8 +52,7 @@ def _apply_access_checks(client, schemas, field_metadata):
         )
     elif inaccessible_streams:
         LOGGER.warning(
-            "These streams have been excluded due to HTTP-Error-Code:403 "
-            "Forbidden: %s",
+            "Unauthorized streams have been excluded: %s",
             ", ".join(inaccessible_streams),
         )
 

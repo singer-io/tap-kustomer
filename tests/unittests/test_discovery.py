@@ -99,8 +99,7 @@ class TestDiscoverPartialAccess:
         with patch('tap_kustomer.discover.LOGGER') as mock_logger:
             discover(client)
             mock_logger.warning.assert_called_once_with(
-                "These streams have been excluded due to HTTP-Error-Code:403 "
-                "Forbidden: %s",
+                "Unauthorized streams have been excluded: %s",
                 "users",
             )
 
@@ -185,7 +184,11 @@ class TestCheckStreamAccess:
         body = json.loads(call_args[1]['body'])
         bookmark_field = STREAMS['customers']['bookmark_query_field']
         gte_value = body['and'][0][bookmark_field]['gte']
-        assert gte_value == '2020-01-01T00:00:00Z'
+        # Should be a recent timestamp (1 day ago), not a hardcoded old date
+        from datetime import datetime, timezone
+        parsed = datetime.strptime(gte_value, '%Y-%m-%dT%H:%M:%SZ').replace(tzinfo=timezone.utc)
+        now = datetime.now(timezone.utc)
+        assert (now - parsed).days <= 1
         assert '{end_window}' not in call_args[1]['body']
 
     def test_returns_false_when_forbidden(self):

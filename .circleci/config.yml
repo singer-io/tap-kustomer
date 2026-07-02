@@ -22,7 +22,7 @@ jobs:
           command: |
             source /usr/local/share/virtualenvs/tap-kustomer/bin/activate
             mkdir -p test_output
-            coverage run -m pytest tests/unittests --junitxml=test_output/report.xml
+            pytest --cov=tap_kustomer --cov-report=term-missing --junitxml=test_output/report.xml tests/unittests
             coverage html
           when: always
       - store_test_results:
