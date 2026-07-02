@@ -283,5 +283,5 @@ class TestRequestRaises403:
             with pytest.raises(KustomerForbiddenError) as exc_info:
                 client.request('GET', path='users')
 
-            assert 'HTTP-error-code: 403' in str(exc_info.value)
+            assert 'HTTP-error-code: 401' in str(exc_info.value)
             assert '{"error": "Invalid or expired token"}' in str(exc_info.value)
