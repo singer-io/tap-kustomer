@@ -1,6 +1,6 @@
 # Changelog
 
-## v1.2.1
+## v1.2.0
 * Streams that the credentials cannot access (403) are now excluded from the catalog during discovery instead of raising an error [#35](https://github.com/singer-io/tap-kustomer/pull/35)
 
 ## v1.1.1
