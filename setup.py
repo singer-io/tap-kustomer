@@ -19,6 +19,7 @@ setup(name='tap-kustomer',
             'ipdb',
             'parameterized',
             'pytest',
+            'pytest-cov',
             'coverage',
         ]
       },
