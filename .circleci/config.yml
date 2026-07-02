@@ -11,7 +11,7 @@ jobs:
             uv venv --python 3.12 /usr/local/share/virtualenvs/tap-kustomer
             source /usr/local/share/virtualenvs/tap-kustomer/bin/activate
             uv pip install -U setuptools
-            uv pip install .[dev]
+            uv pip install -e .[dev]
       - run:
           name: 'pylint'
           command: |
