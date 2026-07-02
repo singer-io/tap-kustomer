@@ -22,18 +22,25 @@ jobs:
           command: |
             source /usr/local/share/virtualenvs/tap-kustomer/bin/activate
             mkdir -p test_output
-            pytest --cov=tap_kustomer --cov-report=term-missing --junitxml=test_output/report.xml tests/unittests
+            pytest --cov=tap_kustomer --cov-report=term-missing --junitxml=test_output/unittests.xml tests/unittests
+          when: always
+      - run:
+          name: 'Mocked Integration Tests'
+          command: |
+            source /usr/local/share/virtualenvs/tap-kustomer/bin/activate
+            pytest --cov=tap_kustomer --cov-report=term-missing --junitxml=test_output/mockedtests.xml tests/mockedtests -v
+          when: always
+      - run:
+          name: 'Coverage Report'
+          command: |
+            source /usr/local/share/virtualenvs/tap-kustomer/bin/activate
+            pytest --cov=tap_kustomer --cov-report=term-missing --junitxml=test_output/all_tests.xml tests/
             coverage html
           when: always
       - store_test_results:
           path: test_output
       - store_artifacts:
           path: htmlcov
-      - run:
-          name: 'Mocked Integration Tests'
-          command: |
-            source /usr/local/share/virtualenvs/tap-kustomer/bin/activate
-            pytest tests/mockedtests -v
       # TODO: Uncomment when credentials are available in CI environment
       # - run:
       #     name: 'Integration Tests'
