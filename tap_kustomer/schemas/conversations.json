@@ -58,7 +58,7 @@
     },
     "custom": {
       "type": ["null", "object"],
-      "additionalProperties": false,
+      "additionalProperties": true,
       "properties": {
         "auto_response_at": {
           "type": ["null", "string"]
@@ -127,6 +127,18 @@
           "type": ["null", "string"]
         },
         "issue_report_tree": {
+          "type": ["null", "string"]
+        },
+        "customerInquiryTypeStr": {
+          "type": ["null", "string"]
+        },
+        "customerTypeStr": {
+          "type": ["null", "string"]
+        },
+        "orderUpdateReasonsStr": {
+          "type": ["null", "string"]
+        },
+        "orderCancellationReasonsStr": {
           "type": ["null", "string"]
         }
       }
